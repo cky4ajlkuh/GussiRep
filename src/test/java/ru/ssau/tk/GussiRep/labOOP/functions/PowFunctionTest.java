@@ -10,9 +10,9 @@ public class PowFunctionTest {
 
     @Test
     public void testApply() {
-        MathFunction pow = new PowFunction();
-        assertEquals(pow.apply(2), 4,DELTA);
-        assertEquals(pow.apply(1), 1,DELTA);
-        assertNotEquals(pow.apply(3), 2,DELTA);
+        MathFunction FreakFunk = new PowFunction();
+        assertEquals(FreakFunk.apply(2), 4,DELTA);
+        assertEquals(FreakFunk.apply(1), 1,DELTA);
+        assertNotEquals(FreakFunk.apply(3), 2,DELTA);
     }
 }
