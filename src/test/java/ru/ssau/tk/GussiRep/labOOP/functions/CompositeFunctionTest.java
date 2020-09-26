@@ -11,6 +11,6 @@ public class CompositeFunctionTest {
         MathFunction G = new PowFunction();
         MathFunction H = new IdentityFunction();
         MathFunction F = new CompositeFunction(H,G);
-        assertEquals(F.apply(2), 4);
+        assertEquals(F.apply(2), 4, 0.0001);
     }
 }

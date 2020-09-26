@@ -9,6 +9,6 @@ public class PowFunctionTest {
     @Test
     public void testApply() {
         MathFunction pow = new PowFunction();
-        assertEquals(pow.apply(2), 4);
+        assertEquals(pow.apply(2), 4,0.0001);
     }
 }
