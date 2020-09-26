@@ -1,6 +1,6 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-public class asinFunction implements MathFunction {
+public class AsinFunction implements MathFunction {
 
     @Override
     public double apply(double x) {

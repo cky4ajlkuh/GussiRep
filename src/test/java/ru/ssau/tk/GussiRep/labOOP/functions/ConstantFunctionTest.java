@@ -8,13 +8,14 @@ public class ConstantFunctionTest {
 
     @Test
     public void testGetConstant() {
+
     }
 
     @Test
     public void testApply() {
-        ConstantFunction FreakFunk = new ConstantFunction(2);
-        assertEquals(FreakFunk.apply(10),2.0, 0.001);
-        assertEquals(FreakFunk.apply(9),2.0, 0.001);
-        assertEquals(FreakFunk.apply(2),2.0, 0.001);
+        MathFunction constant = new ConstantFunction(2);
+        assertEquals(constant.apply(10),2.0, 0.001);
+        assertEquals(constant.apply(9),2.0, 0.001);
+        assertEquals(constant.apply(2),2.0, 0.001);
     }
 }
