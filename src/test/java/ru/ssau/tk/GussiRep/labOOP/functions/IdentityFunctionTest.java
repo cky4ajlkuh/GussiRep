@@ -9,10 +9,10 @@ public class IdentityFunctionTest {
 
     @Test
     public void testApply() {
-        MathFunction apply = new IdentityFunction();
-        assertEquals(apply.apply(5), 5, DELTA);
-        assertEquals(apply.apply(100), 100, DELTA);
-        assertEquals(apply.apply(-0.1), -0.1, DELTA);
-        assertNotEquals(apply.apply(1), 2, DELTA);
+        MathFunction identity = new IdentityFunction();
+        assertEquals(identity.apply(5), 5, DELTA);
+        assertEquals(identity.apply(100), 100, DELTA);
+        assertEquals(identity.apply(-0.1), -0.1, DELTA);
+        assertNotEquals(identity.apply(1), 2, DELTA);
     }
 }
