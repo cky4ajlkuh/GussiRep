@@ -11,9 +11,9 @@ public class PowFunctionTest {
     @Test
     public void testApply() {
         MathFunction pow = new PowFunction();
-        assertEquals(pow.apply(2), 4,DELTA);
-        assertEquals(pow.apply(1), 1,DELTA);
-        assertNotEquals(pow.apply(3), 2,DELTA);
+        assertEquals(pow.apply(2), 4, DELTA);
+        assertEquals(pow.apply(1), 1, DELTA);
+        assertNotEquals(pow.apply(3), 2, DELTA);
         assertEquals(pow.apply(-2), 0.25, DELTA);
     }
 }

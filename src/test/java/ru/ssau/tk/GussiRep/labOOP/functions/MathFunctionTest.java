@@ -9,12 +9,19 @@ public class MathFunctionTest {
     MathFunction sqrX = new SqrFunction();
     MathFunction one = new UnitFunction();
     MathFunction andThen = sqrX.andThen(X);
+    MathFunction arcsine = new AsinFunction();
+    MathFunction sqrArcsine = new SqrFunction();
+    MathFunction secondAndThen = sqrArcsine.andThen(arcsine);
+    MathFunction two = new UnitFunction();
 
     @Test
     public void testAndThen() {
         assertEquals(andThen.apply(1), 1.0, 0.001);
         assertEquals(andThen.andThen(one).apply(10), 1.0, 0.001);
-        assertEquals(andThen.andThen(sqrX).apply(-1),1.0, 0.001);
+        assertEquals(andThen.andThen(sqrX).apply(-1), 1.0, 0.001);
         assertNotEquals(andThen.andThen(sqrX).apply(4), 1.5, 0.001);
+        assertEquals(secondAndThen.apply(1), Math.PI / 2, 0.001);
+        assertEquals(secondAndThen.andThen(two).apply(3), 1, 0.001);
+        assertEquals(secondAndThen.andThen(sqrArcsine).apply(0), 0, 0.001);
     }
 }
