@@ -29,3 +29,6 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
         }
         return (interpolate(x, floorIndexOfX(x)));
     }
+
+    ;
+}
