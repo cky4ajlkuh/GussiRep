@@ -2,19 +2,53 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
+    private Node last;
     private Node head;
+    protected int count;
 
-   private static class Node
-    {
-        double x;
-        double y;
-        Node next;
-        Node prev;
+    private static class Node {
+        public double x;
+        public double y;
+        public Node next;
+        public Node prev;
     }
 
-    private void addNode(double x, double y){
+
+    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
 
     }
+
+    private void addNode(double x, double y) {
+
+        Node knot = new Node();
+        if (head == null) {
+            head = knot;
+            knot.next = knot;
+            knot.prev = knot;
+            last = knot;
+            knot.x = x;
+            knot.y = y;
+        } else {
+            knot.next = head;
+            knot.prev = last;
+            head.prev = knot;
+            last.next = knot;
+            knot.x = x;
+            knot.y = y;
+            last = knot;
+        }
+        count++;
+    }
+
+    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        for (int i = 0; i != xValues.length; i++) {
+            addNode(xValues[i], yValues[i]);
+        }
+    }
+
+    // private Node getNode(double index) {
+    //
+    // }
 
     @Override
     protected int floorIndexOfX(double x) {
@@ -58,21 +92,39 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public int indexOfX(double x) {
-        return 0;
+        Node firstX;
+        firstX = head;
+        for (int i = 0; i < count; i++) {
+            if (firstX.x == x) {
+                return i;
+            } else {
+                firstX = firstX.next;
+            }
+        }
+        return -1;
     }
 
     @Override
     public int indexOfY(double y) {
-        return 0;
+        Node firstY;
+        firstY = head;
+        for (int i = 0; i < count; i++) {
+            if (firstY.y == y) {
+                return i;
+            } else {
+                firstY = firstY.next;
+            }
+        }
+        return -1;
     }
 
     @Override
     public double leftBound() {
-        return 0;
+        return head.x;
     }
 
     @Override
     public double rightBound() {
-        return 0;
+        return last.x;
     }
 }
