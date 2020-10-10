@@ -2,7 +2,6 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
-    private Node last;
     private Node head;
     protected int count;
 
@@ -20,17 +19,17 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             head = knot;
             knot.next = knot;
             knot.prev = knot;
-            last = knot;
+            head.prev = knot;
             knot.x = x;
             knot.y = y;
         } else {
             knot.next = head;
-            knot.prev = last;
+            knot.prev = head.prev;
             head.prev = knot;
-            last.next = knot;
+            head.prev.next = knot;
             knot.x = x;
             knot.y = y;
-            last = knot;
+            head.prev = knot;
         }
         count++;
     }
@@ -60,7 +59,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     private Node getNode(int index) {
         Node argument;
         if (index > (count / 2.)) {
-            argument = last;
+            argument = head.prev;
             for (int i = count; i > 0; i--) {
                 if (i == index) {
                     return argument;
@@ -99,28 +98,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (head.x == last.x) {
+        if (head.x == head.prev.x) {
             return head.y;
         }
-        return head.y + (head.next.y - head.y) / (x - head.x) * (head.next.x - head.x);
+        return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (head.x == last.x) {
+        if (head.x == head.prev.x) {
             return head.y;
         }
-        return last.prev.y + (x - last.prev.x) * (last.y - last.prev.y) / (last.x - last.prev.x);
+        return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (head.x == last.x) {
+        if (head.x == head.prev.x) {
             return head.y;
         }
         Node left = getNode(floorIndex);
         Node right = left.next;
-        return left.y + (right.y - left.y) / (right.x - left.x) * (x - left.x);
+        return interpolate(x, getNode(floorIndex).x,getNode(floorIndex+1).x,getNode(floorIndex).y, getNode(floorIndex+1).y);
     }
 
     @Override
@@ -173,7 +172,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public double rightBound() {
-        return last.x;
+        return head.prev.x;
     }
 }
 
