@@ -41,7 +41,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        this.count = count;
+        //this.count = count;
         double step = (xTo - xFrom) / (count - 1);
         if (xFrom < xTo) {
             for (int i = 0; i < count; i++) {
@@ -117,9 +117,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (head.x == head.prev.x) {
             return head.y;
         }
+
+
         Node left = getNode(floorIndex);
         Node right = left.next;
-        return interpolate(x, getNode(floorIndex).x,getNode(floorIndex+1).x,getNode(floorIndex).y, getNode(floorIndex+1).y);
+        return interpolate(x, left.x, right.x, left.y, right.y);
     }
 
     @Override
