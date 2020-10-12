@@ -13,7 +13,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     private void addNode(double x, double y) {
-
         Node knot = new Node();
         if (head == null) {
             head = knot;
@@ -25,7 +24,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         } else {
             knot.next = head;
             knot.prev = head.prev;
-            head.prev = knot;
             head.prev.next = knot;
             knot.x = x;
             knot.y = y;
@@ -117,7 +115,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
         if (head.x == head.prev.x) {
             return head.y;
         }
-
 
         Node left = getNode(floorIndex);
         Node right = left.next;
