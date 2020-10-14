@@ -3,7 +3,7 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     private final double x0 = 2;
-    private final double x1 = 3;
+    private final double x1 = 5;
     private final double y0 = 1;
     private final double y1 = 4;
 
@@ -14,17 +14,17 @@ class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     protected double extrapolateLeft(double x) {
-        return interpolate(x,x0,x1,y0,y1);
+        return interpolate(x, x0, x1, y0, y1);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        return interpolate(x,x0,x1,y0,y1);
+        return interpolate(x, x0, x1, y0, y1);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        return interpolate(x,x0,x1,y0,y1);
+        return interpolate(x, x0, x1, y0, y1);
     }
 
     @Override

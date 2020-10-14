@@ -13,21 +13,20 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     private void addNode(double x, double y) {
-        Node knot = new Node();
+        Node node = new Node();
         if (head == null) {
-            head = knot;
-            knot.next = knot;
-            knot.prev = knot;
-            head.prev = knot;
-            knot.x = x;
-            knot.y = y;
+            head = node;
+            node.next = node;
+            node.prev = node;
+            node.x = x;
+            node.y = y;
         } else {
-            knot.next = head;
-            knot.prev = head.prev;
-            head.prev.next = knot;
-            knot.x = x;
-            knot.y = y;
-            head.prev = knot;
+            node.next = head;
+            node.prev = head.prev;
+            head.prev.next = node;
+            node.x = x;
+            node.y = y;
+            head.prev = node;
         }
         count++;
     }
@@ -39,7 +38,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        //this.count = count;
         double step = (xTo - xFrom) / (count - 1);
         if (xFrom < xTo) {
             for (int i = 0; i < count; i++) {
@@ -97,7 +95,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     protected double extrapolateLeft(double x) {
         if (head.x == head.prev.x) {
-            return head.y;
+            return x;
         }
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
@@ -105,7 +103,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     protected double extrapolateRight(double x) {
         if (head.x == head.prev.x) {
-            return head.y;
+            return x;
         }
         return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
@@ -113,7 +111,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     protected double interpolate(double x, int floorIndex) {
         if (head.x == head.prev.x) {
-            return head.y;
+            return x;
         }
 
         Node left = getNode(floorIndex);
