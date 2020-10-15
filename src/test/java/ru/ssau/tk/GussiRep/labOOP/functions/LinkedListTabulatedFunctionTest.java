@@ -62,23 +62,23 @@ public class LinkedListTabulatedFunctionTest {
     @Test
     public void testGetX() {
         assertEquals(kX().getX(2), 2, DELTA);
-        assertEquals(parabola().getX(3), 2, DELTA);
+        assertEquals(parabola().getX(3), 3, DELTA);
         assertEquals(pow().getX(1), 2, DELTA);
     }
 
     @Test
     public void testGetY() {
-        assertEquals(kX().getY(4), 6, DELTA);
-        assertEquals(parabola().getY(5), 16, DELTA);
+        assertEquals(kX().getY(4), 8, DELTA);
+        assertEquals(parabola().getY(1), 1, DELTA);
         assertEquals(pow().getY(2), 27, DELTA);
     }
 
     @Test
     public void testSetY() {
-        kX().setY(5, 10);
+        kX().setY(2, 3);
         parabola().setY(2, 4);
         pow().setY(1, 2);
-        assertEquals(kX().getY(5), 8, DELTA);
+        assertEquals(kX().getY(2), 4, DELTA);
         assertEquals(parabola().getY(2), 4, DELTA);
         assertEquals(pow().getY(1), 4, DELTA);
     }
@@ -113,21 +113,22 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testApply() {
+
         assertEquals(kX().apply(-1), -2, DELTA);
         assertEquals(kX().apply(2), 4, DELTA);
         assertEquals(kX().apply(3.5), 7, DELTA);
         assertEquals(kX().apply(5), 10, DELTA);
 
-        assertEquals(parabola().apply(2),4, DELTA);
-        assertEquals(parabola().apply(5.),23, DELTA);
+        assertEquals(parabola().apply(4),16, DELTA);
+        assertEquals(parabola().apply(5),23, DELTA);
         assertEquals(parabola().apply(0), 0, DELTA);
         assertEquals(parabola().apply(2.5), 6.5, DELTA);
         assertEquals(parabola().apply(-1), -1, DELTA);
 
         assertEquals(pow().apply(2),4, DELTA);
         assertEquals(pow().apply(0),-2, DELTA);
-        assertEquals(pow().apply(6), 5994, DELTA);
-        assertEquals(pow().apply(4), 27, DELTA);
+        assertEquals(pow().apply(5.5), 4559.5, DELTA);
+        assertEquals(pow().apply(4), 256, DELTA);
 
     }
 }

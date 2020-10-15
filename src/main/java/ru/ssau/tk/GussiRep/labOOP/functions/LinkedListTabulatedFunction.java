@@ -58,7 +58,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
             argument = head.prev;
             for (int i = count; i > 0; i--) {
                 if (i == index) {
-                    return argument;
+                    return argument.next;
                 } else {
                     argument = argument.prev;
                 }
