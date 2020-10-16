@@ -7,7 +7,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction{
     private final double[] xValues;
     private final double[] yValues;
 
-    ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+    public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         count = xValues.length;
         this.xValues = Arrays.copyOf(xValues, count);
         this.yValues = Arrays.copyOf(yValues, count);
@@ -30,7 +30,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction{
 
     @Override
     public int getCount() {
-        return (count);
+        return count;
     }
 
     @Override
