@@ -1,6 +1,6 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-class MockTabulatedFunction extends AbstractTabulatedFunction {
+ public class MockTabulatedFunction extends AbstractTabulatedFunction {
 
     private final double x0 = 2;
     private final double x1 = 5;
