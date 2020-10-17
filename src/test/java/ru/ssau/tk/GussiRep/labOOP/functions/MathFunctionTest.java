@@ -30,5 +30,20 @@ public class MathFunctionTest {
         assertEquals(sqrArcsine.apply(1), Math.PI / 2, 0.001);
         assertEquals(sqrArcsine.andThen(two).apply(3), 1, 0.001);
         assertEquals(sqrArcsine.andThen(sqrArcsine).apply(0), 0, 0.001);
+
+        final double[] valuesX = new double[]{0., 1., 2., 3., 4., 5., 6., 7., 8., 9.};
+        final double[] valuesY = new double[10];
+        for (int i = 0; i < 10; i++) {
+            valuesY[i] = sqr.apply(valuesX[i]);
+        }
+
+        TabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+        assertEquals(parabola.andThen(sqr).apply(2),16 ,0.001);
+        assertEquals(parabola.andThen(sqr).apply(0), 0, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(3),81, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(-1), 1, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(9),6561, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(2.5), 42.25, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(10), 9604, 0.001);
     }
 }
