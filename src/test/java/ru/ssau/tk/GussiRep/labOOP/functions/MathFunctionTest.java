@@ -32,32 +32,19 @@ public class MathFunctionTest {
         assertEquals(sqrArcsine.andThen(sqrArcsine).apply(0), 0, 0.001);
 
         final double[] valuesX = new double[]{0., 1., 2., 3., 4., 5., 6., 7., 8., 9.};
-        final double[] valuesY = new double[10];
-        for (int i = 0; i < 10; i++) {
-            valuesY[i] = sqr.apply(valuesX[i]);
-        }
+        final double[] valuesY = new double[]{0., 1., 4., 9., 16., 25., 36., 49., 64., 81.};
+        TabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+        MathFunction sqr = new SqrFunction();
+        TabulatedFunction pow = new ArrayTabulatedFunction(valuesX, valuesY);
 
-        TabulatedFunction parabola = new LinkedListTabulatedFunction(firstSqr, 1, 10, 10);
-        assertEquals(parabola.andThen(sqr).apply(2), 16, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(0), 4, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(3), 81, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(-1), 25, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(9), 6561, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(2.5), 42.25, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(10), 10000, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(sqr).apply(2), 256, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(sqr).apply(-1), 1, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(sqr).apply(9), 1703025, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(sqr).apply(2.4), 1296, 0.001);
 
-
-        final double[] valuesX2 = new double[]{ 1., 2., 3., 4., 5.};
-        final double[] valuesY2 = new double[5];
-        for (int i = 0; i < 5; i++) {
-            valuesY2[i] = sqr.apply(valuesX2[i] * valuesX2[i]);
-        }
-        TabulatedFunction pow = new ArrayTabulatedFunction(x,1,5,5);
-        assertEquals(pow.andThen(sqr).apply(2), 16, 0.01);
-        assertEquals(pow.andThen(sqr).apply(-1), 25, 0.01);
-        assertEquals(pow.andThen(sqr).apply(5), 9765625, 0.01);
-        assertEquals(pow.andThen(sqr).apply(1.5), 6.25, 0.01);
-        assertEquals(pow.andThen(sqr).apply(1), 1, 0.01);
-        assertEquals(pow.andThen(sqr).apply(0), 4, 0.01);
+        assertEquals(parabola.andThen(pow).andThen(asin).apply(1), Math.PI/2 , 0.001);
+        assertEquals(parabola.andThen(pow).andThen(asin).apply(0.5), Math.PI/6, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(asin).apply(0.1), 0.1, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(asin).apply(-1),- Math.PI/2, 0.001);
     }
 }
