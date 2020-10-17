@@ -37,26 +37,27 @@ public class MathFunctionTest {
             valuesY[i] = sqr.apply(valuesX[i]);
         }
 
-        TabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+        TabulatedFunction parabola = new LinkedListTabulatedFunction(firstSqr, 1, 10, 10);
         assertEquals(parabola.andThen(sqr).apply(2), 16, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(0), 0, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(0), 4, 0.001);
         assertEquals(parabola.andThen(sqr).apply(3), 81, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(-1), 1, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(-1), 25, 0.001);
         assertEquals(parabola.andThen(sqr).apply(9), 6561, 0.001);
         assertEquals(parabola.andThen(sqr).apply(2.5), 42.25, 0.001);
-        assertEquals(parabola.andThen(sqr).apply(10), 9604, 0.001);
+        assertEquals(parabola.andThen(sqr).apply(10), 10000, 0.001);
 
 
-        final double[] valuesX2 = new double[]{0., 1., 2., 3., 4., 5.};
-        final double[] valuesY2 = new double[6];
-        for (int i = 0; i < 6; i++) {
-            valuesY2[i] = sqr.apply(valuesX[i] * valuesX[i]);
+        final double[] valuesX2 = new double[]{ 1., 2., 3., 4., 5.};
+        final double[] valuesY2 = new double[5];
+        for (int i = 0; i < 5; i++) {
+            valuesY2[i] = sqr.apply(valuesX2[i] * valuesX2[i]);
         }
-        TabulatedFunction pow = new ArrayTabulatedFunction(valuesX2, valuesY2);
-        assertEquals(pow.andThen(sqr).apply(2), 256, 0.01);
-        assertEquals(pow.andThen(sqr).apply(-1), 1, 0.01);
-        assertEquals(pow.andThen(sqr).apply(6), 988036, 0.01);
-        assertEquals(pow.andThen(sqr).apply(1.5), 72.25, 0.01);
+        TabulatedFunction pow = new ArrayTabulatedFunction(x,1,5,5);
+        assertEquals(pow.andThen(sqr).apply(2), 16, 0.01);
+        assertEquals(pow.andThen(sqr).apply(-1), 25, 0.01);
+        assertEquals(pow.andThen(sqr).apply(5), 9765625, 0.01);
+        assertEquals(pow.andThen(sqr).apply(1.5), 6.25, 0.01);
         assertEquals(pow.andThen(sqr).apply(1), 1, 0.01);
+        assertEquals(pow.andThen(sqr).apply(0), 4, 0.01);
     }
 }
