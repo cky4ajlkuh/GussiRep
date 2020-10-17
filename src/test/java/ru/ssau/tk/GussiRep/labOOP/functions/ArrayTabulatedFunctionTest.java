@@ -6,8 +6,8 @@ import static org.testng.Assert.*;
 
 public class ArrayTabulatedFunctionTest {
     private final static double DELTA = 0.00001;
-    private final double[] valuesX = new double[]{-18., -4., -2., -1., 0., 1., 3., 9.};
-    private final double[] valuesY = new double[]{32., 16., 4., 1., 0, 1., 9, 81.};
+    private final double[] valuesX = new double[]{-20, -5, -1, 0, 1, 5, 20};
+    private final double[] valuesY = new double[]{-10, -3, -1, -0, 1, 3, 10};
     private final MathFunction sqrFunc = new SqrFunction();
 
     private ArrayTabulatedFunction getDefinedThroughArrays() {
