@@ -75,10 +75,10 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testSetY() {
-        TabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
-        TabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+        AbstractTabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
+        AbstractTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
         final MathFunction powFunc = new PowFunction();
-        TabulatedFunction pow = new LinkedListTabulatedFunction(powFunc, 1, 5, 5);
+        AbstractTabulatedFunction pow = new LinkedListTabulatedFunction(powFunc, 1, 5, 5);
         kX.setY(2, 3);
         parabola.setY(2, 4);
         pow.setY(1, 2);

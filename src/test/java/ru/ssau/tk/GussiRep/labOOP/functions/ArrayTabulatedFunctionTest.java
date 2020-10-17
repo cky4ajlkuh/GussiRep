@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-class ArrayTabulatedFunctionTest {
+public class ArrayTabulatedFunctionTest {
     private final static double DELTA = 0.00001;
     private final double[] valuesX = new double[]{-18., -4., -2., -1., 0., 1., 3., 9.};
     private final double[] valuesY = new double[]{32., 16., 4., 1., 0, 1., 9, 81.};
