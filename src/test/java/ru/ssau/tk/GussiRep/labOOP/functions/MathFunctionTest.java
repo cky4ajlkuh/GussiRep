@@ -42,9 +42,9 @@ public class MathFunctionTest {
         assertEquals(parabola.andThen(pow).andThen(sqr).apply(9), 1703025, 0.001);
         assertEquals(parabola.andThen(pow).andThen(sqr).apply(2.4), 1296, 0.001);
 
-        assertEquals(parabola.andThen(pow).andThen(asin).apply(1), Math.PI/2 , 0.001);
-        assertEquals(parabola.andThen(pow).andThen(asin).apply(0.5), Math.PI/6, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(asin).apply(1), Math.PI / 2, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(asin).apply(0.5), Math.PI / 6, 0.001);
         assertEquals(parabola.andThen(pow).andThen(asin).apply(0.1), 0.1, 0.001);
-        assertEquals(parabola.andThen(pow).andThen(asin).apply(-1),- Math.PI/2, 0.001);
+        assertEquals(parabola.andThen(pow).andThen(asin).apply(-1), -Math.PI / 2, 0.001);
     }
 }
