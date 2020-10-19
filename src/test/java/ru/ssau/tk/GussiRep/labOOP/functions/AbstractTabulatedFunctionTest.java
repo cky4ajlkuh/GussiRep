@@ -21,7 +21,7 @@ public class AbstractTabulatedFunctionTest {
 
     @Test
     public void testExtrapolateRight() {
-        assertEquals(function.extrapolateRight(6), 13, DELTA);
+        assertEquals(function.extrapolateRight(6), 5, DELTA);
     }
 
     @Test
