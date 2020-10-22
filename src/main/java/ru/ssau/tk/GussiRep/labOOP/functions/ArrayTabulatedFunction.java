@@ -2,7 +2,7 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable {
 
     private final double[] xValues;
     private final double[] yValues;
@@ -106,11 +106,48 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction{
         }
         return interpolate(x, xValues[count - 2], xValues[count - 1], yValues[count - 2], yValues[count - 1]);
     }
+
     @Override
     protected double interpolate(double x, int floorIndex) {
         if (count == 1) {
             return x;
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
+    }
+
+    @Override
+    public void insert(int x, int y) {
+        double[] xValues2 = new double[count];
+        double[] yValues2 = new double[count];
+        for (int i = 0; i < xValues.length; i++) {
+            if (xValues[i] == x) {
+                setY(x, y);
+            }
+        }
+        if (x == rightBound()) {
+            System.arraycopy(xValues, 0, xValues2, 0, count + 1);
+            System.arraycopy(yValues, 0, yValues2, 0, count + 1);
+            xValues2[count] = x;
+            yValues2[count] = y;
+
+        }
+        if (x == leftBound()) {
+            System.arraycopy(xValues, 0, xValues2, 0, count + 1);
+            System.arraycopy(yValues, 0, yValues2, 0, count + 1);
+            xValues2[0] = x;
+            yValues2[0] = y;
+        }
+        if (x > rightBound()) {
+            System.arraycopy(xValues, 0, xValues2, 0, count + 2);
+            System.arraycopy(yValues, 0, yValues2, 0, count + 2);
+            xValues2[count + 1] = x;
+            yValues2[count + 1] = y;
+        }
+        if (x < leftBound()) {
+            xValues2[0] = x;
+            yValues2[0] = y;
+            System.arraycopy(xValues, 0, xValues2, 0, count);
+            System.arraycopy(yValues, 0, yValues2, 0, count);
+        }
     }
 }

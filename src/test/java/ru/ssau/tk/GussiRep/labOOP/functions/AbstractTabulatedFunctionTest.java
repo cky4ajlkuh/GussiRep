@@ -41,4 +41,5 @@ public class AbstractTabulatedFunctionTest {
         assertEquals(function.apply(6), 5, DELTA);
         assertEquals(function.apply(10), 9, DELTA);
     }
+
 }

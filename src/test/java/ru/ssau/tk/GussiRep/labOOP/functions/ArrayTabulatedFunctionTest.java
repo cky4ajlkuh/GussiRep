@@ -151,4 +151,9 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getUnitArray().apply(1),1 ,DELTA);
     }
 
+    @Test
+    public void insert(){
+        getDefinedThroughArrays().insert(-6,100);
+        assertEquals(getDefinedThroughArrays().getY(0),-7, DELTA);
+    }
 }
