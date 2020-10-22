@@ -32,12 +32,18 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        if (xValues.length < 2 & yValues.length < 2) {
+            throw new IllegalArgumentException("Count of points less then 2");
+        }
         for (int i = 0; i != xValues.length; i++) {
             addNode(xValues[i], yValues[i]);
         }
     }
 
     public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if (xFrom >= xTo) {
+            throw new IllegalArgumentException("Count of points less then 2");
+        }
         double step = (xTo - xFrom) / (count - 1);
         if (xFrom < xTo) {
             for (int i = 0; i < count; i++) {
@@ -53,6 +59,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     }
 
     private Node getNode(int index) {
+        if(index < 0 || index >= count){
+            throw new ArrayIndexOutOfBoundsException("Invalid index");
+        }
         Node argument;
         if (index > (count / 2.)) {
             argument = head.prev;
@@ -79,7 +88,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     protected int floorIndexOfX(double x) {
         if (x < head.x) {
-            return 0;
+            throw new IllegalArgumentException("X less than the left border");
         }
         Node node = head;
         for (int i = 0; i <= count; i++) {
@@ -121,11 +130,13 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
 
     @Override
     public double getX(int index) {
+        checkBorders(index);
         return getNode(index).x;
     }
 
     @Override
     public double getY(int index) {
+        checkBorders(index);
         return getNode(index).y;
     }
 
@@ -170,6 +181,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
     @Override
     public double rightBound() {
         return head.prev.x;
+    }
+
+    public void checkBorders(int index){
+        if(index < 0 || index >= count){
+            throw new ArrayIndexOutOfBoundsException("Invalid index");
+        }
     }
 }
 
