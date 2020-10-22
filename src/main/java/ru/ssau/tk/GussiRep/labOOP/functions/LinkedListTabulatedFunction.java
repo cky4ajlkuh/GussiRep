@@ -1,9 +1,14 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
 
     private Node head;
     protected int count;
+
+    @Override
+    public void remove(int index) {
+
+    }
 
     private static class Node {
         public double x;
