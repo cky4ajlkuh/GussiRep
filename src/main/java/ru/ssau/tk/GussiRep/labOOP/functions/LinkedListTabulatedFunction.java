@@ -5,10 +5,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     private Node head;
     protected int count;
 
-    @Override
-    public void remove(int index) {
-
-    }
 
     private static class Node {
         public double x;
@@ -56,6 +52,18 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 xFrom += step;
             }
         }
+    }
+
+    @Override
+    public void remove(int index) {
+        if(count==2){
+            throw new  IllegalArgumentException("small number of tabulated values");
+        }
+        checkBorders(index);
+        Node executed = getNode(index);
+        count--;
+        executed.prev.next = executed.next;
+        executed.next.prev = executed.prev;
     }
 
     @Override

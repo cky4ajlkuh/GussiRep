@@ -25,6 +25,20 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    public void testRemove() {
+        AbstractTabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
+        AbstractTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+        kX.remove(1);
+        assertEquals(kX.getX(1),2, DELTA);
+        assertEquals(kX.getY(1),4, DELTA);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> kX.remove(-1));
+        parabola.remove(3);
+        assertEquals(parabola.getX(3),4, DELTA);
+        assertEquals(parabola.getY(3),16, DELTA);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> parabola.remove(10));
+    }
+
+    @Test
     public void testGetCount() {
         assertEquals(pow().getCount(), 5, DELTA);
         assertEquals(parabola().getCount(), 5, DELTA);

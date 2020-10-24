@@ -165,4 +165,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             throw new IllegalArgumentException("Invalid index");
         }
     }
+
+    @Override
+    public void remove(int index) {
+
+    }
 }
