@@ -36,20 +36,29 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX().floorIndexOfX(2), 1, DELTA);
         assertEquals(parabola().floorIndexOfX(3), 2, DELTA);
         assertEquals(pow().floorIndexOfX(4), 2, DELTA);
+        assertThrows(IllegalArgumentException.class, () -> {
+            kX().floorIndexOfX(-1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            parabola().floorIndexOfX(-5);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            pow().floorIndexOfX(-100);
+        });
     }
 
     @Test
     public void testExtrapolateLeft() {
-        assertEquals(kX().extrapolateLeft(3), 6, DELTA);
+        assertEquals(kX().extrapolateLeft(-1), -2, DELTA);
         assertEquals(parabola().extrapolateLeft(0.5), 0.5, DELTA);
-        assertEquals(pow().extrapolateLeft(1.5), 2.5, DELTA);
+        assertEquals(pow().extrapolateLeft(0), -2, DELTA);
     }
 
     @Test
     public void testExtrapolateRight() {
-        assertEquals(kX().extrapolateRight(4), 8, DELTA);
-        assertEquals(parabola().extrapolateRight(3), 9, DELTA);
-        assertEquals(pow().extrapolateRight(1), -8351, DELTA);
+        assertEquals(kX().extrapolateRight(6), 12, DELTA);
+        assertEquals(parabola().extrapolateRight(5.5), 26.5, DELTA);
+        assertEquals(pow().extrapolateRight(7), 8863, DELTA);
     }
 
     @Test
@@ -64,6 +73,15 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX().getX(2), 2, DELTA);
         assertEquals(parabola().getX(3), 3, DELTA);
         assertEquals(pow().getX(1), 2, DELTA);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            parabola().getX(100);
+        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            parabola().getX(-200);
+        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            parabola().getX(150);
+        });
     }
 
     @Test
@@ -71,6 +89,15 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX().getY(4), 8, DELTA);
         assertEquals(parabola().getY(1), 1, DELTA);
         assertEquals(pow().getY(2), 27, DELTA);
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            parabola().getY(555);
+        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            pow().getY(-55);
+        });
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            kX().getY(-132);
+        });
     }
 
     @Test
