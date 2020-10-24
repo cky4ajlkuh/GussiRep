@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable {
 
-    private final double[] xValues;
-    private final double[] yValues;
+    private double[] xValues;
+    private double[] yValues;
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length < 2 & yValues.length < 2) {
@@ -125,39 +125,43 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public void insert(int x, int y) {
-        double[] xValues2 = new double[count];
-        double[] yValues2 = new double[count];
-        for (int i = 0; i < xValues.length; i++) {
-            if (xValues[i] == x) {
-                setY(x, y);
+        int indexX = indexOfX(x);
+        int index;
+        if (indexX != -1) {
+            setY(indexX, y);
+        } else {
+            if (x < xValues[0]) {
+                index = 0;
+            } else {
+                index = floorIndexOfX(x);
+            }
+            count++;
+            if (xValues.length == (count - 1)) {
+                double[] valuesX = new double[count];
+                double[] valuesY = new double[count];
+                if (index == 0) {
+                    valuesX[0] = x;
+                    valuesY[0] = y;
+                    System.arraycopy(xValues, 0, valuesX, 1, count - 1);
+                    System.arraycopy(yValues, 0, valuesY, 1, count - 1);
+                }
+                if (index == count - 1) {
+                    valuesX[index] = x;
+                    valuesY[index] = y;
+                    System.arraycopy(xValues, 0, valuesX, 1, count - 1);
+                    System.arraycopy(yValues, 0, valuesY, 1, count - 1);
+                } else {
+                    System.arraycopy(xValues, 0, valuesX, 1, index + 1);
+                    System.arraycopy(yValues, 0, valuesY, 1, index + 1);
+                    valuesX[index + 1] = x;
+                    valuesY[index + 1] = y;
+                    System.arraycopy(xValues, index + 1, valuesX, 1, count - index - 2);
+                    System.arraycopy(yValues, index + 1, valuesY, 1, count - index - 2);
+                }
+                this.xValues = valuesX;
+                this.yValues = valuesY;
             }
         }
-        if (x == rightBound()) {
-            System.arraycopy(xValues, 0, xValues2, 0, count + 1);
-            System.arraycopy(yValues, 0, yValues2, 0, count + 1);
-            xValues2[count] = x;
-            yValues2[count] = y;
-
-        }
-        if (x == leftBound()) {
-            System.arraycopy(xValues, 0, xValues2, 0, count + 1);
-            System.arraycopy(yValues, 0, yValues2, 0, count + 1);
-            xValues2[0] = x;
-            yValues2[0] = y;
-        }
-        if (x > rightBound()) {
-            System.arraycopy(xValues, 0, xValues2, 0, count + 2);
-            System.arraycopy(yValues, 0, yValues2, 0, count + 2);
-            xValues2[count + 1] = x;
-            yValues2[count + 1] = y;
-        }
-        if (x < leftBound()) {
-            xValues2[0] = x;
-            yValues2[0] = y;
-            System.arraycopy(xValues, 0, xValues2, 0, count);
-            System.arraycopy(yValues, 0, yValues2, 0, count);
-        }
-
     }
 
     public void checkBorders(int index) {

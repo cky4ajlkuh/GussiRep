@@ -1,9 +1,14 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
 
     private Node head;
     protected int count;
+
+    @Override
+    public void insert(int x, int y) {
+
+    }
 
 
     private static class Node {
@@ -56,8 +61,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void remove(int index) {
-        if(count==2){
-            throw new  IllegalArgumentException("small number of tabulated values");
+        if (count == 2) {
+            throw new IllegalArgumentException("small number of tabulated values");
         }
         checkBorders(index);
         Node executed = getNode(index);
@@ -72,7 +77,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     private Node getNode(int index) {
-        if(index < 0 || index >= count){
+        if (index < 0 || index >= count) {
             throw new ArrayIndexOutOfBoundsException("Invalid index");
         }
         Node argument;
@@ -196,8 +201,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return head.prev.x;
     }
 
-    public void checkBorders(int index){
-        if(index < 0 || index >= count){
+    public void checkBorders(int index) {
+        if (index < 0 || index >= count) {
             throw new ArrayIndexOutOfBoundsException("Invalid index");
         }
     }

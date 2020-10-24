@@ -66,7 +66,7 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getDefinedThroughMathFunction().getY(19), 361, DELTA);
 
         assertEquals(getUnitArray().getY(0), 1, DELTA);
-        assertEquals(getUnitArray().getY(2),9, DELTA);
+        assertEquals(getUnitArray().getY(2), 9, DELTA);
         assertEquals(getUnitArray().getY(3), 16, DELTA);
 
         assertThrows(IllegalArgumentException.class, () -> {
@@ -100,7 +100,7 @@ public class ArrayTabulatedFunctionTest {
 
         assertEquals(getDefinedThroughArrays().leftBound(), -6, DELTA);
         assertEquals(getDefinedThroughMathFunction().leftBound(), 0., DELTA);
-        assertEquals(getUnitArray().leftBound(),1, DELTA);
+        assertEquals(getUnitArray().leftBound(), 1, DELTA);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class ArrayTabulatedFunctionTest {
 
         assertEquals(getDefinedThroughArrays().rightBound(), 9, DELTA);
         assertEquals(getDefinedThroughMathFunction().rightBound(), 25, DELTA);
-        assertEquals(getUnitArray().rightBound(),5, DELTA);
+        assertEquals(getUnitArray().rightBound(), 5, DELTA);
     }
 
     @Test
@@ -132,7 +132,7 @@ public class ArrayTabulatedFunctionTest {
     @Test
     public void testFloorIndexOfX() {
 
-        assertEquals(getUnitArray().floorIndexOfX(4),3, DELTA);
+        assertEquals(getUnitArray().floorIndexOfX(4), 3, DELTA);
         assertEquals(getDefinedThroughArrays().floorIndexOfX(2), 5, DELTA);
         assertEquals(getDefinedThroughMathFunction().floorIndexOfX(6), 6, DELTA);
         assertThrows(IllegalArgumentException.class, () -> {
@@ -177,12 +177,22 @@ public class ArrayTabulatedFunctionTest {
 
         assertEquals(getDefinedThroughMathFunction().apply(4), 16, DELTA);
         assertEquals(getDefinedThroughArrays().apply(2.0), 5.0, DELTA);
-        assertEquals(getUnitArray().apply(1),1 ,DELTA);
+        assertEquals(getUnitArray().apply(1), 1, DELTA);
     }
 
     @Test
-    public void insert(){
-        //getDefinedThroughArrays().insert(-6,100);
-        //assertEquals(getDefinedThroughArrays().getY(0),-7, DELTA);
+    public void insert() {
+        double[] xValues = new double[]{1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
+        double[] yValues = new double[]{2., 4., 6., 8., 10., 12., 14., 16., 18., 20.};
+
+        AbstractTabulatedFunction functionFirst = new ArrayTabulatedFunction(xValues, yValues);
+
+        functionFirst.insert(0, 0);
+        assertEquals(functionFirst.getX(0), 0, DELTA);
+        assertEquals(functionFirst.getY(0), 0, DELTA);
+        functionFirst.insert(3, 7);
+        assertEquals(functionFirst.getX(2), 3, DELTA);
+        assertEquals(functionFirst.getY(2), 7, DELTA);
+
     }
 }
