@@ -1,6 +1,6 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
- public class MockTabulatedFunction extends AbstractTabulatedFunction {
+public class MockTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
 
     private final double x0 = 2;
     private final double x1 = 5;
@@ -65,5 +65,15 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
     @Override
     public double rightBound() {
         return x1;
+    }
+
+    @Override
+    public void remove(int index) {
+
+    }
+
+    @Override
+    public void insert(int x, int y) {
+
     }
 }
