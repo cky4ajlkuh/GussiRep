@@ -1,6 +1,7 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
 
@@ -14,7 +15,25 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
+        return new Iterator<>() {
+            private Node node = head;
+
+            @Override
+            public Point next() {
+                if (hasNext()) {
+                    Point point = new Point(node.x, node.y);
+                    node = (node != head.prev) ? node.next : null;
+                    return point;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+
+            public boolean hasNext() {
+                return (node != null);
+            }
+
+        };
     }
 
 
