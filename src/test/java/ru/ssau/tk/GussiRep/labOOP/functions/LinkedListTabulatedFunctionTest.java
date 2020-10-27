@@ -2,6 +2,9 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import org.testng.annotations.Test;
 
+import java.util.NoSuchElementException;
+import java.util.Iterator;
+
 import static org.testng.Assert.*;
 
 public class LinkedListTabulatedFunctionTest {
@@ -175,5 +178,40 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(pow().apply(5.5), 4559.5, DELTA);
         assertEquals(pow().apply(4), 256, DELTA);
 
+    }
+
+    @Test
+    public void TestIterator() {
+
+        LinkedListTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+        final MathFunction powFunc = new PowFunction();
+        LinkedListTabulatedFunction pow = new LinkedListTabulatedFunction(powFunc, 1, 5, 5);
+        Iterator<Point> iterator = parabola.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(point.x, parabola.getX(i++));
+        }
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
+
+        int j = 0;
+
+        for (Point point : parabola) {
+            assertEquals(point.x, parabola.getX(j++));
+        }
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
+
+        Iterator<Point> iterator2 = pow.iterator();
+        i = 0;
+        while (iterator.hasNext()) {
+            Point point = iterator2.next();
+            assertEquals(point.x, pow.getX(i++));
+        }
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
+        j = 0;
+        for (Point point : pow) {
+            assertEquals(point.x, pow.getX(j++));
+        }
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 }

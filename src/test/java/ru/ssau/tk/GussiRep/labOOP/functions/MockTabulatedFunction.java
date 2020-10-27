@@ -1,6 +1,9 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-public class MockTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class MockTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
 
     private final double x0 = 2;
     private final double x1 = 5;
@@ -75,5 +78,10 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction implements 
     @Override
     public void insert(int x, int y) {
 
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return null;
     }
 }

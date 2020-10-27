@@ -18,6 +18,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return new Iterator<>() {
             private Node node = head;
 
+            public boolean hasNext() {
+                return (node != null);
+            }
+
             @Override
             public Point next() {
                 if (hasNext()) {
@@ -27,10 +31,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 } else {
                     throw new NoSuchElementException();
                 }
-            }
-
-            public boolean hasNext() {
-                return (node != null);
             }
 
         };
