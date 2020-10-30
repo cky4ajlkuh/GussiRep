@@ -4,7 +4,7 @@ public class ArrayIsNotSortedException extends RuntimeException {
     public ArrayIsNotSortedException(){
         super();
     }
-    public ArrayIsNotSortedException (String comment){
-        super(comment);
+    public ArrayIsNotSortedException (String message){
+        super(message);
     }
 }
