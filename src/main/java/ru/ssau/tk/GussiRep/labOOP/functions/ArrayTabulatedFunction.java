@@ -1,8 +1,9 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Iterable<Point> {
 
     private double[] xValues;
     private double[] yValues;
@@ -173,5 +174,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     public void remove(int index) {
 
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
     }
 }
