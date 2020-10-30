@@ -214,4 +214,5 @@ public class LinkedListTabulatedFunctionTest {
         }
         assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
+
 }
