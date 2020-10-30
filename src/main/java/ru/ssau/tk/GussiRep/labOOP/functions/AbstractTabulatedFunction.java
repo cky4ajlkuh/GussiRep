@@ -1,5 +1,8 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
+import ru.ssau.tk.GussiRep.labOOP.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.GussiRep.labOOP.exceptions.DifferentLengthOfArraysException;
+
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
     protected int count;
 
@@ -30,4 +33,22 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
         return (interpolate(x, floorIndexOfX(x)));
     }
 
+    protected static void checkLengthIsTheSame(double[] xValues, double[] yValues) {
+        int xV, yV;
+        xV = xValues.length;
+        yV = yValues.length;
+        if (xV != yV) {
+            throw new DifferentLengthOfArraysException("Lengths of xValues and yValues are different");
+        }
+    }
+    protected static void checkSorted(double[] xValues){
+            int xV;
+            xV = xValues.length;
+            for (int i = 0; (i + 1) < xV; i++) {
+                if (xValues[i] > xValues[i + 1]) {
+                    throw new ArrayIsNotSortedException("Array is not sorted");
+                }
+        }
+
+    }
 }
