@@ -2,7 +2,7 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import java.util.Iterator;
 
-public class Point implements Iterable{
+public class Point {
     public final double x;
     public final double y;
 
@@ -11,8 +11,4 @@ public class Point implements Iterable{
         this.y = y;
     }
 
-    @Override
-    public Iterator iterator() {
-        return null;
-    }
 }

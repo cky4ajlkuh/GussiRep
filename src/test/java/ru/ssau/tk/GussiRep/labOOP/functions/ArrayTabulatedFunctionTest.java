@@ -46,13 +46,13 @@ public class ArrayTabulatedFunctionTest {
 
         assertEquals(getUnitArray().getX(0), 1, DELTA);
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             getUnitArray().getX(44);
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             getDefinedThroughMathFunction().getX(-100);
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             getDefinedThroughArrays().getX(10);
         });
     }
@@ -72,13 +72,13 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getUnitArray().getY(2), 9, DELTA);
         assertEquals(getUnitArray().getY(3), 16, DELTA);
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             getUnitArray().getY(83);
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             getDefinedThroughMathFunction().getY(100);
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
             getDefinedThroughArrays().getY(26);
         });
     }
@@ -147,6 +147,7 @@ public class ArrayTabulatedFunctionTest {
         assertThrows(IllegalArgumentException.class, () -> {
             getUnitArray().floorIndexOfX(0);
         });
+
     }
 
     @Test
@@ -188,7 +189,7 @@ public class ArrayTabulatedFunctionTest {
         double[] xValues = new double[]{1., 2., 3., 4., 5., 6., 7., 8., 9., 10.};
         double[] yValues = new double[]{2., 4., 6., 8., 10., 12., 14., 16., 18., 20.};
 
-        AbstractTabulatedFunction functionFirst = new ArrayTabulatedFunction(xValues, yValues);
+        ArrayTabulatedFunction functionFirst = new ArrayTabulatedFunction(xValues, yValues);
 
         functionFirst.insert(0, 0);
         assertEquals(functionFirst.getX(0), 0, DELTA);
@@ -201,34 +202,38 @@ public class ArrayTabulatedFunctionTest {
 
     @Test
     public void testIterator() {
-        AbstractTabulatedFunction functionFirst = new ArrayTabulatedFunction(valuesX, valuesY);
+        ArrayTabulatedFunction functionFirst = new ArrayTabulatedFunction(valuesX, valuesY);
         Iterator<Point> iterator = functionFirst.iterator();
         int i = 0;
         while (iterator.hasNext()) {
             Point point = iterator.next();
             assertEquals(point.x, functionFirst.getX(i++));
         }
+        assertEquals(i, 8, 0.01);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
 
         int j = 0;
         for (Point point : functionFirst) {
             assertEquals(point.x, functionFirst.getX(j++));
         }
+        assertEquals(i, 8, 0.01);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
 
         SqrFunction sqr = new SqrFunction();
         ArrayTabulatedFunction functionSecond = new ArrayTabulatedFunction(sqr, 1, 5, 5);
         Iterator<Point> secondIterator = functionSecond.iterator();
         i = 0;
-        while (iterator.hasNext()) {
+        while (secondIterator.hasNext()) {
             Point point = secondIterator.next();
             assertEquals(point.x, functionSecond.getX(i++));
         }
+        assertEquals(i, 5, 0.01);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
         j = 0;
         for (Point point : functionSecond) {
             assertEquals(point.x, functionSecond.getX(j++));
         }
+        assertEquals(j, 5, 0.01);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 }

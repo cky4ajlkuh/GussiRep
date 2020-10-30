@@ -1,5 +1,7 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
+import ru.ssau.tk.GussiRep.labOOP.exceptions.InterpolationException;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -18,7 +20,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         this.yValues = Arrays.copyOf(yValues, count);
     }
 
-    ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+    public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         if (xFrom >= xTo) {
             throw new IllegalArgumentException("Count of points less then 2");
         }
@@ -43,13 +45,11 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public double getX(int index) {
-        checkBorders(index);
         return xValues[index];
     }
 
     @Override
     public double getY(int index) {
-        checkBorders(index);
         return yValues[index];
     }
 
@@ -90,9 +90,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < xValues[0]) {
-            throw new IllegalArgumentException("X less than the left border");
-        }
         for (int i = 0; i + 1 < count; i++) {
             if (xValues[i + 1] > x) {
                 return i;
@@ -103,24 +100,20 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (count == 1) {
-            return x;
-        }
+
         return interpolate(x, xValues[0], xValues[1], yValues[0], yValues[1]);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (count == 1) {
-            return x;
-        }
+
         return interpolate(x, xValues[count - 2], xValues[count - 1], yValues[count - 2], yValues[count - 1]);
     }
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (count == 1) {
-            return x;
+        if (x < xValues[floorIndex] || x > xValues[floorIndex + 1]) {
+            throw new InterpolationException("X is out of bounds of interpolation");
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
@@ -166,25 +159,16 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
     }
 
-    public void checkBorders(int index) {
-        if (index < 0 || index >= count) {
-            throw new IllegalArgumentException("Invalid index");
-        }
-    }
-
-    @Override
-    public void remove(int index) {
-
-    }
-
     @Override
     public Iterator<Point> iterator() {
         return new Iterator<>() {
             int i = 0;
+
             @Override
             public boolean hasNext() {
                 return i < count;
             }
+
             @Override
             public Point next() {
                 if (!hasNext()) {

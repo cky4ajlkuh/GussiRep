@@ -29,8 +29,8 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testRemove() {
-        AbstractTabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
-        AbstractTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+        LinkedListTabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
+        LinkedListTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
         kX.remove(1);
         assertEquals(kX.getX(1), 2, DELTA);
         assertEquals(kX.getY(1), 4, DELTA);
@@ -192,6 +192,7 @@ public class LinkedListTabulatedFunctionTest {
             Point point = iterator.next();
             assertEquals(point.x, parabola.getX(i++));
         }
+        assertEquals(i, 5, 0.001);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
 
         int j = 0;
@@ -199,19 +200,22 @@ public class LinkedListTabulatedFunctionTest {
         for (Point point : parabola) {
             assertEquals(point.x, parabola.getX(j++));
         }
+        assertEquals(j, 5, 0.01);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
 
         Iterator<Point> iterator2 = pow.iterator();
         i = 0;
-        while (iterator.hasNext()) {
+        while (iterator2.hasNext()) {
             Point point = iterator2.next();
             assertEquals(point.x, pow.getX(i++));
         }
+        assertEquals(i, 5, 0.01);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
         j = 0;
         for (Point point : pow) {
             assertEquals(point.x, pow.getX(j++));
         }
+        assertEquals(j, 5, 0.001);
         assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 

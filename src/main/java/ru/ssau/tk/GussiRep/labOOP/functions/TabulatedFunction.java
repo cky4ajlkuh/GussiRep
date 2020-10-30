@@ -2,7 +2,7 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import java.util.Iterator;
 
-public interface TabulatedFunction extends MathFunction, Iterable<Point> {
+public interface TabulatedFunction extends MathFunction {
     int getCount();
 
     double getX(int index);

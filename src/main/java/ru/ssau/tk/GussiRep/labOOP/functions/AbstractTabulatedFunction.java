@@ -1,6 +1,6 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction, Removable, Insertable {
+public abstract class AbstractTabulatedFunction implements TabulatedFunction {
     protected int count;
 
     protected abstract int floorIndexOfX(double x);
