@@ -1,0 +1,10 @@
+package ru.ssau.tk.GussiRep.labOOP.exceptions;
+
+public class ArrayIsNotSortedException extends RuntimeException {
+    public ArrayIsNotSortedException(){
+        super();
+    }
+    public ArrayIsNotSortedException (String comment){
+        super(comment);
+    }
+}
