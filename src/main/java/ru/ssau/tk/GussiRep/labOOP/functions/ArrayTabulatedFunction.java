@@ -15,6 +15,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         if (xValues.length < 2 & yValues.length < 2) {
             throw new IllegalArgumentException("Count of points less then 2");
         }
+        checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         count = xValues.length;
         this.xValues = Arrays.copyOf(xValues, count);
         this.yValues = Arrays.copyOf(yValues, count);
@@ -113,7 +115,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     protected double interpolate(double x, int floorIndex) {
         if (x < xValues[floorIndex] || x > xValues[floorIndex + 1]) {
-            throw new InterpolationException("X is out of bounds of interpolation");
+            throw new InterpolationException("X is out of bounds");
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }

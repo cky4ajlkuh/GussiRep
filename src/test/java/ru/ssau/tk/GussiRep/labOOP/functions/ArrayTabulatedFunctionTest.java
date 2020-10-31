@@ -5,6 +5,10 @@ import org.testng.annotations.Test;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import ru.ssau.tk.GussiRep.labOOP.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.GussiRep.labOOP.exceptions.DifferentLengthOfArraysException;
+import ru.ssau.tk.GussiRep.labOOP.exceptions.InterpolationException;
+
 import static org.testng.Assert.*;
 
 public class ArrayTabulatedFunctionTest {
@@ -31,6 +35,25 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getDefinedThroughArrays().getCount(), 8, DELTA);
         assertEquals(getDefinedThroughMathFunction().getCount(), 26, DELTA);
         assertEquals(getUnitArray().getCount(), 5, DELTA);
+    }
+
+    @Test
+    public void testException() {
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(new double[]{0}, new double[]{1}));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(new double[]{}, new double[]{10}));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(new double[]{}, new double[]{}));
+
+        assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(new double[]{2., 3., 4.}, new double[]{0., 1., 2., 3., 4., 5}));
+        assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(new double[]{-3., -2.}, new double[]{0.}));
+        assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(new double[]{10., 11., 2}, new double[]{9., 1}));
+
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[]{-5., -4., 1}, new double[]{1, 2, 0}));
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[]{1., -1., 4}, new double[]{3., -4., 5.}));
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[]{1, 2, 0}, new double[]{10, 1, 2}));
+
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(sqrFunc, 5, 5, 10));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(sqrFunc, 1, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new ArrayTabulatedFunction(sqrFunc, 1, -5, 0));
     }
 
     @Test
@@ -96,6 +119,11 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(functionFirst.getY(1), 1, DELTA);
         assertEquals(functionSecond.getY(2), 2, DELTA);
         assertEquals(functionThird.getY(3), 3, DELTA);
+
+
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> functionFirst.setY(10, 100));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> functionSecond.setY(-10, -100));
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> functionThird.setY(41, 51));
     }
 
     @Test
@@ -138,15 +166,15 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getUnitArray().floorIndexOfX(4), 3, DELTA);
         assertEquals(getDefinedThroughArrays().floorIndexOfX(2), 5, DELTA);
         assertEquals(getDefinedThroughMathFunction().floorIndexOfX(6), 6, DELTA);
-        assertThrows(IllegalArgumentException.class, () -> {
-            getDefinedThroughArrays().floorIndexOfX(-10);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            getDefinedThroughMathFunction().floorIndexOfX(-1);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            getUnitArray().floorIndexOfX(0);
-        });
+        assertThrows(IllegalArgumentException.class, () ->
+            getDefinedThroughArrays().floorIndexOfX(-10)
+        );
+        assertThrows(IllegalArgumentException.class, () ->
+            getDefinedThroughMathFunction().floorIndexOfX(-1)
+        );
+        assertThrows(IllegalArgumentException.class, () ->
+            getUnitArray().floorIndexOfX(0)
+        );
 
     }
 
@@ -174,6 +202,10 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getDefinedThroughArrays().interpolate(2, 5), 5, DELTA);
         assertEquals(getDefinedThroughMathFunction().interpolate(4.5, 4), 20.5, DELTA);
         assertEquals(getUnitArray().interpolate(1.5, 3), -6.5, DELTA);
+
+        assertThrows(InterpolationException.class, () -> getDefinedThroughMathFunction().interpolate(100, 100));
+        assertThrows(InterpolationException.class, () -> getUnitArray().interpolate(-5, 3));
+        assertThrows(InterpolationException.class, () -> getDefinedThroughArrays().interpolate(-2, 0));
     }
 
     @Test

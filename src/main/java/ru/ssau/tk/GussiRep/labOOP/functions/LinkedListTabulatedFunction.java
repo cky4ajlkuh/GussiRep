@@ -22,6 +22,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         if (xValues.length < 2 & yValues.length < 2) {
             throw new IllegalArgumentException("Count of points less then 2");
         }
+        checkSorted(xValues);
+        checkLengthIsTheSame(xValues, yValues);
         for (int i = 0; i != xValues.length; i++) {
             addNode(xValues[i], yValues[i]);
         }

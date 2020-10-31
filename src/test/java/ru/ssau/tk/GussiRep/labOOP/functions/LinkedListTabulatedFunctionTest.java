@@ -2,6 +2,10 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import org.testng.annotations.Test;
 
+import ru.ssau.tk.GussiRep.labOOP.exceptions.InterpolationException;
+import ru.ssau.tk.GussiRep.labOOP.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.GussiRep.labOOP.exceptions.DifferentLengthOfArraysException;
+
 import java.util.NoSuchElementException;
 import java.util.Iterator;
 
@@ -25,6 +29,25 @@ public class LinkedListTabulatedFunctionTest {
 
     private AbstractTabulatedFunction pow() {
         return new LinkedListTabulatedFunction(pow, 1, 5, 5);
+    }
+
+    @Test
+    public void testException() {
+
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(new double[]{0}, new double[]{1}));
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(new double[]{}, new double[]{10}));
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(new double[]{}, new double[]{}));
+
+        assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(new double[]{2., 3., 4.}, new double[]{0., 1., 2., 3., 4., 5}));
+        assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(new double[]{-3., -2.}, new double[]{0.}));
+        assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(new double[]{10., 11., 2}, new double[]{9., 1}));
+
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(new double[]{-2, -1., 0}, new double[]{3., 4., 5.}));
+
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(pow, 5, 5, 10));
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(pow, 1, 0, 2));
+        assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(pow, 1, -5, 0));
+
     }
 
     @Test
@@ -83,6 +106,9 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX().interpolate(2, 4), 4, DELTA);
         assertEquals(parabola().interpolate(3, 3), 9, DELTA);
         assertEquals(pow().interpolate(4, 2), 256, DELTA);
+        assertThrows(InterpolationException.class, () -> parabola().interpolate(-1, 10));
+        assertThrows(InterpolationException.class, () -> kX().interpolate(100, 100));
+        assertThrows(InterpolationException.class, () -> pow().interpolate(-1, -1));
     }
 
     @Test
@@ -129,6 +155,11 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX.getY(2), 3, DELTA);
         assertEquals(parabola.getY(2), 4, DELTA);
         assertEquals(pow.getY(1), 2, DELTA);
+
+
+        assertThrows(IllegalArgumentException.class, () -> parabola().setY(666, 500));
+        assertThrows(IllegalArgumentException.class, () -> kX().setY(21, -40));
+        assertThrows(IllegalArgumentException.class, () -> pow().setY(99, 89));
     }
 
     @Test
