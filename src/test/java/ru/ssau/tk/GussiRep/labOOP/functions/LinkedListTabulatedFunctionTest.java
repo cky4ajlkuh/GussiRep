@@ -42,7 +42,9 @@ public class LinkedListTabulatedFunctionTest {
         assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(new double[]{-3., -2.}, new double[]{0.}));
         assertThrows(DifferentLengthOfArraysException.class, () -> new LinkedListTabulatedFunction(new double[]{10., 11., 2}, new double[]{9., 1}));
 
-        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(new double[]{-2, -1., 0}, new double[]{3., 4., 5.}));
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(new double[]{2, -1., 0}, new double[]{3., 4., 5.}));
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(new double[]{100, -100, 50, -50}, new double[]{100., 1000., 5000., 10000}));
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(new double[]{1., 2., 4., 3.}, new double[]{1, 2, 3, 4}));
 
         assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(pow, 5, 5, 10));
         assertThrows(IllegalArgumentException.class, () -> new LinkedListTabulatedFunction(pow, 1, 0, 2));
@@ -57,11 +59,11 @@ public class LinkedListTabulatedFunctionTest {
         kX.remove(1);
         assertEquals(kX.getX(1), 2, DELTA);
         assertEquals(kX.getY(1), 4, DELTA);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> kX.remove(-1));
+        assertThrows(IllegalArgumentException.class, () -> kX.remove(-1));
         parabola.remove(3);
         assertEquals(parabola.getX(3), 4, DELTA);
         assertEquals(parabola.getY(3), 16, DELTA);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> parabola.remove(10));
+        assertThrows(IllegalArgumentException.class, () -> parabola.remove(10));
     }
 
     @Test
@@ -116,13 +118,13 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX().getX(2), 2, DELTA);
         assertEquals(parabola().getX(3), 3, DELTA);
         assertEquals(pow().getX(1), 2, DELTA);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             parabola().getX(100);
         });
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             parabola().getX(-200);
         });
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             parabola().getX(150);
         });
     }
@@ -132,13 +134,13 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX().getY(4), 8, DELTA);
         assertEquals(parabola().getY(1), 1, DELTA);
         assertEquals(pow().getY(2), 27, DELTA);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             parabola().getY(555);
         });
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             pow().getY(-55);
         });
-        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             kX().getY(-132);
         });
     }

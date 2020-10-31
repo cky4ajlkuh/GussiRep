@@ -47,7 +47,7 @@ public class ArrayTabulatedFunctionTest {
         assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(new double[]{-3., -2.}, new double[]{0.}));
         assertThrows(DifferentLengthOfArraysException.class, () -> new ArrayTabulatedFunction(new double[]{10., 11., 2}, new double[]{9., 1}));
 
-        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[]{-5., -4., 1}, new double[]{1, 2, 0}));
+        assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[]{5., -4., 1}, new double[]{1, 2, 0}));
         assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[]{1., -1., 4}, new double[]{3., -4., 5.}));
         assertThrows(ArrayIsNotSortedException.class, () -> new ArrayTabulatedFunction(new double[]{1, 2, 0}, new double[]{10, 1, 2}));
 
@@ -166,10 +166,10 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getUnitArray().floorIndexOfX(4), 3, DELTA);
         assertEquals(getDefinedThroughArrays().floorIndexOfX(2), 5, DELTA);
         assertEquals(getDefinedThroughMathFunction().floorIndexOfX(6), 6, DELTA);
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(ArrayIndexOutOfBoundsException.class, () ->
             getDefinedThroughArrays().floorIndexOfX(-10)
         );
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(ArrayIndexOutOfBoundsException.class, () ->
             getDefinedThroughMathFunction().floorIndexOfX(-1)
         );
         assertThrows(IllegalArgumentException.class, () ->

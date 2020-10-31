@@ -22,8 +22,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         if (xValues.length < 2 & yValues.length < 2) {
             throw new IllegalArgumentException("Count of points less then 2");
         }
-        checkSorted(xValues);
         checkLengthIsTheSame(xValues, yValues);
+        checkSorted(xValues);
         for (int i = 0; i != xValues.length; i++) {
             addNode(xValues[i], yValues[i]);
         }
@@ -105,27 +105,14 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         if (index < 0 || index >= count) {
             throw new IllegalArgumentException("Invalid index");
         }
-        Node argument;
-        if (index > (count / 2.)) {
-            argument = head.prev;
-            for (int i = count; i > 0; i--) {
-                if (i == index) {
-                    return argument.next;
-                } else {
-                    argument = argument.prev;
-                }
-            }
-        } else {
-            argument = head;
-            for (int i = 0; i < count - index; i++) {
-                if (i == index) {
-                    return argument;
-                } else {
-                    argument = argument.next;
-                }
+        Node argument = head;
+        for(int i =0 ; i < index; i++){
+            argument = argument.next;
+            if(argument == head){
+                throw new IllegalArgumentException();
             }
         }
-        return null;
+        return argument;
     }
 
     @Override
