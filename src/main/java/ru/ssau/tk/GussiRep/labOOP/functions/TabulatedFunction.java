@@ -1,7 +1,5 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-import java.util.Iterator;
-
 public interface TabulatedFunction extends MathFunction {
     int getCount();
 

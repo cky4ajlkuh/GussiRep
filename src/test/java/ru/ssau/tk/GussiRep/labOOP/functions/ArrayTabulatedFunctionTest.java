@@ -166,15 +166,9 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(getUnitArray().floorIndexOfX(4), 3, DELTA);
         assertEquals(getDefinedThroughArrays().floorIndexOfX(2), 5, DELTA);
         assertEquals(getDefinedThroughMathFunction().floorIndexOfX(6), 6, DELTA);
-        assertThrows(ArrayIndexOutOfBoundsException.class, () ->
-            getDefinedThroughArrays().floorIndexOfX(-10)
-        );
-        assertThrows(ArrayIndexOutOfBoundsException.class, () ->
-            getDefinedThroughMathFunction().floorIndexOfX(-1)
-        );
-        assertThrows(IllegalArgumentException.class, () ->
-            getUnitArray().floorIndexOfX(0)
-        );
+        assertThrows(IllegalArgumentException.class, () -> getDefinedThroughArrays().floorIndexOfX(-89));
+        assertThrows(IllegalArgumentException.class, () -> getDefinedThroughMathFunction().floorIndexOfX(-19));
+        assertThrows(IllegalArgumentException.class, () -> getUnitArray().floorIndexOfX(-44));
 
     }
 
@@ -199,13 +193,13 @@ public class ArrayTabulatedFunctionTest {
     @Test
     public void testInterpolate() {
 
-        assertEquals(getDefinedThroughArrays().interpolate(2, 5), 5, DELTA);
+        assertEquals(getDefinedThroughArrays().interpolate(3, 6), 9, DELTA);
         assertEquals(getDefinedThroughMathFunction().interpolate(4.5, 4), 20.5, DELTA);
-        assertEquals(getUnitArray().interpolate(1.5, 3), -6.5, DELTA);
+        assertEquals(getUnitArray().interpolate(3, 2), 9, DELTA);
 
-        assertThrows(InterpolationException.class, () -> getDefinedThroughMathFunction().interpolate(100, 100));
-        assertThrows(InterpolationException.class, () -> getUnitArray().interpolate(-5, 3));
-        assertThrows(InterpolationException.class, () -> getDefinedThroughArrays().interpolate(-2, 0));
+        assertThrows(InterpolationException.class, () -> getUnitArray().interpolate(10, 0));
+        assertThrows(InterpolationException.class, () -> getDefinedThroughArrays().interpolate(-41, 3));
+        assertThrows(InterpolationException.class, () -> getDefinedThroughMathFunction().interpolate(-100, 2));
     }
 
     @Test

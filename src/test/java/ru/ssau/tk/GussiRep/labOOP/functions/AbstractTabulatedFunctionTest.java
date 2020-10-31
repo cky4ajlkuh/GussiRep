@@ -3,6 +3,7 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
+
 import ru.ssau.tk.GussiRep.labOOP.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.GussiRep.labOOP.exceptions.DifferentLengthOfArraysException;
 
@@ -14,7 +15,7 @@ public class AbstractTabulatedFunctionTest {
     protected final double[] yArray = new double[]{2d, 6d, 7d};
     protected final double[] xArrayAnotherWrong = new double[]{81d, 36d, 49d};
     protected final double[] xArrayLong = new double[]{-1d, 0d, 6d, 7d, 8d, 9d};
-    protected final double[] xArrayWrong = new double[]{1d, 36d, 64d, 49d,  81d};
+    protected final double[] xArrayWrong = new double[]{1d, 36d, 64d, 49d, 81d};
 
     private ArrayTabulatedFunction function() {
 
@@ -53,12 +54,14 @@ public class AbstractTabulatedFunctionTest {
         assertEquals(function.apply(6), 5, DELTA);
         assertEquals(function.apply(10), 9, DELTA);
     }
+
     @Test
-    public void testCheckSorted(){
+    public void testCheckSorted() {
         assertThrows(ArrayIsNotSortedException.class, () -> AbstractTabulatedFunction.checkSorted(xArrayWrong));
         assertThrows(ArrayIsNotSortedException.class, () -> AbstractTabulatedFunction.checkSorted(xArrayAnotherWrong));
         AbstractTabulatedFunction.checkSorted(xArray);
     }
+
     @Test
     public void testCheckLengthIsTheSame() {
         assertThrows(DifferentLengthOfArraysException.class, () -> AbstractTabulatedFunction.checkLengthIsTheSame(xArray, xArrayLong));

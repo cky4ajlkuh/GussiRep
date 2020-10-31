@@ -106,9 +106,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             throw new IllegalArgumentException("Invalid index");
         }
         Node argument = head;
-        for(int i =0 ; i < index; i++){
+        for (int i = 0; i < index; i++) {
             argument = argument.next;
-            if(argument == head){
+            if (argument == head) {
                 throw new IllegalArgumentException();
             }
         }

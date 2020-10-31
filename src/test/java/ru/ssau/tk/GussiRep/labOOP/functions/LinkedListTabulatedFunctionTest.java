@@ -108,6 +108,7 @@ public class LinkedListTabulatedFunctionTest {
         assertEquals(kX().interpolate(2, 4), 4, DELTA);
         assertEquals(parabola().interpolate(3, 3), 9, DELTA);
         assertEquals(pow().interpolate(4, 2), 256, DELTA);
+
         assertThrows(InterpolationException.class, () -> parabola().interpolate(-1, 10));
         assertThrows(InterpolationException.class, () -> kX().interpolate(100, 100));
         assertThrows(InterpolationException.class, () -> pow().interpolate(-1, -1));
