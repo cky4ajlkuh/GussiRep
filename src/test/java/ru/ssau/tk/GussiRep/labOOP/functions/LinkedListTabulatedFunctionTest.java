@@ -235,7 +235,6 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(point.x, parabola.getX(j++));
         }
         assertEquals(j, 5, 0.01);
-        assertThrows(NoSuchElementException.class, () -> iterator.next());
 
         Iterator<Point> iterator2 = pow.iterator();
         i = 0;
@@ -250,7 +249,6 @@ public class LinkedListTabulatedFunctionTest {
             assertEquals(point.x, pow.getX(j++));
         }
         assertEquals(j, 5, 0.001);
-        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
 }

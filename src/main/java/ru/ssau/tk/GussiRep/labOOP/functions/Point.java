@@ -1,7 +1,5 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
-import java.util.Iterator;
-
 public class Point {
     public final double x;
     public final double y;

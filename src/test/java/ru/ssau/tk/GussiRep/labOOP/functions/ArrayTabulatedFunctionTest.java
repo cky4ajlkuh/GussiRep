@@ -243,7 +243,6 @@ public class ArrayTabulatedFunctionTest {
             assertEquals(point.x, functionFirst.getX(j++));
         }
         assertEquals(i, 8, 0.01);
-        assertThrows(NoSuchElementException.class, () -> iterator.next());
 
         SqrFunction sqr = new SqrFunction();
         ArrayTabulatedFunction functionSecond = new ArrayTabulatedFunction(sqr, 1, 5, 5);
@@ -260,6 +259,5 @@ public class ArrayTabulatedFunctionTest {
             assertEquals(point.x, functionSecond.getX(j++));
         }
         assertEquals(j, 5, 0.01);
-        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 }

@@ -102,9 +102,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     private Node getNode(int index) {
-        if (index < 0 || index >= count) {
-            throw new IllegalArgumentException("Invalid index");
-        }
+        checkBorders(index);
         Node argument = head;
         for (int i = 0; i < index; i++) {
             argument = argument.next;
@@ -168,6 +166,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void setY(int index, double value) {
+        checkBorders(index);
         getNode(index).y = value;
     }
 
