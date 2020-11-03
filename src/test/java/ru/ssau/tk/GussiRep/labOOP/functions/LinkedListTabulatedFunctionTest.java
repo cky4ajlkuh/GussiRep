@@ -215,7 +215,7 @@ public class LinkedListTabulatedFunctionTest {
     }
 
     @Test
-    public void TestIterator() {
+    public void testIterator() {
 
         LinkedListTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
         final MathFunction powFunc = new PowFunction();
