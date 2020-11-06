@@ -9,6 +9,9 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
 
     @Override
     public TabulatedFunction derive(TabulatedFunction function) {
+        int count = function.getCount();
+        double[] xValues = new double[count-1];
+        double[] yValues = new double[count-1];
         return null;
     }
 
