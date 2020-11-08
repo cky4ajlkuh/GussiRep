@@ -19,9 +19,9 @@ public class TabulatedFunctionFactoryTest {
         LinkedListTabulatedFunctionFactory firstFunction = new LinkedListTabulatedFunctionFactory();
         ArrayTabulatedFunctionFactory secondFunction = new ArrayTabulatedFunctionFactory();
 
-        assertEquals(firstFunction.create(xValues, yValues).getClass(), LinkedListTabulatedFunction.class);
-        assertEquals(secondFunction.create(xValues2, yValues2).getClass(), ArrayTabulatedFunction.class);
-        assertEquals(firstFunction.create(xValues3, yValues3).getClass(), LinkedListTabulatedFunction.class);
-        assertEquals(secondFunction.create(xValues3, yValues3).getClass(), ArrayTabulatedFunction.class);
+        assertTrue(firstFunction.create(xValues, yValues) instanceof LinkedListTabulatedFunction);
+        assertTrue(secondFunction.create(xValues2, yValues2) instanceof ArrayTabulatedFunction);
+        assertTrue(firstFunction.create(xValues3, yValues3) instanceof LinkedListTabulatedFunction);
+        assertTrue(secondFunction.create(xValues3, yValues3) instanceof ArrayTabulatedFunction);
     }
 }

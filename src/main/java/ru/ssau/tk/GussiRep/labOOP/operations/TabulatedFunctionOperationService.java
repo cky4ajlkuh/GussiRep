@@ -7,7 +7,7 @@ import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactor
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
 
 public class TabulatedFunctionOperationService {
-    TabulatedFunctionFactory factory;
+    private TabulatedFunctionFactory factory;
 
     public TabulatedFunctionOperationService(TabulatedFunctionFactory factory) {
         this.factory = factory;
@@ -21,8 +21,8 @@ public class TabulatedFunctionOperationService {
         this.factory = factory;
     }
 
-    public Class getFactory() {
-        return factory.getClass();
+    public TabulatedFunctionFactory getFactory() {
+        return factory;
     }
 
     public static Point[] asPoints(TabulatedFunction tabulatedFunction) {
@@ -45,8 +45,8 @@ public class TabulatedFunctionOperationService {
         }
         Point[] pointsA = asPoints(a);
         Point[] pointsB = asPoints(b);
-        double[] xValues = new double[a.getCount() - 1];
-        double[] yValues = new double[b.getCount() - 1];
+        double[] xValues = new double[a.getCount()];
+        double[] yValues = new double[b.getCount()];
         for (int i = 0; i < xValues.length; i++) {
             if (pointsA[i].x - pointsB[i].x != 0) {
                 throw new InconsistentFunctionsException("The X coordinates are different!");
