@@ -19,13 +19,12 @@ public class TabulatedFunctionOperationServiceTest {
 
     TabulatedFunction functionFirst = new ArrayTabulatedFunction(xValues, yValues);
     TabulatedFunction functionSecond = new LinkedListTabulatedFunction(xValues, yValuesSecond);
-    final static TabulatedFunctionOperationService service = new TabulatedFunctionOperationService();
 
     @Test
     public void testSetFactory() {
-        TabulatedFunctionOperationService service1 = new TabulatedFunctionOperationService(new ArrayTabulatedFunctionFactory());
-        assertTrue(service1.getFactory() instanceof ArrayTabulatedFunctionFactory);
-        //assertTrue(service.getFactory(), LinkedListTabulatedFunctionFactory.class);
+        assertTrue(new TabulatedFunctionOperationService(new ArrayTabulatedFunctionFactory()).getFactory() instanceof ArrayTabulatedFunctionFactory);
+        assertTrue(new TabulatedFunctionOperationService(new LinkedListTabulatedFunctionFactory()).getFactory() instanceof LinkedListTabulatedFunctionFactory);
+
     }
 
     @Test
@@ -33,8 +32,8 @@ public class TabulatedFunctionOperationServiceTest {
         TabulatedFunctionOperationService service1 = new TabulatedFunctionOperationService(new ArrayTabulatedFunctionFactory());
         TabulatedFunctionOperationService service2 = new TabulatedFunctionOperationService(new LinkedListTabulatedFunctionFactory());
 
-        assertEquals(service1.getFactory(), ArrayTabulatedFunctionFactory.class);
-        assertEquals(service2.getFactory(), LinkedListTabulatedFunctionFactory.class);
+        assertTrue(service1.getFactory() instanceof ArrayTabulatedFunctionFactory);
+        assertTrue(service2.getFactory() instanceof LinkedListTabulatedFunctionFactory);
 
     }
 
@@ -74,6 +73,10 @@ public class TabulatedFunctionOperationServiceTest {
         }
         assertThrows(InconsistentFunctionsException.class, () ->
                 service1.sum(factoryLLF.create(new double[]{1., 2., 3}, new double[]{2., 6., 5.}), b));
+
+
+        assertTrue(a instanceof ArrayTabulatedFunction);
+        assertTrue(b instanceof LinkedListTabulatedFunction);
     }
 
     @Test
@@ -98,6 +101,10 @@ public class TabulatedFunctionOperationServiceTest {
         }
         assertThrows(InconsistentFunctionsException.class, () ->
                 service2.subtract(factoryATF.create(new double[]{-4., 0., 3., 18.}, new double[]{-5., -2., 5., 6.}), b));
+
+
+        assertTrue(a instanceof ArrayTabulatedFunction);
+        assertTrue(b instanceof LinkedListTabulatedFunction);
     }
 
     @Test
@@ -126,6 +133,10 @@ public class TabulatedFunctionOperationServiceTest {
         assertThrows(InconsistentFunctionsException.class, () ->
                 service1.subtract(factoryLLF.create(new double[]{1, 1.1, 1.2, 1.998, 1.999}, new double[]{6, 23, 511, 1000.01, 1000.2}),
                         factoryATF.create(new double[]{1., 1.1, 1.2, 1.998}, new double[]{23, 511., 900., 1000.})));
+
+        assertTrue(a instanceof ArrayTabulatedFunction);
+        assertTrue(b instanceof LinkedListTabulatedFunction);
+
     }
 
     @Test
@@ -149,5 +160,9 @@ public class TabulatedFunctionOperationServiceTest {
         }
         assertThrows(InconsistentFunctionsException.class, () ->
                 service1.subtract(factoryLLF.create(new double[]{6., 7., 8.9, 10., 23}, new double[]{1.,10.,100.,1000.,10000.}), a));
+
+        assertTrue(a instanceof ArrayTabulatedFunction);
+        assertTrue(b instanceof LinkedListTabulatedFunction);
     }
+
 }
