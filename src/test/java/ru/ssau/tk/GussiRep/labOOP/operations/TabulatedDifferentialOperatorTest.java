@@ -17,7 +17,7 @@ public class TabulatedDifferentialOperatorTest {
     private final static double[] yValues = new double[]{1., 2., 3., 4., 5., 6.};
     private final static double[] xValuesSecond = new double[]{0., 2., 4., 6., 8., 10.};
     private final static double[] yValuesSecond = new double[]{6., 6., 6., 6., 6., 6.};
-    private final static double[] yValuesDivider = new double[]{1 / 2., 1 / 4., 1 / 6., 1 / 8., 1 / 10., 1/12.};
+    private final static double[] yValuesDivider = new double[]{1 / 2., 1 / 4., 1 / 6., 1 / 8., 1 / 10., 1 / 12.};
     private final static double[] yValuesDivider2 = new double[]{0., 0., 0., 0., 0., 0.};
     final static TabulatedFunction firstFunction = factoryATF.create(xValues, yValues);
     final static TabulatedFunction secondFunction = factoryLLF.create(xValuesSecond, yValuesSecond);
@@ -28,12 +28,18 @@ public class TabulatedDifferentialOperatorTest {
     public void testDerive() {
         final TabulatedFunction function1 = operator2.derive(firstFunction);
         final TabulatedFunction function2 = operator1.derive(secondFunction);
+        final TabulatedFunction function3 = operator1.derive(firstFunction);
+        final TabulatedFunction function4 = operator2.derive(secondFunction);
         for (int i = 0; i < yValuesDivider.length; i++) {
             assertEquals(function1.getY(i), yValuesDivider[i], 1 / 3.);
             assertEquals(function2.getY(i), yValuesDivider2[i], 0.01);
+            assertEquals(function3.getY(i), yValuesDivider[i], 1 / 3.);
+            assertEquals(function4.getY(i), yValuesDivider2[i], 0.01);
         }
         assertTrue(function1 instanceof ArrayTabulatedFunction);
         assertTrue(function2 instanceof LinkedListTabulatedFunction);
+        assertTrue(function3 instanceof LinkedListTabulatedFunction);
+        assertTrue(function4 instanceof ArrayTabulatedFunction);
     }
 
     @Test
