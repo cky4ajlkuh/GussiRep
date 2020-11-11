@@ -1,7 +1,6 @@
 package ru.ssau.tk.GussiRep.labOOP.operations;
 
 import org.testng.annotations.Test;
-import ru.ssau.tk.GussiRep.labOOP.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.GussiRep.labOOP.exceptions.InconsistentFunctionsException;
 import ru.ssau.tk.GussiRep.labOOP.functions.ArrayTabulatedFunction;
 import ru.ssau.tk.GussiRep.labOOP.functions.LinkedListTabulatedFunction;
