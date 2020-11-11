@@ -18,8 +18,8 @@ public class TabulatedFunctionOperationServiceTest {
     private final static double[] yValues = new double[]{5., 12., 89., 5., 56., 1.};
     private final static double[] yValuesSecond = new double[]{1., 4., 7., 16., 15., 3.};
 
-    final static TabulatedFunction functionFirst = new ArrayTabulatedFunction(xValues, yValues);
-    final static TabulatedFunction functionSecond = new LinkedListTabulatedFunction(xValues, yValuesSecond);
+    private final static TabulatedFunction functionFirst = new ArrayTabulatedFunction(xValues, yValues);
+    private final static TabulatedFunction functionSecond = new LinkedListTabulatedFunction(xValues, yValuesSecond);
 
     @Test
     public void testSetFactory() {
@@ -81,8 +81,8 @@ public class TabulatedFunctionOperationServiceTest {
         assertThrows(InconsistentFunctionsException.class, () ->
                 service1.sum(factoryLLF.create(new double[]{1., 2., 3}, new double[]{2., 6., 5.}), b));
 
-        assertThrows(ArrayIsNotSortedException.class, () ->
-                service1.sum(factoryLLF.create(new double[]{1., 1., 2., 3., 4.}, new double[]{1., 2., 3., 4., 6.}), a));
+        assertThrows(InconsistentFunctionsException.class, () ->
+                service1.sum(factoryLLF.create(new double[]{1., 4., 9., 16., 24., 36.}, new double[]{1., 2., 3., 4., 5., 6.}), a));
 
         assertTrue(sumATF instanceof ArrayTabulatedFunction);
         assertTrue(sumLLF instanceof LinkedListTabulatedFunction);
@@ -111,8 +111,8 @@ public class TabulatedFunctionOperationServiceTest {
         assertThrows(InconsistentFunctionsException.class, () ->
                 service2.subtract(factoryATF.create(new double[]{-4., 0., 3., 18.}, new double[]{-5., -2., 5., 6.}), b));
 
-        assertThrows(ArrayIsNotSortedException.class, () ->
-                service2.subtract(factoryATF.create(new double[]{100, 100.01, 100.01, 101., 102}, new double[]{1., 2., 3., 4., 6.}), b));
+        assertThrows(InconsistentFunctionsException.class, () ->
+                service2.subtract(factoryATF.create(new double[]{1., 4., 9., 16., 25., 37.}, new double[]{1., 2., 3., 4., 5., 6.}), b));
 
 
         assertTrue(subtractATF instanceof ArrayTabulatedFunction);
@@ -146,8 +146,8 @@ public class TabulatedFunctionOperationServiceTest {
                 service1.subtract(factoryLLF.create(new double[]{1, 1.1, 1.2, 1.998, 1.999}, new double[]{6, 23, 511, 1000.01, 1000.2}),
                         factoryATF.create(new double[]{1., 1.1, 1.2, 1.998}, new double[]{23, 511., 900., 1000.})));
 
-        assertThrows(ArrayIsNotSortedException.class, () ->
-                service1.sum(factoryATF.create(new double[]{14., 15., 13., 16., 17.}, new double[]{10., 21., 31., 41., 55.}), a));
+        assertThrows(InconsistentFunctionsException.class, () ->
+                service1.sum(factoryATF.create(new double[]{1., 4., 8., 16., 25., 36.}, new double[]{10., 21., 31., 41., 55.,65}), a));
 
         assertTrue(multiplyATF instanceof ArrayTabulatedFunction);
         assertTrue(multiplyLLF instanceof LinkedListTabulatedFunction);
@@ -176,9 +176,9 @@ public class TabulatedFunctionOperationServiceTest {
         assertThrows(InconsistentFunctionsException.class, () ->
                 service1.subtract(factoryLLF.create(new double[]{6., 7., 8.9, 10., 23}, new double[]{1., 10., 100., 1000., 10000.}), a));
 
-        assertThrows(ArrayIsNotSortedException.class, () ->
-                service1.sum(factoryLLF.create(new double[]{-5., -10., -4., 0}, new double[]{201., 301., 404., 505.}),
-                        factoryLLF.create(new double[]{-5., -5., -5., -5.}, new double[]{6.6, 6.66, 6.666, 6.6666})));
+        assertThrows(InconsistentFunctionsException.class, () ->
+                service1.sum(factoryLLF.create(new double[]{-5., -4.5, -2.5, -2.}, new double[]{201., 301., 404., 505.}),
+                        factoryLLF.create(new double[]{-5., -4., -3., -2.,}, new double[]{6.6, 6.66, 6.666, 6.6666})));
 
 
         assertTrue(dividerATF instanceof ArrayTabulatedFunction);
