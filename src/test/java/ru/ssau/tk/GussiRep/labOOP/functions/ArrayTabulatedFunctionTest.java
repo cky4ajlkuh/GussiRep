@@ -218,12 +218,41 @@ public class ArrayTabulatedFunctionTest {
         ArrayTabulatedFunction functionFirst = new ArrayTabulatedFunction(xValues, yValues);
 
         functionFirst.insert(0, 0);
-        assertEquals(functionFirst.getX(0), 0, DELTA);
-        assertEquals(functionFirst.getY(0), 0, DELTA);
-        functionFirst.insert(3, 7);
-        assertEquals(functionFirst.getX(2), 3, DELTA);
-        assertEquals(functionFirst.getY(2), 7, DELTA);
 
+        for (int i = 0; i < functionFirst.getCount(); i++) {
+            assertEquals(functionFirst.getX(i), i, DELTA);
+            assertEquals(functionFirst.getY(i), i * 2, DELTA);
+        }
+
+        ArrayTabulatedFunction functionSecond = new ArrayTabulatedFunction(xValues, yValues);
+
+        functionSecond.insert(12, 22);
+
+        for (int i = 1; i < functionSecond.getCount(); i++) {
+            assertEquals(functionSecond.getX(i - 1), i, DELTA);
+            assertEquals(functionSecond.getY(i - 1), 2 * i, DELTA);
+        }
+        double[] xValues2 = new double[]{1., 2., 3., 4., 5., 7., 8., 9., 10.};
+        double[] yValues2 = new double[]{2., 4., 6., 8., 10., 14., 16., 18., 20.};
+
+
+        ArrayTabulatedFunction functionThird = new ArrayTabulatedFunction(xValues2, yValues2);
+        functionThird.insert(6., 12.);
+
+        for (int i = 1; i < functionThird.getCount(); i++) {
+            assertEquals(functionThird.getX(i - 1), i, DELTA);
+            assertEquals(functionThird.getY(i - 1), i * 2, DELTA);
+        }
+
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+        function.insert(10, 21);
+
+        assertEquals(function.getX(9), 10, DELTA);
+        assertEquals(function.getY(9), 21, DELTA);
+        for (int i = 1; i < functionThird.getCount() - 1; i++) {
+            assertEquals(function.getX(i - 1), i, DELTA);
+            assertEquals(function.getY(i - 1), i * 2, DELTA);
+        }
     }
 
     @Test

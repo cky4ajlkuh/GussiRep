@@ -57,6 +57,19 @@ public class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
         LinkedListTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
         kX.remove(1);
+        double[] arrayX = new double[]{10, 11, 12, 13};
+        double[] arrayY = new double[]{10, 11, 12, 13};
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(arrayX, arrayY);
+        function.remove(3);
+        for (int i = 0; i < function.getCount() - 1; i++) {
+            assertEquals(function.getY(i), arrayY[i], DELTA);
+            assertEquals(function.getX(i), arrayX[i], DELTA);
+        }
+        function.remove(0);
+        for (int i = 1; i < function.getCount() - 1; i++) {
+            assertEquals(function.getY(i), arrayY[i], DELTA);
+            assertEquals(function.getX(i), arrayX[i], DELTA);
+        }
         assertEquals(kX.getX(1), 2, DELTA);
         assertEquals(kX.getY(1), 4, DELTA);
         assertThrows(IllegalArgumentException.class, () -> kX.remove(-1));

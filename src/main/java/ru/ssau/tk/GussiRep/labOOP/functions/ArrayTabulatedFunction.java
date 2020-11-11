@@ -124,42 +124,56 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
 
     @Override
-    public void insert(int x, int y) {
+    public void insert(double x, double y) {
         int indexX = indexOfX(x);
-        int index;
         if (indexX != -1) {
             setY(indexX, y);
         } else {
-            if (x < xValues[0]) {
-                index = 0;
-            } else {
-                index = floorIndexOfX(x);
-            }
+            int index = x < xValues[0] ? 0 : floorIndexOfX(x);
             count++;
             if (xValues.length == (count - 1)) {
-                double[] valuesX = new double[count];
-                double[] valuesY = new double[count];
+                double[] valuesX = new double[(int) (count * 1.1)];
+                double[] valuesY = new double[(int) (count * 1.1)];
                 if (index == 0) {
                     valuesX[0] = x;
                     valuesY[0] = y;
                     System.arraycopy(xValues, 0, valuesX, 1, count - 1);
                     System.arraycopy(yValues, 0, valuesY, 1, count - 1);
-                }
-                if (index == count - 1) {
+                } else if (index == count - 1) {
+                    System.arraycopy(xValues, 0, valuesX, 0, count - 1);
+                    System.arraycopy(yValues, 0, valuesY, 0, count - 1);
                     valuesX[index] = x;
                     valuesY[index] = y;
-                    System.arraycopy(xValues, 0, valuesX, 1, count - 1);
-                    System.arraycopy(yValues, 0, valuesY, 1, count - 1);
                 } else {
-                    System.arraycopy(xValues, 0, valuesX, 1, index + 1);
-                    System.arraycopy(yValues, 0, valuesY, 1, index + 1);
+                    System.arraycopy(xValues, 0, valuesX, 0, index + 1);
+                    System.arraycopy(yValues, 0, valuesY, 0, index + 1);
                     valuesX[index + 1] = x;
                     valuesY[index + 1] = y;
-                    System.arraycopy(xValues, index + 1, valuesX, 1, count - index - 2);
-                    System.arraycopy(yValues, index + 1, valuesY, 1, count - index - 2);
+                    System.arraycopy(xValues, index + 1, valuesX, index + 2, (count - index - 2));
+                    System.arraycopy(yValues, index + 1, valuesY, index + 2, (count - index - 2));
                 }
                 this.xValues = valuesX;
                 this.yValues = valuesY;
+            } else {
+                if (index == 0) {
+                    for (int i = (count - 1); i != 0; i--) {
+                        this.xValues[i] = this.xValues[i - 1];
+                        this.yValues[i] = this.yValues[i - 1];
+                    }
+                    this.xValues[0] = x;
+                    this.yValues[0] = y;
+                }
+                if (index == count - 1) {
+                    this.xValues[index] = x;
+                    this.yValues[index] = y;
+                } else {
+                    for (int i = (count - 1); i != (index + 1); i--) {
+                        this.xValues[i] = this.xValues[i - 1];
+                        this.yValues[i] = this.yValues[i - 1];
+                    }
+                    this.yValues[index + 1] = y;
+                    this.xValues[index + 1] = x;
+                }
             }
         }
     }

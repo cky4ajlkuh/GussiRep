@@ -76,7 +76,7 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction implements 
     }
 
     @Override
-    public void insert(int x, int y) {
+    public void insert(double x, double y) {
 
     }
 

@@ -1,5 +1,5 @@
 package ru.ssau.tk.GussiRep.labOOP.functions;
 
 public interface Insertable {
-    void insert(int x, int y);
+    void insert(double x, double y);
 }
