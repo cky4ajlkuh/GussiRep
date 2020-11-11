@@ -11,8 +11,8 @@ import static org.testng.Assert.*;
 
 public class TabulatedDifferentialOperatorTest {
 
-    static ArrayTabulatedFunctionFactory factoryATF = new ArrayTabulatedFunctionFactory();
-    static LinkedListTabulatedFunctionFactory factoryLLF = new LinkedListTabulatedFunctionFactory();
+    final static ArrayTabulatedFunctionFactory factoryATF = new ArrayTabulatedFunctionFactory();
+    final static LinkedListTabulatedFunctionFactory factoryLLF = new LinkedListTabulatedFunctionFactory();
     private final static double[] xValues = new double[]{1., 4., 9., 16., 25., 36.};
     private final static double[] yValues = new double[]{1., 2., 3., 4., 5., 6.};
     private final static double[] xValuesSecond = new double[]{0., 2., 4., 6., 8., 10.};
@@ -21,8 +21,8 @@ public class TabulatedDifferentialOperatorTest {
     private final static double[] yValuesDivider2 = new double[]{0., 0., 0., 0., 0., 0.};
     final static TabulatedFunction firstFunction = factoryATF.create(xValues, yValues);
     final static TabulatedFunction secondFunction = factoryLLF.create(xValuesSecond, yValuesSecond);
-    static TabulatedDifferentialOperator operator1 = new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory());
-    static TabulatedDifferentialOperator operator2 = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
+    final static TabulatedDifferentialOperator operator1 = new TabulatedDifferentialOperator(new LinkedListTabulatedFunctionFactory());
+    final static TabulatedDifferentialOperator operator2 = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
 
     @Test
     public void testDerive() {

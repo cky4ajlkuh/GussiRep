@@ -46,11 +46,8 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
         int xV;
         xV = xValues.length;
         for (int i = 0; (i + 1) < xV; i++) {
-            if (xValues[i] > xValues[i + 1]) {
+            if (xValues[i] >= xValues[i + 1]) {
                 throw new ArrayIsNotSortedException("Array is not sorted");
-            }
-            if (xValues[i] == xValues[i + 1]) {
-                throw new ArrayIsNotSortedException("The array contains the same coordinates");
             }
         }
     }

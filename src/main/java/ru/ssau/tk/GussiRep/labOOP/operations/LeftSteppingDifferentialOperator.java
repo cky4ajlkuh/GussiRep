@@ -4,7 +4,7 @@ import ru.ssau.tk.GussiRep.labOOP.functions.MathFunction;
 
 public class LeftSteppingDifferentialOperator extends SteppingDifferentialOperator {
 
-    LeftSteppingDifferentialOperator(double step) {
+    public LeftSteppingDifferentialOperator(double step) {
         super(step);
     }
 
