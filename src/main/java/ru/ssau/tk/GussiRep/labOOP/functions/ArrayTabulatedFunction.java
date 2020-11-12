@@ -154,26 +154,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
                 }
                 this.xValues = valuesX;
                 this.yValues = valuesY;
-            } else {
-                if (index == 0) {
-                    for (int i = (count - 1); i != 0; i--) {
-                        this.xValues[i] = this.xValues[i - 1];
-                        this.yValues[i] = this.yValues[i - 1];
-                    }
-                    this.xValues[0] = x;
-                    this.yValues[0] = y;
-                }
-                if (index == count - 1) {
-                    this.xValues[index] = x;
-                    this.yValues[index] = y;
-                } else {
-                    for (int i = (count - 1); i != (index + 1); i--) {
-                        this.xValues[i] = this.xValues[i - 1];
-                        this.yValues[i] = this.yValues[i - 1];
-                    }
-                    this.yValues[index + 1] = y;
-                    this.xValues[index + 1] = x;
-                }
             }
         }
     }

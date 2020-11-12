@@ -69,4 +69,16 @@ public class AbstractTabulatedFunctionTest {
         AbstractTabulatedFunction.checkLengthIsTheSame(xArray, yArray);
     }
 
+    @Test
+    public void ToString() {
+        double[] xValues = new double[]{1., 2., 3.};
+        double[] yValues = new double[]{2., 4., 6.};
+        LinkedListTabulatedFunction linkedListTabulatedFunction = new LinkedListTabulatedFunction(xValues, yValues);
+        ArrayTabulatedFunction arrayTabulatedFunction = new ArrayTabulatedFunction(xValues, yValues);
+        String stringLLT = "LinkedListTabulatedFunction Size = 3\n[1.0; 2.0]\n[2.0; 4.0]\n[3.0; 6.0]";
+        String stringATF = "ArrayTabulatedFunction Size = 3\n[1.0; 2.0]\n[2.0; 4.0]\n[3.0; 6.0]";
+        assertEquals(linkedListTabulatedFunction.toString(), stringLLT);
+        assertEquals(arrayTabulatedFunction.toString(), stringATF);
+    }
+
 }
