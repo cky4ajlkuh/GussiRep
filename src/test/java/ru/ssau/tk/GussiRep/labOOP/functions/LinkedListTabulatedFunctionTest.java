@@ -61,7 +61,7 @@ public class LinkedListTabulatedFunctionTest {
         double[] arrayY = new double[]{10, 11, 12, 13};
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(arrayX, arrayY);
         function.remove(3);
-        for (int i = 0; i < function.getCount() ; i++) {
+        for (int i = 0; i < function.getCount(); i++) {
             assertEquals(function.getY(i), arrayY[i], DELTA);
             assertEquals(function.getX(i), arrayX[i], DELTA);
         }
