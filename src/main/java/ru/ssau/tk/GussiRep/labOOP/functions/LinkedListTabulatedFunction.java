@@ -2,11 +2,13 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import ru.ssau.tk.GussiRep.labOOP.exceptions.InterpolationException;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Iterable<Point> {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Serializable, Removable, Iterable<Point> {
 
+    private static final long serialVersionUID = -461948185547873972L;
     private Node head;
     protected int count;
 

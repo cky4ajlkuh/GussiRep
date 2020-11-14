@@ -2,14 +2,17 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import ru.ssau.tk.GussiRep.labOOP.exceptions.InterpolationException;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Iterable<Point> {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Serializable, Insertable, Iterable<Point> {
 
+    private static final long serialVersionUID = 2460930254449651650L;
     private double[] xValues;
     private double[] yValues;
+    private int count = 0;
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length < 2 & yValues.length < 2) {
