@@ -69,6 +69,7 @@ public class LinkedListTabulatedFunctionTest {
         for (int i = 0; i < function.getCount(); i++) {
             assertEquals(function.getY(i), arrayY[i], DELTA);
             assertEquals(function.getX(i), arrayX[i], DELTA);
+            System.out.println(function.getY(i) + " " + function.getX(i));
         }
         assertEquals(kX.getX(1), 2, DELTA);
         assertEquals(kX.getY(1), 4, DELTA);

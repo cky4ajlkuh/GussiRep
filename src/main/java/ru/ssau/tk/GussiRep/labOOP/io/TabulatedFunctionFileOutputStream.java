@@ -2,7 +2,6 @@ package ru.ssau.tk.GussiRep.labOOP.io;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.ArrayTabulatedFunction;
 import ru.ssau.tk.GussiRep.labOOP.functions.LinkedListTabulatedFunction;
-import ru.ssau.tk.GussiRep.labOOP.functions.PowFunction;
 
 import java.io.*;
 

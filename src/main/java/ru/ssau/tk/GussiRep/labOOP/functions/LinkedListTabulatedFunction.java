@@ -12,7 +12,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     private Node head;
     protected int count;
 
-    private static class Node {
+    private static class Node implements Serializable {
+        private static final long serialVersionUID = -8848583414268867499L;
         public double x;
         public double y;
         public Node next;
@@ -93,6 +94,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         checkBorders(index);
         Node executed = getNode(index);
+        if (executed == head){
+            head.next=head;
+        }
         count--;
         executed.prev.next = executed.next;
         executed.next.prev = executed.prev;

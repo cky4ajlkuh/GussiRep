@@ -15,7 +15,7 @@ public class TabulatedFunctionFileInputStream {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }/*
+        }
         try {
             System.out.println("Введите размер и значения функции");
 
@@ -31,6 +31,6 @@ public class TabulatedFunctionFileInputStream {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
