@@ -9,20 +9,21 @@ import java.util.Locale;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-public final class FunctionsIO {
+final public class FunctionsIO {
     private FunctionsIO() {
         throw new UnsupportedOperationException();
     }
 
-   public static void writeTabulatedFunction(BufferedWriter writer, TabulatedFunction function) {
-       PrintWriter printWriter = new PrintWriter(writer);
-       printWriter.println(function.getCount());
-       int i = 0;
-       for (Point point : function) {
-           printWriter.printf("%f %f\n", point.x, point.y);
-       }
-       printWriter.flush();
-   }
+    public static void writeTabulatedFunction(BufferedWriter writer, TabulatedFunction function) {
+        PrintWriter printWriter = new PrintWriter(writer);
+        printWriter.println(function.getCount());
+        int i = 0;
+        for (Point point : function) {
+            printWriter.printf("%f %f\n", point.x, point.y);
+        }
+        printWriter.flush();
+    }
+
     static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         dataOutputStream.writeInt(function.getCount());
@@ -32,6 +33,7 @@ public final class FunctionsIO {
         }
         dataOutputStream.flush();
     }
+
     public static TabulatedFunction readTabulatedFunction(BufferedReader reader, TabulatedFunctionFactory factory) throws IOException {
         int count = Integer.parseInt(reader.readLine());
 
@@ -63,6 +65,7 @@ public final class FunctionsIO {
         }
         return factory.create(xValues, yValues);
     }
+
     public static void serialize(BufferedOutputStream stream, TabulatedFunction function) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(stream);
         out.writeObject(function);
