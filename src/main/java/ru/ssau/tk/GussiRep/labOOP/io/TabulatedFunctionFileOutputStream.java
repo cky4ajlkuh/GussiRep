@@ -9,8 +9,8 @@ public class TabulatedFunctionFileOutputStream {
     public static void main(String[] args) {
         ArrayTabulatedFunction functionATF = new ArrayTabulatedFunction(new double[]{1., 2., 3., 4,}, new double[]{2., 4., 6., 8.});
         LinkedListTabulatedFunction functionLLF = new LinkedListTabulatedFunction(new double[]{1., 2., 3., 4,}, new double[]{3., 6., 9., 12.});
-        try (BufferedOutputStream outputStreamATF = new BufferedOutputStream(new FileOutputStream(new File("output/array function.bin")));
-             BufferedOutputStream outputStreamLLF = new BufferedOutputStream(new FileOutputStream(new File("output/array function.bin")))) {
+        try (BufferedOutputStream outputStreamATF = new BufferedOutputStream(new FileOutputStream(new File("output/array functionATF.bin")));
+             BufferedOutputStream outputStreamLLF = new BufferedOutputStream(new FileOutputStream(new File("output/array functionLLF.bin")))) {
             FunctionsIO.writeTabulatedFunction(outputStreamATF, functionATF);
             FunctionsIO.writeTabulatedFunction(outputStreamLLF, functionLLF);
         } catch (IOException e) {
