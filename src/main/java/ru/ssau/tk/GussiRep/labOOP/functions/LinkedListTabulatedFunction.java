@@ -20,7 +20,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         public Node prev;
     }
 
-
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length < 2 & yValues.length < 2) {
             throw new IllegalArgumentException("Count of points less then 2");
