@@ -18,7 +18,6 @@ public class ReadWriteTaskExecutor {
         for(Thread thread: list){
             thread.start();
         }
-        Thread.sleep(3000);
-
+        Thread.sleep(4000);
     }
 }
