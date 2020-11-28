@@ -15,7 +15,7 @@ public class ReadWriteTaskExecutor {
             Thread thread = new Thread(new ReadWriteTask(tabulatedFunction));
             list.add(thread);
         }
-        for(Thread thread: list){
+        for (Thread thread : list) {
             thread.start();
         }
         Thread.sleep(4000);

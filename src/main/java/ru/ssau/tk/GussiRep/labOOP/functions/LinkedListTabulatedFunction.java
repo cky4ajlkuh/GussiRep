@@ -93,8 +93,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         checkBorders(index);
         Node executed = getNode(index);
-        if (executed == head){
-            head.next=head;
+        if (executed == head) {
+            head.next = head;
         }
         count--;
         executed.prev.next = executed.next;
