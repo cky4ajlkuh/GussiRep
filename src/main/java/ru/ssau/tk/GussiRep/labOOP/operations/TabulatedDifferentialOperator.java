@@ -1,5 +1,6 @@
 package ru.ssau.tk.GussiRep.labOOP.operations;
 
+import ru.ssau.tk.GussiRep.labOOP.concurrent.SynchronizedTabulatedFunction;
 import ru.ssau.tk.GussiRep.labOOP.functions.Point;
 import ru.ssau.tk.GussiRep.labOOP.functions.*;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.*;
@@ -22,6 +23,14 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
 
     public TabulatedFunctionFactory getFactory() {
         return factory;
+    }
+
+    public TabulatedFunction deriveSynchronously(TabulatedFunction function) {
+        if (function instanceof StrictTabulatedFunction) {
+            return ((SynchronizedTabulatedFunction) function).doSynchronously(this::derive);
+        }
+        SynchronizedTabulatedFunction synchronizedTF = new SynchronizedTabulatedFunction(function);
+        return synchronizedTF.doSynchronously(this::derive);
     }
 
     @Override
