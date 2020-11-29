@@ -26,26 +26,6 @@ public class TabulatedDifferentialOperatorTest {
     private final static TabulatedDifferentialOperator operator2 = new TabulatedDifferentialOperator(new ArrayTabulatedFunctionFactory());
 
     @Test
-    public void testDeriveSynchronously() {
-        TabulatedFunction function1 = operator2.deriveSynchronously(firstFunction);
-        TabulatedFunction function2 = operator1.deriveSynchronously(secondFunction);
-        TabulatedFunction function3 = operator1.deriveSynchronously(firstFunction);
-        TabulatedFunction function4 = operator2.deriveSynchronously(secondFunction);
-
-        assertTrue(function1 instanceof ArrayTabulatedFunction);
-        assertTrue(function2 instanceof LinkedListTabulatedFunction);
-        assertTrue(function3 instanceof LinkedListTabulatedFunction);
-        assertTrue(function4 instanceof ArrayTabulatedFunction);
-
-        for (int i = 0; i < yValuesDivider.length; i++) {
-            assertEquals(function1.getY(i), yValuesDivider[i], 1 / 3.);
-            assertEquals(function2.getY(i), yValuesDivider2[i], 0.01);
-            assertEquals(function3.getY(i), yValuesDivider[i], 1 / 3.);
-            assertEquals(function4.getY(i), yValuesDivider2[i], 0.01);
-        }
-    }
-
-    @Test
     public void testDerive() {
         final TabulatedFunction function1 = operator2.derive(firstFunction);
         final TabulatedFunction function2 = operator1.derive(secondFunction);

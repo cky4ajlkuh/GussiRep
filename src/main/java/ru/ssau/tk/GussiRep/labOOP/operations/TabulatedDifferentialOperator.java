@@ -25,14 +25,6 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
         return factory;
     }
 
-    public TabulatedFunction deriveSynchronously(TabulatedFunction function) {
-        if (function instanceof StrictTabulatedFunction) {
-            return ((SynchronizedTabulatedFunction) function).doSynchronously(this::derive);
-        }
-        SynchronizedTabulatedFunction synchronizedTF = new SynchronizedTabulatedFunction(function);
-        return synchronizedTF.doSynchronously(this::derive);
-    }
-
     @Override
     public TabulatedFunction derive(TabulatedFunction function) {
 

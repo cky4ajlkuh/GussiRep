@@ -14,14 +14,6 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
         this.tabulatedFunction = tabulatedFunction;
     }
 
-    public interface Operation<T> {
-        T apply(SynchronizedTabulatedFunction synchronizedTF);
-    }
-
-    public <T> T doSynchronously(Operation<? extends T> operation) {
-        return operation.apply(this);
-    }
-
     @Override
     public int getCount() {
         synchronized (tabulatedFunction) {

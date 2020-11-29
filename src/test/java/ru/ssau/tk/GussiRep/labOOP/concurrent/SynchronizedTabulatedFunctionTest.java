@@ -17,15 +17,6 @@ public class SynchronizedTabulatedFunctionTest {
     private final static SynchronizedTabulatedFunction synchronizedATF = new SynchronizedTabulatedFunction(functionATF);
 
     @Test
-    public void testDoSynchronously(){
-        assertEquals((int) synchronizedLLF.doSynchronously(SynchronizedTabulatedFunction -> synchronizedLLF.getCount()),4);
-        assertEquals((int) synchronizedATF.doSynchronously(SynchronizedTabulatedFunction -> synchronizedATF.getCount()),5);
-        assertEquals((double) synchronizedLLF.doSynchronously(SynchronizedTabulatedFunction -> synchronizedLLF.getX(3)),4);
-        assertEquals((double) synchronizedATF.doSynchronously(SynchronizedTabulatedFunction -> synchronizedATF.getX(4)),5);
-
-    }
-
-    @Test
     public void testGetCount() {
         assertEquals(synchronizedLLF.getCount(), 4, DELTA);
         assertEquals(synchronizedATF.getCount(), 5, DELTA);
