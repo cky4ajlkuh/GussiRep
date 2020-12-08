@@ -9,14 +9,21 @@ public class AddingTask implements Runnable {
         this.tabulatedFunction = tabulatedFunction;
     }
 
+    @Override
     public void run() {
+        double x;
+        double y;
         for (int i = 0; i < tabulatedFunction.getCount(); i++) {
-            double currentX = tabulatedFunction.getX(i);
-            double currentY = tabulatedFunction.getY(i);
-            System.out.println(Thread.currentThread().getName() + "i =" + i + " x = " + currentX + " old y = " + currentY);
-            tabulatedFunction.setY(i, currentY + 3);
-            currentY = tabulatedFunction.getY(i);
-            System.out.println(Thread.currentThread().getName() + "i =" + i + " x = " + currentX + " new y = " + currentY);
+            x = tabulatedFunction.getX(i);
+            synchronized (tabulatedFunction) {
+                y = tabulatedFunction.getY(i);
+                System.out.printf("%s, i = %d, x = %f, old y = %f", Thread.currentThread().getName(), i, x, y);
+                System.out.println();
+                tabulatedFunction.setY(i, y + 3);
+                y = tabulatedFunction.getY(i);
+            }
+            System.out.printf("%s, i = %d, x = %f, new y = %f", Thread.currentThread().getName(), i, x, y);
+            System.out.println();
         }
     }
 }
