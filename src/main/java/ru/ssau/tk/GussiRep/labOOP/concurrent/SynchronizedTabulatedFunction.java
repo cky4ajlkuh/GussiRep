@@ -3,7 +3,6 @@ package ru.ssau.tk.GussiRep.labOOP.concurrent;
 import ru.ssau.tk.GussiRep.labOOP.functions.Point;
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
 import ru.ssau.tk.GussiRep.labOOP.operations.TabulatedFunctionOperationService;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
