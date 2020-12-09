@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class Menu extends JFrame {
     JMenu menu = new JMenu("Functions");
     JMenuBar jMenuBar = new JMenuBar();
-    final createZeroFunction function = new createZeroFunction("Нулевая функция");
+    final createZeroFunction function = new createZeroFunction();
 
     Menu(String s) {
         super(s);
@@ -27,12 +27,7 @@ public class Menu extends JFrame {
     private JMenu createMathFunction() {
         JMenu mathFunction = new JMenu("MathFunction");
         JMenuItem zero = new JMenuItem("Нулевая функция");
-        zero.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                function.setVisible(true);
-            }
-        });
+        zero.addActionListener(event -> function.setVisible(true));
         mathFunction.add(zero);
         mathFunction.add(new JMenuItem("Квадратичная функция"));
         mathFunction.add(new JMenuItem("Функция арксинуса"));
@@ -47,7 +42,7 @@ public class Menu extends JFrame {
         JMenu menu = new JMenu("Нулевая функция");
         JMenuBar jMenuBar = new JMenuBar();
 
-        public createZeroFunction(String s) {
+        public createZeroFunction() {
             setSize(100, 100);
             setVisible(false);
             setResizable(false);
