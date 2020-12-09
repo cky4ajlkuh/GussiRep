@@ -30,7 +30,6 @@ public class Menu extends JFrame {
         zero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                setName("aaaaaa");
                 function.setVisible(true);
             }
         });
