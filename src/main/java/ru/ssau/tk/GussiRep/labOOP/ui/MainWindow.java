@@ -9,6 +9,5 @@ public class MainWindow {
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setResizable(false);
         menu.setLocationRelativeTo(null);
-
     }
 }

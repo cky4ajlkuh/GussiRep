@@ -8,11 +8,26 @@ public class Menu extends JFrame {
 
     Menu(String s) {
         super(s);
-        menu.add(new JMenuItem("TabulatedFunction"));
-        menu.add(new JMenuItem("MathFunction"));
+        menu.add(createTabulatedFunction());
+        menu.add(createMathFunction());
         jMenuBar.add(menu);
         setJMenuBar(jMenuBar);
         setSize(400, 400);
+    }
+
+    private JMenu createTabulatedFunction() {
+        JMenu tabulatedFunction = new JMenu("TabulatedFunction");
+        tabulatedFunction.add(new JMenuItem("Ввести количество точек"));
+        return tabulatedFunction;
+    }
+
+    private JMenu createMathFunction() {
+        JMenu mathFunction = new JMenu("MathFunction");
+        mathFunction.add(new JMenuItem("Квадратичная функция"));
+        mathFunction.add(new JMenuItem("Функция арксинуса"));
+        mathFunction.add(new JMenuItem("Функция корня"));
+        mathFunction.add(new JMenuItem("Тождественная функция"));
+        return mathFunction;
     }
 
 }
