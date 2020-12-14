@@ -2,10 +2,13 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Menu extends JFrame {
     JMenu menu = new JMenu("Functions");
@@ -38,59 +41,89 @@ public class Menu extends JFrame {
     static class CreateTabulatedFunction extends JDialog {
         JMenu menu = new JMenu("Табулированная функция");
         JMenuBar jMenuBar = new JMenuBar();
-        JLabel label = new JLabel("");
+        JLabel label = new JLabel("Введите количество точек: ");
+        JButton button = new JButton("Ввод");
         JTextField textField = new JTextField(5);
         List<String> strings = new ArrayList<>();
         AbstractTableModel tableModel = new TableModel(strings);
         JTable table = new JTable(tableModel);
-        JButton addRowButton = new JButton("Add row");
+        JButton addRowButton = new JButton("Создать");
         JButton removeRowButton = new JButton("Remove row");
+        JLabel labelNorth = new JLabel("");
+        JLabel labelSouth = new JLabel("");
+        JScrollPane scrollPane = new JScrollPane(table);
+        double i;
 
         public CreateTabulatedFunction() {
-            GroupLayout layout = new GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setAutoCreateGaps(true);
-            layout.setAutoCreateContainerGaps(true);
-            JScrollPane scrollPane = new JScrollPane(table);
-            layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                    .addGroup(layout.createSequentialGroup()
-                            .addComponent(addRowButton)
-                            .addComponent(removeRowButton))
-                    .addComponent(scrollPane)
-            );
-            layout.setVerticalGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(addRowButton)
-                            .addComponent(removeRowButton))
-                    .addComponent(scrollPane)
-            );
+            add(labelSouth, BorderLayout.SOUTH);
+            add(labelNorth, BorderLayout.NORTH);
+            add(label, BorderLayout.WEST);
+            add(textField);
+            add(button, BorderLayout.EAST);
+            labelSouth.setPreferredSize(new Dimension(100, 175));
+            labelNorth.setPreferredSize(new Dimension(100, 125));
+            listenerButton();
             listenerRow();
             listenerRemoveRow();
-            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             setSize(400, 400);
             setVisible(false);
             setResizable(false);
             setLocationRelativeTo(null);
             jMenuBar.add(menu);
             setJMenuBar(jMenuBar);
+
         }
 
-        public void listenerRow(){
-            addRowButton.addActionListener(new ActionListener() {
+        public void listenerButton() {
+            button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    strings.add("");
-                    tableModel.fireTableDataChanged();
+                    i = Double.parseDouble(textField.getText());
+                    if (e.getSource() == button) {
+                        checkTextAndNull();
+                        GroupLayout layout = new GroupLayout(getContentPane());
+                        getContentPane().setLayout(layout);
+                        layout.setAutoCreateGaps(true);
+                        layout.setAutoCreateContainerGaps(true);
+                        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                                .addComponent(scrollPane)
+                                .addComponent(addRowButton)
+                        );
+                        layout.setVerticalGroup(layout.createSequentialGroup()
+                                .addComponent(scrollPane)
+                                .addComponent(addRowButton)
+                        );
+                        button.setVisible(false);
+                        textField.setVisible(false);
+                        label.setVisible(false);
+                    }
                 }
             });
         }
-        public void listenerRemoveRow(){
+
+        public void listenerRow() {
+            addRowButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setVisible(false);
+                    button.setVisible(true);
+                    textField.setVisible(true);
+                    label.setVisible(true);
+                    addRowButton.setVisible(false);
+                    scrollPane.setVisible(false);
+                    textField.setText(null);
+                }
+            });
+        }
+
+        public void listenerRemoveRow() {
             removeRowButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int selectedRow = table.getSelectedRow();
-                    if (selectedRow != -1){
+                    if (selectedRow != -1) {
                         strings.remove(selectedRow);
                         tableModel.fireTableDataChanged();
                     }
@@ -98,7 +131,14 @@ public class Menu extends JFrame {
             });
         }
 
+        private void checkTextAndNull() {
+            if(i <= 0) {
+                JOptionPane.showMessageDialog(null, "Кол-во точек не может быть отрицательным!");
+                throw new ArithmeticException();
+            }
+        }
     }
+
 
     private JMenu createMathFunction() {
         JMenu mathFunction = new JMenu("MathFunction");
