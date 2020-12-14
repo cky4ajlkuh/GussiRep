@@ -88,17 +88,15 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public void remove(int index) {
-        if (count == 2) {
-            throw new IllegalArgumentException("small number of tabulated values");
-        }
         checkBorders(index);
         Node executed = getNode(index);
-        if (executed == head) {
-            head.next = head;
+        if (index == 0) {
+            head = executed.next;
+            head.prev = executed.prev;
         }
-        count--;
         executed.prev.next = executed.next;
         executed.next.prev = executed.prev;
+        count--;
     }
 
     @Override

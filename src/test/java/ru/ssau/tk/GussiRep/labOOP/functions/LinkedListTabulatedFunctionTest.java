@@ -54,32 +54,53 @@ public class LinkedListTabulatedFunctionTest {
 
     @Test
     public void testRemove() {
-    /*    LinkedListTabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
+        LinkedListTabulatedFunction kX = new LinkedListTabulatedFunction(valuesX, valuesY2);
         LinkedListTabulatedFunction parabola = new LinkedListTabulatedFunction(valuesX, valuesY);
+
         kX.remove(1);
+
         double[] arrayX = new double[]{10, 11, 12, 13};
         double[] arrayY = new double[]{10, 11, 12, 13};
+
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(arrayX, arrayY);
         function.remove(3);
+
         for (int i = 0; i < function.getCount(); i++) {
             assertEquals(function.getY(i), arrayY[i], DELTA);
             assertEquals(function.getX(i), arrayX[i], DELTA);
         }
+
         function.remove(0);
+
         for (int i = 0; i < function.getCount(); i++) {
-            assertEquals(function.getY(i), arrayY[i], DELTA);
-            assertEquals(function.getX(i), arrayX[i], DELTA);
-            System.out.println(function.getY(i) + " " + function.getX(i));
+            assertEquals(function.getY(i), arrayY[i + 1], DELTA);
+            assertEquals(function.getX(i), arrayX[i + 1], DELTA);
         }
+
+        double[] arrayX2 = new double[]{10, 11, 12, 13};
+        double[] arrayY2 = new double[]{10, 11, 12, 13};
+        LinkedListTabulatedFunction function2 = new LinkedListTabulatedFunction(arrayX2, arrayY2);
+        function2.remove(2);
+
+        assertEquals(function2.getX(0), arrayX2[0], DELTA);
+        assertEquals(function2.getY(0), arrayY2[0], DELTA);
+        assertEquals(function2.getX(1), arrayX2[1], DELTA);
+        assertEquals(function2.getY(1), arrayY2[1], DELTA);
+        assertEquals(function2.getX(2), arrayX2[3], DELTA);
+        assertEquals(function2.getY(2), arrayY2[3], DELTA);
+
+
         assertEquals(kX.getX(1), 2, DELTA);
         assertEquals(kX.getY(1), 4, DELTA);
+
         assertThrows(IllegalArgumentException.class, () -> kX.remove(-1));
         parabola.remove(3);
+
         assertEquals(parabola.getX(3), 4, DELTA);
         assertEquals(parabola.getY(3), 16, DELTA);
+
         assertThrows(IllegalArgumentException.class, () -> parabola.remove(10));
 
-     */
     }
 
     @Test

@@ -1,7 +1,11 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.table.AbstractTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Menu extends JFrame {
     JMenu menu = new JMenu("Functions");
@@ -12,7 +16,7 @@ public class Menu extends JFrame {
     final CreateASinFunction function3 = new CreateASinFunction();
     final CreateConstantFunction function4 = new CreateConstantFunction();
     final CreateTabulatedFunction createTabulatedFunction = new CreateTabulatedFunction();
-
+    final TabulatedFunction tabulatedFunction = new TabulatedFunction();
 
     Menu(String s) {
         super(s);
@@ -34,8 +38,36 @@ public class Menu extends JFrame {
     static class CreateTabulatedFunction extends JDialog {
         JMenu menu = new JMenu("Табулированная функция");
         JMenuBar jMenuBar = new JMenuBar();
+        JLabel label = new JLabel("");
+        JTextField textField = new JTextField(5);
+        List<String> strings = new ArrayList<>();
+        AbstractTableModel tableModel = new TableModel(strings);
+        JTable table = new JTable(tableModel);
+        JButton addRowButton = new JButton("Add row");
+        JButton removeRowButton = new JButton("Remove row");
 
         public CreateTabulatedFunction() {
+            GroupLayout layout = new GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setAutoCreateGaps(true);
+            layout.setAutoCreateContainerGaps(true);
+            JScrollPane scrollPane = new JScrollPane(table);
+            layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(addRowButton)
+                            .addComponent(removeRowButton))
+                    .addComponent(scrollPane)
+            );
+            layout.setVerticalGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(addRowButton)
+                            .addComponent(removeRowButton))
+                    .addComponent(scrollPane)
+            );
+            listenerRow();
+            listenerRemoveRow();
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
             setSize(400, 400);
             setVisible(false);
             setResizable(false);
@@ -43,6 +75,29 @@ public class Menu extends JFrame {
             jMenuBar.add(menu);
             setJMenuBar(jMenuBar);
         }
+
+        public void listenerRow(){
+            addRowButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    strings.add("");
+                    tableModel.fireTableDataChanged();
+                }
+            });
+        }
+        public void listenerRemoveRow(){
+            removeRowButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow != -1){
+                        strings.remove(selectedRow);
+                        tableModel.fireTableDataChanged();
+                    }
+                }
+            });
+        }
+
     }
 
     private JMenu createMathFunction() {
@@ -63,10 +118,11 @@ public class Menu extends JFrame {
         JMenuItem constant = new JMenuItem("Тождественная функция");
         constant.addActionListener(event -> function4.setVisible(true));
         mathFunction.add(constant);
+        JMenuItem tabulated = new JMenuItem("Табулированная функция");
+        tabulated.addActionListener(event -> tabulatedFunction.setVisible(true));
 
         return mathFunction;
     }
-
 
     static class CreateZeroFunction extends JDialog {
         JMenu menu = new JMenu("Нулевая функция");
@@ -125,7 +181,7 @@ public class Menu extends JFrame {
     }
 
     static class CreateConstantFunction extends JDialog {
-        JMenu menu = new JMenu("х в степени х функция");
+        JMenu menu = new JMenu("Тождественная функция");
         JMenuBar jMenuBar = new JMenuBar();
 
         public CreateConstantFunction() {
@@ -138,5 +194,18 @@ public class Menu extends JFrame {
         }
     }
 
+    static class TabulatedFunction extends JDialog {
+        JMenu menu = new JMenu("Тождественная функция");
+        JMenuBar jMenuBar = new JMenuBar();
+
+        public TabulatedFunction() {
+            setSize(400, 400);
+            setVisible(false);
+            setResizable(false);
+            setLocationRelativeTo(null);
+            jMenuBar.add(menu);
+            setJMenuBar(jMenuBar);
+        }
+    }
 
 }
