@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Menu extends JFrame {
     JMenu menu = new JMenu("Functions");
@@ -45,10 +43,10 @@ public class Menu extends JFrame {
         JButton button = new JButton("Ввод");
         JTextField textField = new JTextField(5);
         List<String> strings = new ArrayList<>();
-        AbstractTableModel tableModel = new TableModel(strings);
+        List<String> strings2 = new ArrayList<>();
+        AbstractTableModel tableModel = new TableModel(strings, strings2);
         JTable table = new JTable(tableModel);
         JButton addRowButton = new JButton("Создать");
-        JButton removeRowButton = new JButton("Remove row");
         JLabel labelNorth = new JLabel("");
         JLabel labelSouth = new JLabel("");
         JScrollPane scrollPane = new JScrollPane(table);
@@ -64,8 +62,6 @@ public class Menu extends JFrame {
             labelNorth.setPreferredSize(new Dimension(100, 125));
             listenerButton();
             listenerRow();
-            listenerRemoveRow();
-
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             setSize(400, 400);
             setVisible(false);
@@ -82,7 +78,7 @@ public class Menu extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     i = Double.parseDouble(textField.getText());
                     if (e.getSource() == button) {
-                        checkTextAndNull();
+                        checkTextAndNull(textField.getText());
                         GroupLayout layout = new GroupLayout(getContentPane());
                         getContentPane().setLayout(layout);
                         layout.setAutoCreateGaps(true);
@@ -98,6 +94,11 @@ public class Menu extends JFrame {
                         button.setVisible(false);
                         textField.setVisible(false);
                         label.setVisible(false);
+                    }
+                    for (int j = 0; j < i; j++) {
+                        strings.add("");
+                        strings2.add("");
+                        tableModel.fireTableDataChanged();
                     }
                 }
             });
@@ -118,27 +119,22 @@ public class Menu extends JFrame {
             });
         }
 
-        public void listenerRemoveRow() {
-            removeRowButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int selectedRow = table.getSelectedRow();
-                    if (selectedRow != -1) {
-                        strings.remove(selectedRow);
-                        tableModel.fireTableDataChanged();
-                    }
-                }
-            });
-        }
-
-        private void checkTextAndNull() {
-            if(i <= 0) {
+        private void checkTextAndNull(String value) {
+            for (int j = 0; j < value.length(); j++) {
+                char ch = value.charAt(j);/*
+                if (Character.isDigit(ch)){
+                    JOptionPane.showMessageDialog( null, "Не стоит вводить слова/буквы!");
+                    throw new NumberFormatException();
+                }*/
+            }
+            if (i <= 0) {
+                textField.setText(null);
                 JOptionPane.showMessageDialog(null, "Кол-во точек не может быть отрицательным!");
                 throw new ArithmeticException();
+
             }
         }
     }
-
 
     private JMenu createMathFunction() {
         JMenu mathFunction = new JMenu("MathFunction");
