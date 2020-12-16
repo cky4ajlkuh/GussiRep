@@ -8,16 +8,21 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
+
 public class Menu extends JFrame {
     JMenu menu = new JMenu("Functions");
     JMenuBar jMenuBar = new JMenuBar();
+
     final CreateZeroFunction function = new CreateZeroFunction();
     final CreatePowFunction function1 = new CreatePowFunction();
     final CreateSqrFunction function2 = new CreateSqrFunction();
     final CreateASinFunction function3 = new CreateASinFunction();
     final CreateConstantFunction function4 = new CreateConstantFunction();
     final CreateTabulatedFunction createTabulatedFunction = new CreateTabulatedFunction();
-    final TabulatedFunction tabulatedFunction = new TabulatedFunction();
+    final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
 
     Menu(String s) {
         super(s);
@@ -37,6 +42,7 @@ public class Menu extends JFrame {
     }
 
     static class CreateTabulatedFunction extends JDialog {
+
         JMenu menu = new JMenu("Табулированная функция");
         JMenuBar jMenuBar = new JMenuBar();
         JLabel label = new JLabel("Введите количество точек: ");
@@ -115,6 +121,15 @@ public class Menu extends JFrame {
                     addRowButton.setVisible(false);
                     scrollPane.setVisible(false);
                     textField.setText(null);
+
+                    double[] x = new double[strings.size()];
+                    double[] y = new double[strings2.size()];
+                    TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+                    for (int j = 0; j < tableModel.getRowCount(); j++) {
+                        x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
+                        y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
+                    }
+                    TabulatedFunction function = factory.create(x, y);
                 }
             });
         }
@@ -155,7 +170,7 @@ public class Menu extends JFrame {
         constant.addActionListener(event -> function4.setVisible(true));
         mathFunction.add(constant);
         JMenuItem tabulated = new JMenuItem("Табулированная функция");
-        tabulated.addActionListener(event -> tabulatedFunction.setVisible(true));
+        tabulated.addActionListener(event -> createTabulatedFunctionForMath.setVisible(true));
 
         return mathFunction;
     }
@@ -230,11 +245,11 @@ public class Menu extends JFrame {
         }
     }
 
-    static class TabulatedFunction extends JDialog {
+    static class CreateTabulatedFunctionForMath extends JDialog {
         JMenu menu = new JMenu("Тождественная функция");
         JMenuBar jMenuBar = new JMenuBar();
 
-        public TabulatedFunction() {
+        public CreateTabulatedFunctionForMath() {
             setSize(400, 400);
             setVisible(false);
             setResizable(false);
