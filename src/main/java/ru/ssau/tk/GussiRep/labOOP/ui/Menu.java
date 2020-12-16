@@ -3,8 +3,6 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,74 +77,67 @@ public class Menu extends JFrame {
         }
 
         public void listenerButton() {
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    i = Double.parseDouble(textField.getText());
-                    if (e.getSource() == button) {
-                        checkTextAndNull(textField.getText());
-                        GroupLayout layout = new GroupLayout(getContentPane());
-                        getContentPane().setLayout(layout);
-                        layout.setAutoCreateGaps(true);
-                        layout.setAutoCreateContainerGaps(true);
-                        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                                .addComponent(scrollPane)
-                                .addComponent(addRowButton)
-                        );
-                        layout.setVerticalGroup(layout.createSequentialGroup()
-                                .addComponent(scrollPane)
-                                .addComponent(addRowButton)
-                        );
-                        button.setVisible(false);
-                        textField.setVisible(false);
-                        label.setVisible(false);
-                    }
-                    for (int j = 0; j < i; j++) {
-                        strings.add("");
-                        strings2.add("");
-                        tableModel.fireTableDataChanged();
-                    }
+            button.addActionListener(e -> {
+                i = Double.parseDouble(textField.getText());
+                if (e.getSource() == button) {
+                    checkTextAndNull(textField.getText());
+                    GroupLayout layout = new GroupLayout(getContentPane());
+                    getContentPane().setLayout(layout);
+                    layout.setAutoCreateGaps(true);
+                    layout.setAutoCreateContainerGaps(true);
+                    layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                            .addComponent(scrollPane)
+                            .addComponent(addRowButton)
+                    );
+                    layout.setVerticalGroup(layout.createSequentialGroup()
+                            .addComponent(scrollPane)
+                            .addComponent(addRowButton)
+                    );
+                    button.setVisible(false);
+                    textField.setVisible(false);
+                    label.setVisible(false);
+                }
+                for (int j = 0; j < i; j++) {
+                    strings.add("");
+                    strings2.add("");
+                    tableModel.fireTableDataChanged();
                 }
             });
         }
 
         public void listenerRow() {
-            addRowButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setVisible(false);
-                    button.setVisible(true);
-                    textField.setVisible(true);
-                    label.setVisible(true);
-                    addRowButton.setVisible(false);
-                    scrollPane.setVisible(false);
-                    textField.setText(null);
+            addRowButton.addActionListener(e -> {
+                setVisible(false);
+                button.setVisible(true);
+                textField.setVisible(true);
+                label.setVisible(true);
+                addRowButton.setVisible(false);
+                scrollPane.setVisible(false);
+                textField.setText(null);
 
-                    double[] x = new double[strings.size()];
-                    double[] y = new double[strings2.size()];
-                    TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
-                    for (int j = 0; j < tableModel.getRowCount(); j++) {
-                        x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
-                        y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
-                    }
-                    TabulatedFunction function = factory.create(x, y);
+                double[] x = new double[strings.size()];
+                double[] y = new double[strings2.size()];
+                TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+                for (int j = 0; j < tableModel.getRowCount(); j++) {
+                    x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
+                    y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
                 }
+                TabulatedFunction function = factory.create(x, y);
             });
         }
 
         private void checkTextAndNull(String value) {
-            for (int j = 0; j < value.length(); j++) {
-                char ch = value.charAt(j);/*
+            /*for (int j = 0; j < value.length(); j++) {
+                char ch = value.charAt(j);
                 if (Character.isDigit(ch)){
                     JOptionPane.showMessageDialog( null, "Не стоит вводить слова/буквы!");
                     throw new NumberFormatException();
-                }*/
-            }
+                }
+            }*/
             if (i <= 0) {
                 textField.setText(null);
                 JOptionPane.showMessageDialog(null, "Кол-во точек не может быть отрицательным!");
                 throw new ArithmeticException();
-
             }
         }
     }
