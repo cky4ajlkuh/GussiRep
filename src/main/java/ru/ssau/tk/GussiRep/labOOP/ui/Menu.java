@@ -3,17 +3,17 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
-import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
 
 public class Menu extends JFrame {
     JMenu menu = new JMenu("Functions");
     JMenuBar jMenuBar = new JMenuBar();
-
+    JMenu menuSettings = new JMenu("Настройки");
     final CreateZeroFunction function = new CreateZeroFunction();
     final CreatePowFunction function1 = new CreatePowFunction();
     final CreateSqrFunction function2 = new CreateSqrFunction();
@@ -28,8 +28,11 @@ public class Menu extends JFrame {
         menu.add(createMathFunction());
         jMenuBar.add(menu);
         setJMenuBar(jMenuBar);
+        menuSettings.add(createTabulatedFunction.setSettings());
+        jMenuBar.add(menuSettings);
         setSize(400, 400);
     }
+
 
     private JMenu createTabulatedFunction() {
         JMenu tabulatedFunction = new JMenu("TabulatedFunction");
@@ -55,6 +58,15 @@ public class Menu extends JFrame {
         JLabel labelSouth = new JLabel("");
         JScrollPane scrollPane = new JScrollPane(table);
         double i;
+        JRadioButtonMenuItem array = new JRadioButtonMenuItem("Массив");
+        JRadioButtonMenuItem linkedList = new JRadioButtonMenuItem("Связный список");
+
+        private JMenu setSettings() {
+            JMenu settings = new JMenu("настройки реализации");
+            settings.add(array);
+            settings.add(linkedList);
+            return settings;
+        }
 
         public CreateTabulatedFunction() {
             add(labelSouth, BorderLayout.SOUTH);
@@ -80,7 +92,7 @@ public class Menu extends JFrame {
             button.addActionListener(e -> {
                 i = Double.parseDouble(textField.getText());
                 if (e.getSource() == button) {
-                    checkTextAndNull(textField.getText());
+                    checkTextAndNull();
                     GroupLayout layout = new GroupLayout(getContentPane());
                     getContentPane().setLayout(layout);
                     layout.setAutoCreateGaps(true);
@@ -107,6 +119,9 @@ public class Menu extends JFrame {
 
         public void listenerRow() {
             addRowButton.addActionListener(e -> {
+                double[] x = new double[strings.size()];
+                double[] y = new double[strings2.size()];
+
                 setVisible(false);
                 button.setVisible(true);
                 textField.setVisible(true);
@@ -114,26 +129,32 @@ public class Menu extends JFrame {
                 addRowButton.setVisible(false);
                 scrollPane.setVisible(false);
                 textField.setText(null);
-
-                double[] x = new double[strings.size()];
-                double[] y = new double[strings2.size()];
-                TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
-                for (int j = 0; j < tableModel.getRowCount(); j++) {
-                    x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
-                    y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
-                }
-                TabulatedFunction function = factory.create(x, y);
+                array.addItemListener(e1 -> {
+                    if (e1.getStateChange() == ItemEvent.SELECTED) {
+                        LinkedListTabulatedFunctionFactory factoryLLF = new LinkedListTabulatedFunctionFactory();
+                        for (int j = 0; j < tableModel.getRowCount(); j++) {
+                            x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
+                            y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
+                        }
+                        TabulatedFunction function = factoryLLF.create(x, y);
+                        System.out.println(function.toString());
+                    }
+                });
+                linkedList.addActionListener(event2 -> {
+                    if (event2.getSource() == linkedList) {
+                        LinkedListTabulatedFunctionFactory factoryLLF = new LinkedListTabulatedFunctionFactory();
+                        for (int j = 0; j < tableModel.getRowCount(); j++) {
+                            x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
+                            y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
+                        }
+                        TabulatedFunction function = factoryLLF.create(x, y);
+                        System.out.println(function.toString());
+                    }
+                });
             });
         }
 
-        private void checkTextAndNull(String value) {
-            /*for (int j = 0; j < value.length(); j++) {
-                char ch = value.charAt(j);
-                if (Character.isDigit(ch)){
-                    JOptionPane.showMessageDialog( null, "Не стоит вводить слова/буквы!");
-                    throw new NumberFormatException();
-                }
-            }*/
+        private void checkTextAndNull() {
             if (i <= 0) {
                 textField.setText(null);
                 JOptionPane.showMessageDialog(null, "Кол-во точек не может быть отрицательным!");
