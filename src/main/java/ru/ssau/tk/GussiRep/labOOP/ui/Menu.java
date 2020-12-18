@@ -3,12 +3,15 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
-import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
 
 public class Menu extends JFrame {
     JMenu menu = new JMenu("Functions");
@@ -21,6 +24,10 @@ public class Menu extends JFrame {
     final CreateConstantFunction function4 = new CreateConstantFunction();
     final CreateTabulatedFunction createTabulatedFunction = new CreateTabulatedFunction();
     final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
+    public static TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+
+    JRadioButtonMenuItem array = new JRadioButtonMenuItem("Массив");
+    JRadioButtonMenuItem linkedList = new JRadioButtonMenuItem("Связный список");
 
     Menu(String s) {
         super(s);
@@ -28,11 +35,10 @@ public class Menu extends JFrame {
         menu.add(createMathFunction());
         jMenuBar.add(menu);
         setJMenuBar(jMenuBar);
-        menuSettings.add(createTabulatedFunction.setSettings());
+        menuSettings.add(setSettings());
         jMenuBar.add(menuSettings);
         setSize(400, 400);
     }
-
 
     private JMenu createTabulatedFunction() {
         JMenu tabulatedFunction = new JMenu("TabulatedFunction");
@@ -40,6 +46,31 @@ public class Menu extends JFrame {
         tabFunction.addActionListener(event -> createTabulatedFunction.setVisible(true));
         tabulatedFunction.add(tabFunction);
         return tabulatedFunction;
+    }
+
+    private JMenu setSettings() {
+        JMenu settings = new JMenu("настройки реализации");
+        array.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    factory = new ArrayTabulatedFunctionFactory();
+                }
+            }
+        });
+
+        linkedList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    factory = new LinkedListTabulatedFunctionFactory();
+                }
+            }
+        });
+        settings.add(array);
+        settings.add(linkedList);
+
+        return settings;
     }
 
     static class CreateTabulatedFunction extends JDialog {
@@ -58,15 +89,6 @@ public class Menu extends JFrame {
         JLabel labelSouth = new JLabel("");
         JScrollPane scrollPane = new JScrollPane(table);
         double i;
-        JRadioButtonMenuItem array = new JRadioButtonMenuItem("Массив");
-        JRadioButtonMenuItem linkedList = new JRadioButtonMenuItem("Связный список");
-
-        private JMenu setSettings() {
-            JMenu settings = new JMenu("настройки реализации");
-            settings.add(array);
-            settings.add(linkedList);
-            return settings;
-        }
 
         public CreateTabulatedFunction() {
             add(labelSouth, BorderLayout.SOUTH);
@@ -85,7 +107,6 @@ public class Menu extends JFrame {
             setLocationRelativeTo(null);
             jMenuBar.add(menu);
             setJMenuBar(jMenuBar);
-
         }
 
         public void listenerButton() {
@@ -119,8 +140,8 @@ public class Menu extends JFrame {
 
         public void listenerRow() {
             addRowButton.addActionListener(e -> {
-                double[] x = new double[strings.size()];
-                double[] y = new double[strings2.size()];
+                double[] x = new double[tableModel.getRowCount()];
+                double[] y = new double[tableModel.getRowCount()];
 
                 setVisible(false);
                 button.setVisible(true);
@@ -129,28 +150,14 @@ public class Menu extends JFrame {
                 addRowButton.setVisible(false);
                 scrollPane.setVisible(false);
                 textField.setText(null);
-                array.addItemListener(e1 -> {
-                    if (e1.getStateChange() == ItemEvent.SELECTED) {
-                        LinkedListTabulatedFunctionFactory factoryLLF = new LinkedListTabulatedFunctionFactory();
-                        for (int j = 0; j < tableModel.getRowCount(); j++) {
-                            x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
-                            y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
-                        }
-                        TabulatedFunction function = factoryLLF.create(x, y);
-                        System.out.println(function.toString());
-                    }
-                });
-                linkedList.addActionListener(event2 -> {
-                    if (event2.getSource() == linkedList) {
-                        LinkedListTabulatedFunctionFactory factoryLLF = new LinkedListTabulatedFunctionFactory();
-                        for (int j = 0; j < tableModel.getRowCount(); j++) {
-                            x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
-                            y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
-                        }
-                        TabulatedFunction function = factoryLLF.create(x, y);
-                        System.out.println(function.toString());
-                    }
-                });
+
+                for (int j = 0; j < tableModel.getRowCount(); j++) {
+                    x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
+                    y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
+                }
+
+                TabulatedFunction function = factory.create(x, y);
+                System.out.println(function.toString());
             });
         }
 
@@ -161,6 +168,7 @@ public class Menu extends JFrame {
                 throw new ArithmeticException();
             }
         }
+
     }
 
     private JMenu createMathFunction() {
