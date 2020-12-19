@@ -8,8 +8,8 @@ public class TableModel extends AbstractTableModel {
 
     @Serial
     private static final long serialVersionUID = -6914076134122253408L;
-    private static final int Y_COLUMN_NUMBER = 0;
-    private static final int X_COLUMN_NUMBER = 1;
+    private static final int X_COLUMN_NUMBER = 0;
+    private static final int Y_COLUMN_NUMBER = 1;
     private final List<String> stringsX;
     private final List<String> stringsY;
 
@@ -64,6 +64,7 @@ public class TableModel extends AbstractTableModel {
         return switch (column) {
             case X_COLUMN_NUMBER -> "Value X";
             case Y_COLUMN_NUMBER -> "Value Y";
+
             default -> super.getColumnName(column);
         };
     }

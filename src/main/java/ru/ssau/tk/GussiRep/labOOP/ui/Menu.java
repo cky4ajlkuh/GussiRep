@@ -3,12 +3,13 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
 
 public class Menu extends JFrame {
-    JMenu menu = new JMenu("Functions");
+    JMenu menu = new JMenu("Функции");
     JMenuBar jMenuBar = new JMenuBar();
     JMenu menuSettings = new JMenu("Настройки");
     final CreateZeroFunction function = new CreateZeroFunction();
@@ -16,7 +17,7 @@ public class Menu extends JFrame {
     final CreateSqrFunction function2 = new CreateSqrFunction();
     final CreateASinFunction function3 = new CreateASinFunction();
     final CreateConstantFunction function4 = new CreateConstantFunction();
-    final CreateTabulatedFunction createTabulatedFunction = new CreateTabulatedFunction();
+    JDialog createTabulatedFunction = new CreateTabulatedFunction(this, "Создание функции", true);
     final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
     public static TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
 
@@ -35,7 +36,7 @@ public class Menu extends JFrame {
     }
 
     private JMenu createTabulatedFunction() {
-        JMenu tabulatedFunction = new JMenu("TabulatedFunction");
+        JMenu tabulatedFunction = new JMenu("Табулированная функция");
         JMenuItem tabFunction = new JMenuItem("Ввести количество точек");
         tabFunction.addActionListener(event -> createTabulatedFunction.setVisible(true));
         tabulatedFunction.add(tabFunction);
@@ -43,7 +44,7 @@ public class Menu extends JFrame {
     }
 
     private JMenu setSettings() {
-        JMenu settings = new JMenu("настройки реализации");
+        JMenu settings = new JMenu("Настройки реализации");
         array.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

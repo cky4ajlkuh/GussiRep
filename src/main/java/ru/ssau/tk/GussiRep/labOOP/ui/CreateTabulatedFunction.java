@@ -4,15 +4,14 @@ import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.swing.GroupLayout.*;
+
 public class CreateTabulatedFunction extends JDialog {
 
-    JMenu menu = new JMenu("Табулированная функция");
-    JMenuBar jMenuBar = new JMenuBar();
-    JLabel label = new JLabel("Введите количество точек: ");
+    JLabel label = new JLabel("Ввведите количество точек: ");
     JButton button = new JButton("Ввод");
     JTextField textField = new JTextField(5);
     List<String> strings = new ArrayList<>();
@@ -20,28 +19,29 @@ public class CreateTabulatedFunction extends JDialog {
     AbstractTableModel tableModel = new TableModel(strings, strings2);
     JTable table = new JTable(tableModel);
     JButton addRowButton = new JButton("Создать");
-    JLabel labelNorth = new JLabel("");
-    JLabel labelSouth = new JLabel("");
     JScrollPane scrollPane = new JScrollPane(table);
     double i;
 
-    public CreateTabulatedFunction() {
-        add(labelSouth, BorderLayout.SOUTH);
-        add(labelNorth, BorderLayout.NORTH);
-        add(label, BorderLayout.WEST);
+    public CreateTabulatedFunction(Menu menu, String s, boolean modal) {
+        super(menu, s, modal);
+        setLayout(null);
+        label.setBounds(20, 120, 175, 40);
+        textField.setBounds(215, 120, 160, 40);
+        button.setBounds(380, 120, 180, 40);
+
+        add(label);
         add(textField);
-        add(button, BorderLayout.EAST);
-        labelSouth.setPreferredSize(new Dimension(100, 175));
-        labelNorth.setPreferredSize(new Dimension(100, 125));
+        add(button);
         listenerButton();
         listenerRow();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        setSize(400, 400);
+        setSize(600, 400);
+
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
-        jMenuBar.add(menu);
-        setJMenuBar(jMenuBar);
+
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     public void listenerButton() {
@@ -53,7 +53,7 @@ public class CreateTabulatedFunction extends JDialog {
                 getContentPane().setLayout(layout);
                 layout.setAutoCreateGaps(true);
                 layout.setAutoCreateContainerGaps(true);
-                layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                layout.setHorizontalGroup(layout.createParallelGroup(Alignment.CENTER)
                         .addComponent(scrollPane)
                         .addComponent(addRowButton)
                 );
