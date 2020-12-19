@@ -10,7 +10,7 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
     private TabulatedFunctionFactory factory;
 
     public TabulatedDifferentialOperator() {
-        factory = new ArrayTabulatedFunctionFactory();
+        this.factory = new ArrayTabulatedFunctionFactory();
     }
 
     public TabulatedDifferentialOperator(TabulatedFunctionFactory factory) {
@@ -29,15 +29,28 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
     public TabulatedFunction derive(TabulatedFunction function) {
 
         Point[] points = TabulatedFunctionOperationService.asPoints(function);
-        double[] xValues = new double[function.getCount()];
-        double[] yValues = new double[function.getCount()];
-        for (int i = 0; i < xValues.length; i++) {
+        int length = points.length;
+
+        double[] xValues = new double[length];
+        double[] yValues = new double[length];
+
+        for (int i = 0; i < length - 1; i++) {
+            yValues[i] = (points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x);
             xValues[i] = points[i].x;
         }
-        for (int i = 0; i < yValues.length - 1; i++) {
-            yValues[i] = (points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x);
-        }
-        yValues[xValues.length - 1] = yValues[xValues.length - 2];
+
+        yValues[length - 1] = yValues[length - 2];
+        xValues[length - 1] = points[length - 1].x;
+
         return factory.create(xValues, yValues);
+    }
+    public TabulatedFunction deriveSynchronously(TabulatedFunction function) {
+        Object mu = new Object();
+
+        if (function instanceof SynchronizedTabulatedFunction) {
+            return ((SynchronizedTabulatedFunction) function).doSynchronously(this::derive);
+        }
+        SynchronizedTabulatedFunction syncFunc = new SynchronizedTabulatedFunction(function, mu);
+        return syncFunc.doSynchronously(this::derive);
     }
 }
