@@ -1,6 +1,8 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,6 +14,7 @@ public class Menu extends JFrame {
     JMenu menu = new JMenu("Функции");
     JMenuBar jMenuBar = new JMenuBar();
     JMenu menuSettings = new JMenu("Настройки");
+    JMenu menuOperations = new JMenu("Операции");
     final CreateZeroFunction function = new CreateZeroFunction();
     final CreatePowFunction function1 = new CreatePowFunction();
     final CreateSqrFunction function2 = new CreateSqrFunction();
@@ -30,9 +33,21 @@ public class Menu extends JFrame {
         menu.add(createMathFunction());
         jMenuBar.add(menu);
         setJMenuBar(jMenuBar);
-        menuSettings.add(setSettings());
-        jMenuBar.add(menuSettings);
+        jMenuBar.add(createOperations());
+        jMenuBar.add(setSettings());
         setSize(400, 400);
+    }
+
+    private JMenu createOperations() {
+        JMenuItem sum = new JMenuItem("Суммирование");
+        JMenuItem divider = new JMenuItem("Деление");
+        JMenuItem multiply = new JMenuItem("Умножение");
+        JMenuItem subtract = new JMenuItem("Разность");
+        menuOperations.add(subtract);
+        menuOperations.add(sum);
+        menuOperations.add(multiply);
+        menuOperations.add(divider);
+        return menuOperations;
     }
 
     private JMenu createTabulatedFunction() {
@@ -44,28 +59,38 @@ public class Menu extends JFrame {
     }
 
     private JMenu setSettings() {
-        JMenu settings = new JMenu("Настройки реализации");
         array.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     factory = new ArrayTabulatedFunctionFactory();
+                    linkedList.setEnabled(false);
                 }
             }
         });
-
+        array.addActionListener(e -> {
+            if (!array.isSelected()) {
+                linkedList.setEnabled(true);
+            }
+        });
         linkedList.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     factory = new LinkedListTabulatedFunctionFactory();
+                    array.setEnabled(false);
                 }
             }
         });
-        settings.add(array);
-        settings.add(linkedList);
+        linkedList.addActionListener(e -> {
+            if (!linkedList.isSelected()) {
+                array.setEnabled(true);
+            }
+        });
+        menuSettings.add(array);
+        menuSettings.add(linkedList);
 
-        return settings;
+        return menuSettings;
     }
 
     private JMenu createMathFunction() {

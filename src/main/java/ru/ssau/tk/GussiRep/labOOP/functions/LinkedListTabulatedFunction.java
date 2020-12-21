@@ -2,17 +2,20 @@ package ru.ssau.tk.GussiRep.labOOP.functions;
 
 import ru.ssau.tk.GussiRep.labOOP.exceptions.InterpolationException;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Serializable, Removable, Iterable<Point> {
 
+    @Serial
     private static final long serialVersionUID = -461948185547873972L;
     private Node head;
     protected int count;
 
-    private static class Node implements Serializable {
+    static class Node implements Serializable {
+        @Serial
         private static final long serialVersionUID = -8848583414268867499L;
         public double x;
         public double y;
