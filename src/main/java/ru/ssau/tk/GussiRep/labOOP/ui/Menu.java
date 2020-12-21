@@ -1,8 +1,8 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,6 +21,7 @@ public class Menu extends JFrame {
     final CreateASinFunction function3 = new CreateASinFunction();
     final CreateConstantFunction function4 = new CreateConstantFunction();
     JDialog createTabulatedFunction = new CreateTabulatedFunction(this, "Создание функции", true);
+    JDialog operationsWithFunctions = new OperationsWithFunctions(this, "Операции",true);
     final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
     public static TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
 
@@ -39,14 +40,22 @@ public class Menu extends JFrame {
     }
 
     private JMenu createOperations() {
-        JMenuItem sum = new JMenuItem("Суммирование");
-        JMenuItem divider = new JMenuItem("Деление");
-        JMenuItem multiply = new JMenuItem("Умножение");
-        JMenuItem subtract = new JMenuItem("Разность");
-        menuOperations.add(subtract);
-        menuOperations.add(sum);
-        menuOperations.add(multiply);
-        menuOperations.add(divider);
+        menuOperations.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                operationsWithFunctions.setVisible(true);
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
         return menuOperations;
     }
 
