@@ -21,7 +21,7 @@ public class Menu extends JFrame {
     final CreateASinFunction function3 = new CreateASinFunction();
     final CreateConstantFunction function4 = new CreateConstantFunction();
     JDialog createTabulatedFunction = new CreateTabulatedFunction(this, "Создание функции", true);
-    JDialog operationsWithFunctions = new OperationsWithFunctions(this, "Операции",true);
+    JDialog operationsWithFunctions = new OperationsWithFunctions(this, "Операции", true);
     final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
     public static TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
 
