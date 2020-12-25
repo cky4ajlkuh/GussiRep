@@ -14,7 +14,7 @@ public class Menu extends JFrame {
     JMenu menu = new JMenu("Функции");
     JMenuBar jMenuBar = new JMenuBar();
     JMenu menuSettings = new JMenu("Настройки");
-    JMenu menuOperations = new JMenu("Операции");
+
     final CreateZeroFunction function = new CreateZeroFunction();
     final CreatePowFunction function1 = new CreatePowFunction();
     final CreateSqrFunction function2 = new CreateSqrFunction();
@@ -40,22 +40,11 @@ public class Menu extends JFrame {
     }
 
     private JMenu createOperations() {
-        menuOperations.addMenuListener(new MenuListener() {
-            @Override
-            public void menuSelected(MenuEvent e) {
-                operationsWithFunctions.setVisible(true);
-            }
 
-            @Override
-            public void menuDeselected(MenuEvent e) {
-
-            }
-
-            @Override
-            public void menuCanceled(MenuEvent e) {
-
-            }
-        });
+        JMenu menuOperations = new JMenu("Операции");
+        JMenuItem jMenuItem = new JMenuItem("Приступить к операциям");
+        jMenuItem.addActionListener(e -> operationsWithFunctions.setVisible(true));
+        menuOperations.add(jMenuItem);
         return menuOperations;
     }
 
