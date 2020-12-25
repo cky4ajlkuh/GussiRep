@@ -3,6 +3,7 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -37,6 +38,7 @@ public class Menu extends JFrame {
         jMenuBar.add(createOperations());
         jMenuBar.add(setSettings());
         setSize(400, 400);
+
     }
 
     private JMenu createOperations() {

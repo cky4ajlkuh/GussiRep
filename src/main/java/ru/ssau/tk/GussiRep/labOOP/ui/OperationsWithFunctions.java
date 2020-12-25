@@ -1,7 +1,5 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
-import ru.ssau.tk.GussiRep.labOOP.operations.TabulatedFunctionOperationService;
-
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
@@ -10,17 +8,18 @@ import java.util.List;
 
 public class OperationsWithFunctions extends JDialog {
 
-    JMenu menu = new JMenu("Операции");
+    JLabel noName = new JLabel(" ");
+    JLabel nameFirst = new JLabel("Первая функция");
+    JLabel nameSecond = new JLabel("Вторая функция");
+    JLabel nameResult = new JLabel("Результат");
+
+    JComboBox<String> comboBox = new JComboBox<>(new String[]{"", "Умножение", "Деление", "Сумма", "Разность"});
+    JButton create = new JButton("Вычислить");
 
     JCheckBox boxArrayFirst = new JCheckBox("Массив");
     JCheckBox boxLLFirst = new JCheckBox("Связный список");
     JCheckBox boxArraySecond = new JCheckBox("Массив");
     JCheckBox boxLLSecond = new JCheckBox("Связный список");
-
-    JLabel operation = new JLabel("Операция");
-    JTextField operationText = new JTextField();
-
-    TabulatedFunctionOperationService service = new TabulatedFunctionOperationService();
 
     JButton createFirstFunction = new JButton("Создать");
     JButton createSecondFunction = new JButton("Создать");
@@ -32,7 +31,6 @@ public class OperationsWithFunctions extends JDialog {
     JButton saveSecondFunction = new JButton("Сохранить");
     JButton saveResult = new JButton("Сохранить");
 
-    JButton create = new JButton("=");
 
     List<String> xValues = new ArrayList<>();
     List<String> yValues = new ArrayList<>();
@@ -51,23 +49,26 @@ public class OperationsWithFunctions extends JDialog {
 
     public OperationsWithFunctions(Menu menu, String s, Boolean modal) {
         super(menu, s, modal);
+        resultFunction.setPreferredSize(new Dimension(350, 400));
+        resultFunction.setMaximumSize(new Dimension(350, 400));
+        resultFunction.setMinimumSize(new Dimension(350, 400));
 
-        JMenuItem sum = new JMenuItem("Суммирование");
-        JMenuItem division = new JMenuItem("Деление");
-        JMenuItem multiplication = new JMenuItem("Умножение");
-        JMenuItem difference = new JMenuItem("Разность");
+        secondScroll.setPreferredSize(new Dimension(350, 400));
+        secondScroll.setMaximumSize(new Dimension(350, 400));
+        secondScroll.setMinimumSize(new Dimension(350, 400));
 
-        this.menu.add(sum);
-        this.menu.add(division);
-        this.menu.add(multiplication);
-        this.menu.add(difference);
+        firstScroll.setPreferredSize(new Dimension(350, 400));
+        firstScroll.setMaximumSize(new Dimension(350, 400));
+        firstScroll.setMinimumSize(new Dimension(350, 400));
 
-        JMenuBar jMenuBar = new JMenuBar();
-        jMenuBar.add(this.menu);
-        setJMenuBar(jMenuBar);
-        operationText.setPreferredSize(new Dimension(50,25));
-        operationText.setMinimumSize(new Dimension(45,25));
-        operationText.setMaximumSize(new Dimension(55,25));
+        comboBox.setPreferredSize(new Dimension(120, 26));
+        comboBox.setMaximumSize(new Dimension(120, 26));
+        comboBox.setMinimumSize(new Dimension(120, 26));
+
+        //костыль для нормальной высоты
+        noName.setPreferredSize(new Dimension(1, 16));
+        noName.setMaximumSize(new Dimension(1, 16));
+        noName.setMinimumSize(new Dimension(1, 16));
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,6 +76,7 @@ public class OperationsWithFunctions extends JDialog {
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(nameFirst)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(boxArrayFirst)
                                 .addComponent(boxLLFirst)
@@ -87,11 +89,8 @@ public class OperationsWithFunctions extends JDialog {
                                 .addComponent(saveFirstFunction)
                         )
                 )
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(operation)
-                        .addComponent(operationText)
-                )
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(nameSecond)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(boxArraySecond)
                                 .addComponent(boxLLSecond)
@@ -103,21 +102,24 @@ public class OperationsWithFunctions extends JDialog {
                                 .addComponent(loadingSecondFunction)
                                 .addComponent(saveSecondFunction)
                         )
-
                 )
-                .addComponent(create)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(nameResult)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(comboBox)
+                                .addComponent(create)
+                        )
+                        .addComponent(noName)
                         .addComponent(resultFunction)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(saveResult)
                         )
-
                 )
-
         );
         layout.setVerticalGroup(layout.createParallelGroup()
                 .addGroup(
                         layout.createSequentialGroup()
+                                .addComponent(nameFirst)
                                 .addGroup(layout.createParallelGroup()
                                         .addComponent(boxArrayFirst)
                                         .addComponent(boxLLFirst)
@@ -129,12 +131,9 @@ public class OperationsWithFunctions extends JDialog {
                                         .addComponent(saveFirstFunction)
                                 )
                 )
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(operation)
-                        .addComponent(operationText)
-                )
                 .addGroup(
                         layout.createSequentialGroup()
+                                .addComponent(nameSecond)
                                 .addGroup(layout.createParallelGroup()
                                         .addComponent(boxArraySecond)
                                         .addComponent(boxLLSecond)
@@ -146,19 +145,24 @@ public class OperationsWithFunctions extends JDialog {
                                         .addComponent(saveSecondFunction)
                                 )
                 )
-                .addComponent(create)
                 .addGroup(
                         layout.createSequentialGroup()
+                                .addComponent(nameResult)
+                                .addGroup(layout.createParallelGroup()
+                                        .addComponent(comboBox)
+                                        .addComponent(create)
+
+                                )
+                                .addComponent(noName)
                                 .addComponent(resultFunction)
                                 .addGroup(layout.createParallelGroup()
                                         .addComponent(saveResult)
                                 )
                 )
-
         );
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
-        setSize(new Dimension(1200, 600));
+        setSize(new Dimension(1100, 600));
     }
 }

@@ -11,7 +11,7 @@ import static javax.swing.GroupLayout.*;
 
 public class CreateTabulatedFunction extends JDialog {
 
-    JLabel label = new JLabel("Ввведите количество точек: ");
+    JLabel label = new JLabel("Количество точек:");
     JButton button = new JButton("Ввод");
     JTextField textField = new JTextField(5);
     List<String> strings = new ArrayList<>();
@@ -25,9 +25,9 @@ public class CreateTabulatedFunction extends JDialog {
     public CreateTabulatedFunction(Menu menu, String s, boolean modal) {
         super(menu, s, modal);
         setLayout(null);
-        label.setBounds(20, 120, 175, 40);
-        textField.setBounds(215, 120, 160, 40);
-        button.setBounds(380, 120, 180, 40);
+        label.setBounds(20, 170, 110, 40);
+        textField.setBounds(140, 170, 120, 40);
+        button.setBounds(280, 170, 80, 40);
 
         add(label);
         add(textField);
@@ -35,7 +35,7 @@ public class CreateTabulatedFunction extends JDialog {
         listenerButton();
         listenerRow();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        setSize(600, 400);
+        setSize(400, 450);
 
         setVisible(false);
         setResizable(false);
