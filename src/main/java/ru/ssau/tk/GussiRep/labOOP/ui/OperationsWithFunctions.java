@@ -3,6 +3,7 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,6 @@ public class OperationsWithFunctions extends JDialog {
     JButton saveSecondFunction = new JButton("Сохранить");
     JButton saveResult = new JButton("Сохранить");
 
-
     List<String> xValues = new ArrayList<>();
     List<String> yValues = new ArrayList<>();
     AbstractTableModel firstFunction = new TableModel(xValues, yValues);
@@ -49,6 +49,7 @@ public class OperationsWithFunctions extends JDialog {
 
     public OperationsWithFunctions(Menu menu, String s, Boolean modal) {
         super(menu, s, modal);
+
         resultFunction.setPreferredSize(new Dimension(350, 400));
         resultFunction.setMaximumSize(new Dimension(350, 400));
         resultFunction.setMinimumSize(new Dimension(350, 400));
@@ -160,9 +161,73 @@ public class OperationsWithFunctions extends JDialog {
                                 )
                 )
         );
+        checkBoxListener();
+        createFirstFunListener();
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
         setSize(new Dimension(1100, 600));
+    }
+
+    public void checkBoxListener() {
+        boxArrayFirst.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                boxLLFirst.setEnabled(false);
+            }
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                boxLLFirst.setEnabled(true);
+            }
+        });
+
+        boxLLFirst.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                boxArrayFirst.setEnabled(false);
+            }
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                boxArrayFirst.setEnabled(true);
+            }
+        });
+        boxArraySecond.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                boxLLSecond.setEnabled(false);
+            }
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                boxLLSecond.setEnabled(true);
+            }
+        });
+        boxLLSecond.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                boxArraySecond.setEnabled(false);
+            }
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                boxArraySecond.setEnabled(true);
+            }
+        });
+
+    }
+
+    public void createFirstFunListener() {
+        createFirstFunction.addActionListener(e -> {
+            if (boxArrayFirst.isSelected()) {
+                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+                function.setVisible(true);
+            }
+            if (boxLLFirst.isSelected()) {
+                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+                function.setVisible(true);
+                boxArrayFirst.setEnabled(false);
+            }
+        });
+        createSecondFunction.addActionListener(e -> {
+            if (boxLLSecond.isSelected()) {
+                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+                function.setVisible(true);
+            }
+            if (boxArraySecond.isSelected()) {
+                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+                function.setVisible(true);
+                boxArrayFirst.setEnabled(false);
+            }
+        });
     }
 }

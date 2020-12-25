@@ -44,6 +44,28 @@ public class CreateTabulatedFunction extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    public CreateTabulatedFunction(OperationsWithFunctions menu, String s, boolean modal) {
+        super(menu, s, modal);
+        setLayout(null);
+        label.setBounds(20, 170, 110, 40);
+        textField.setBounds(140, 170, 120, 40);
+        button.setBounds(280, 170, 80, 40);
+
+        add(label);
+        add(textField);
+        add(button);
+        listenerButton();
+        listenerRow();
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        setSize(400, 450);
+
+        setVisible(false);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
     public void listenerButton() {
         button.addActionListener(e -> {
             i = Double.parseDouble(textField.getText());
