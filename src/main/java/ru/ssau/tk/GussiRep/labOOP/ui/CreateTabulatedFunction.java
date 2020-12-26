@@ -130,6 +130,7 @@ public class CreateTabulatedFunction extends JDialog {
 
             function = Menu.factory.create(x, y);
             System.out.println(function.toString());
+
         });
     }
 

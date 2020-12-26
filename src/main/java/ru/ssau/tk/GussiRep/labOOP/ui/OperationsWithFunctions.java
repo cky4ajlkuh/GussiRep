@@ -2,6 +2,8 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.io.FunctionsIO;
 
 import javax.swing.*;
@@ -9,10 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -233,7 +232,28 @@ public class OperationsWithFunctions extends JDialog {
             fileSave.showSaveDialog(menu);
             File file = fileSave.getSelectedFile();
             if (file != null) {
+                TabulatedFunction function;
+                TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+                if (boxArrayFirst.isSelected()) {
+                    factory = new ArrayTabulatedFunctionFactory();
+                }
+                if (boxLLFirst.isSelected()) {
+                    factory = new LinkedListTabulatedFunctionFactory();
+                }
+                double[] x = new double[firstFunction.getRowCount()];
+                double[] y = new double[firstFunction.getRowCount()];
+                for (int i = 0; i < firstFunction.getRowCount(); i++) {
+                    x[i] = Double.parseDouble(firstFunction.getValueAt(i, 0).toString());
+                    y[i] = Double.parseDouble(firstFunction.getValueAt(i, 1).toString());
+                }
 
+                function = factory.create(x, y);
+
+                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+                    FunctionsIO.writeTabulatedFunction(out, function);
+                } catch (IOException error) {
+                    error.printStackTrace();
+                }
             }
         });
 
@@ -241,16 +261,50 @@ public class OperationsWithFunctions extends JDialog {
             fileSaveResult.showSaveDialog(menu);
             File file = fileSaveResult.getSelectedFile();
             if (file != null) {
+                TabulatedFunction function;
+                double[] x = new double[result.getRowCount()];
+                double[] y = new double[result.getRowCount()];
+                for (int i = 0; i < result.getRowCount(); i++) {
+                    x[i] = Double.parseDouble(result.getValueAt(i, 0).toString());
+                    y[i] = Double.parseDouble(result.getValueAt(i, 1).toString());
+                }
 
+                function = Menu.factory.create(x, y);
+                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+                    FunctionsIO.writeTabulatedFunction(out, function);
+                } catch (IOException error) {
+                    error.printStackTrace();
+                }
             }
         });
-
 
         saveSecondFunction.addActionListener(e -> {
             fileSaveSecond.showSaveDialog(menu);
             File file = fileSaveSecond.getSelectedFile();
             if (file != null) {
+                TabulatedFunction function;
+                TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
 
+                if (boxArraySecond.isSelected()) {
+                    factory = new ArrayTabulatedFunctionFactory();
+                }
+                if (boxLLSecond.isSelected()) {
+                    factory = new LinkedListTabulatedFunctionFactory();
+                }
+                double[] x = new double[secondFunction.getRowCount()];
+                double[] y = new double[secondFunction.getRowCount()];
+                for (int i = 0; i < secondFunction.getRowCount(); i++) {
+                    x[i] = Double.parseDouble(secondFunction.getValueAt(i, 0).toString());
+                    y[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
+                }
+
+                function = factory.create(x, y);
+
+                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+                    FunctionsIO.writeTabulatedFunction(out, function);
+                } catch (IOException error) {
+                    error.printStackTrace();
+                }
             }
         });
 
