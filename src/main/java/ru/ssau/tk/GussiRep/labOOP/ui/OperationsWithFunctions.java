@@ -207,9 +207,14 @@ public class OperationsWithFunctions extends JDialog {
             fileOpen.showOpenDialog(menu);
             File file = fileOpen.getSelectedFile();
             if (file != null) {
-                try (BufferedReader inArray = new BufferedReader(new FileReader(file))) {
-                    TabulatedFunction arrayFunction = FunctionsIO.readTabulatedFunction(inArray, new ArrayTabulatedFunctionFactory());
-                    System.out.println(arrayFunction.toString());
+                try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, new ArrayTabulatedFunctionFactory());
+                    for (int i = 0; i < function.getCount(); i++) {
+                        xValues.add(i, String.valueOf(function.getX(i)));
+                        yValues.add(i, String.valueOf(function.getY(i)));
+                        firstFunction.fireTableDataChanged();
+                    }
+                    System.out.println(function.toString());
                 } catch (IOException err) {
                     err.printStackTrace();
                 }
@@ -219,9 +224,14 @@ public class OperationsWithFunctions extends JDialog {
             fileOpenSecond.showOpenDialog(menu);
             File file = fileOpenSecond.getSelectedFile();
             if (file != null) {
-                try (BufferedReader inArray = new BufferedReader(new FileReader(file))) {
-                    TabulatedFunction arrayFunction = FunctionsIO.readTabulatedFunction(inArray, new ArrayTabulatedFunctionFactory());
-                    System.out.println(arrayFunction.toString());
+                try (BufferedReader in = new BufferedReader(new FileReader(file))) {
+                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, new ArrayTabulatedFunctionFactory());
+                    for (int i = 0; i < function.getCount(); i++) {
+                        xValuesSecond.add(i, String.valueOf(function.getX(i)));
+                        yValuesSecond.add(i, String.valueOf(function.getY(i)));
+                        secondFunction.fireTableDataChanged();
+                    }
+                    System.out.println(function.toString());
                 } catch (IOException err) {
                     err.printStackTrace();
                 }
