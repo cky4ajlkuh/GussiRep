@@ -5,6 +5,7 @@ import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactor
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.io.FunctionsIO;
+import ru.ssau.tk.GussiRep.labOOP.operations.TabulatedFunctionOperationService;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -57,6 +58,8 @@ public class OperationsWithFunctions extends JDialog {
     AbstractTableModel result = new TableModel(xValuesResult, yValuesResult);
     JTable resultTable = new JTable(result);
     JScrollPane resultFunction = new JScrollPane(resultTable);
+
+    TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(Menu.factory);
 
     public OperationsWithFunctions(Menu menu, String s, Boolean modal) {
         super(menu, s, modal);
@@ -220,6 +223,7 @@ public class OperationsWithFunctions extends JDialog {
                 }
             }
         });
+
         loadingSecondFunction.addActionListener(e -> {
             fileOpenSecond.showOpenDialog(menu);
             File file = fileOpenSecond.getSelectedFile();
@@ -318,8 +322,66 @@ public class OperationsWithFunctions extends JDialog {
             }
         });
 
+        comboBox.addActionListener(event -> {
+            double[] x1 = new double[firstFunction.getRowCount()];
+            double[] y1 = new double[firstFunction.getRowCount()];
+            for (int i = 0; i < firstFunction.getRowCount(); i++) {
+                x1[i] = Double.parseDouble(firstFunction.getValueAt(i, 0).toString());
+                y1[i] = Double.parseDouble(firstFunction.getValueAt(i, 1).toString());
+            }
+            double[] x2 = new double[secondFunction.getRowCount()];
+            double[] y2 = new double[secondFunction.getRowCount()];
+            for (int i = 0; i < secondFunction.getRowCount(); i++) {
+                x2[i] = Double.parseDouble(secondFunction.getValueAt(i, 0).toString());
+                y2[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
+            }
+            TabulatedFunction firstF = Menu.factory.create(x1, y1);
+            TabulatedFunction secondF = Menu.factory.create(x2, y2);
+
+            if (comboBox.getSelectedIndex() == 1) {
+                create.addActionListener(e -> {
+                    TabulatedFunction function = service.multiply(firstF, secondF);
+                    for (int i = 0; i < function.getCount(); i++) {
+                        xValuesResult.add(i, String.valueOf(function.getX(i)));
+                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        result.fireTableDataChanged();
+                    }
+                });
+            }
+            if (comboBox.getSelectedIndex() == 2) {
+                create.addActionListener(e -> {
+                    TabulatedFunction function = service.divider(firstF, secondF);
+                    for (int i = 0; i < function.getCount(); i++) {
+                        xValuesResult.add(i, String.valueOf(function.getX(i)));
+                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        result.fireTableDataChanged();
+                    }
+                });
+            }
+            if (comboBox.getSelectedIndex() == 3) {
+                create.addActionListener(e -> {
+                    TabulatedFunction function = service.sum(firstF, secondF);
+                    for (int i = 0; i < function.getCount(); i++) {
+                        xValuesResult.add(i, String.valueOf(function.getX(i)));
+                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        result.fireTableDataChanged();
+                    }
+                });
+            }
+            if (comboBox.getSelectedIndex() == 4) {
+                create.addActionListener(e -> {
+                    TabulatedFunction function = service.subtract(firstF, secondF);
+                    for (int i = 0; i < function.getCount(); i++) {
+                        xValuesResult.add(i, String.valueOf(function.getX(i)));
+                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        result.fireTableDataChanged();
+                    }
+                });
+            }
+        });
+
         checkBoxListener();
-        createFirstFunListener();
+        createFunctionsListener();
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -363,7 +425,7 @@ public class OperationsWithFunctions extends JDialog {
 
     }
 
-    public void createFirstFunListener() {
+    public void createFunctionsListener() {
         createFirstFunction.addActionListener(e -> {
             if (boxArrayFirst.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
