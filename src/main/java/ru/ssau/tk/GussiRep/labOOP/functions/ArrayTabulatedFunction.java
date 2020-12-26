@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Serializable, Insertable, Iterable<Point> {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Serializable, Removable, Insertable, Iterable<Point> {
 
     private static final long serialVersionUID = 2460930254449651650L;
     private double[] xValues;
@@ -124,6 +124,23 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
             throw new InterpolationException("X is out of bounds");
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
+    }
+
+    @Override
+    public void remove(int index){
+        if (count <=2) {
+            throw new IllegalArgumentException("Array's length is less than 2");
+        }
+        double[] valuesX = new double[count - 1];
+        double[] valuesY = new double[count - 1];
+        System.arraycopy(yValues, 0, valuesX, 0, index);
+        System.arraycopy(yValues, index + 1, valuesY, index, count - index - 1);
+
+        System.arraycopy(xValues, 0, valuesX, 0, index);
+        System.arraycopy(xValues, index + 1, valuesY, index, count - index - 1);
+        count--;
+        this.xValues = valuesX;
+        this.yValues = valuesY;
     }
 
     @Override

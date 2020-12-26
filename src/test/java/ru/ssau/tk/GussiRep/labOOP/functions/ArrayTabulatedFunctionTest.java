@@ -15,6 +15,13 @@ public class ArrayTabulatedFunctionTest {
     private final static double DELTA = 0.001;
     private final double[] valuesX = new double[]{-6., -4., -2., -1., 0., 1., 3., 9.};
     private final double[] valuesY = new double[]{36., 16., 4., 1., 0, 1., 9, 81.};
+    double[] x = new double[]{2., 3., 4.};
+    double[] y = new double[]{4., 9., 16.};
+
+    private ArrayTabulatedFunction type8(){
+        return new ArrayTabulatedFunction(x, y);
+    }
+
     private final MathFunction sqrFunc = new SqrFunction();
 
     private ArrayTabulatedFunction getDefinedThroughArrays() {
@@ -307,5 +314,26 @@ public class ArrayTabulatedFunctionTest {
             assertEquals(point.x, functionSecond.getX(j++));
         }
         assertEquals(j, 5, 0.01);
+    }
+
+    @Test
+    public void testRemove() {
+        ArrayTabulatedFunction function = type8();
+        function.remove(0);
+        assertEquals(function.getX(0), 2.0);
+        assertEquals(function.getY(0), 4.0);
+        assertEquals(function.getX(1), 3.0);
+        assertEquals(function.getY(1), 9.0);
+        assertEquals(function.getX(2), 4.0);
+        assertEquals(function.getY(2), 16.0);
+        assertEquals(function.getCount(), 3);
+        assertEquals(function.getY(1), 9.0);
+        function.remove(1);
+        assertEquals(function.getX(0), 2.0);
+        assertEquals(function.getY(0), 4.0);
+        assertEquals(function.getX(1), 4.0);
+        assertEquals(function.getY(1), 16.0);
+        assertEquals(function.getCount(), 2);
+        assertThrows(IllegalArgumentException.class, () -> function.remove(0));
     }
 }
