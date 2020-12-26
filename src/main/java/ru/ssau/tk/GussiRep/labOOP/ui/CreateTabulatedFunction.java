@@ -1,6 +1,8 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -20,6 +22,7 @@ public class CreateTabulatedFunction extends JDialog {
     JTable table = new JTable(tableModel);
     JButton addRowButton = new JButton("Создать");
     JScrollPane scrollPane = new JScrollPane(table);
+    TabulatedFunction function;
     double i;
 
     public CreateTabulatedFunction(Menu menu, String s, boolean modal) {
@@ -51,6 +54,19 @@ public class CreateTabulatedFunction extends JDialog {
         textField.setBounds(140, 170, 120, 40);
         button.setBounds(280, 170, 80, 40);
 
+        if (menu.boxArrayFirst.isSelected()) {
+            Menu.factory = new ArrayTabulatedFunctionFactory();
+        }
+        if (menu.boxLLFirst.isSelected()) {
+            Menu.factory = new LinkedListTabulatedFunctionFactory();
+        }
+        if (menu.boxArraySecond.isSelected()) {
+            Menu.factory = new ArrayTabulatedFunctionFactory();
+        }
+        if (menu.boxLLSecond.isSelected()) {
+            Menu.factory = new LinkedListTabulatedFunctionFactory();
+        }
+
         add(label);
         add(textField);
         add(button);
@@ -58,7 +74,6 @@ public class CreateTabulatedFunction extends JDialog {
         listenerRow();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setSize(400, 450);
-
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -113,7 +128,7 @@ public class CreateTabulatedFunction extends JDialog {
                 y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
             }
 
-            TabulatedFunction function = Menu.factory.create(x, y);
+            function = Menu.factory.create(x, y);
             System.out.println(function.toString());
         });
     }

@@ -18,7 +18,6 @@ public class TableModel extends AbstractTableModel {
         this.stringsY = strings2;
     }
 
-
     @Override
     public int getRowCount() {
         return stringsX.size();

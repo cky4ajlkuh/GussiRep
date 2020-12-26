@@ -1,9 +1,18 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
+import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.io.FunctionsIO;
+
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,20 +44,54 @@ public class OperationsWithFunctions extends JDialog {
     List<String> xValues = new ArrayList<>();
     List<String> yValues = new ArrayList<>();
     AbstractTableModel firstFunction = new TableModel(xValues, yValues);
-    JScrollPane firstScroll = new JScrollPane(new JTable(firstFunction));
+    JTable firstTable = new JTable(firstFunction);
+    JScrollPane firstScroll = new JScrollPane(firstTable);
 
     List<String> xValuesSecond = new ArrayList<>();
     List<String> yValuesSecond = new ArrayList<>();
     AbstractTableModel secondFunction = new TableModel(xValuesSecond, yValuesSecond);
-    JScrollPane secondScroll = new JScrollPane(new JTable(secondFunction));
+    JTable secondTable = new JTable(secondFunction);
+    JScrollPane secondScroll = new JScrollPane(secondTable);
 
     List<String> xValuesResult = new ArrayList<>();
     List<String> yValuesResult = new ArrayList<>();
     AbstractTableModel result = new TableModel(xValuesResult, yValuesResult);
-    JScrollPane resultFunction = new JScrollPane(new JTable(result));
+    JTable resultTable = new JTable(result);
+    JScrollPane resultFunction = new JScrollPane(resultTable);
 
     public OperationsWithFunctions(Menu menu, String s, Boolean modal) {
         super(menu, s, modal);
+
+        JFileChooser fileOpen = new JFileChooser();
+        JFileChooser fileOpenSecond = new JFileChooser();
+        JFileChooser fileSave = new JFileChooser();
+        JFileChooser fileSaveSecond = new JFileChooser();
+        JFileChooser fileSaveResult = new JFileChooser();
+
+        fileSaveSecond.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileSaveSecond.setDialogTitle("Загрузка функции");
+        fileSaveSecond.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileSaveSecond.setAcceptAllFileFilterUsed(false);
+
+        fileSave.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileSave.setDialogTitle("Загрузка функции");
+        fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileSave.setAcceptAllFileFilterUsed(false);
+
+        fileSaveResult.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileSaveResult.setDialogTitle("Загрузка функции");
+        fileSaveResult.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileSaveResult.setAcceptAllFileFilterUsed(false);
+
+        fileOpen.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileOpen.setDialogTitle("Загрузка функции");
+        fileOpen.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileOpen.setAcceptAllFileFilterUsed(false);
+
+        fileOpenSecond.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileOpenSecond.setDialogTitle("Загрузка функции");
+        fileOpenSecond.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileOpenSecond.setAcceptAllFileFilterUsed(false);
 
         resultFunction.setPreferredSize(new Dimension(350, 400));
         resultFunction.setMaximumSize(new Dimension(350, 400));
@@ -161,6 +204,56 @@ public class OperationsWithFunctions extends JDialog {
                                 )
                 )
         );
+        loadingFirstFunction.addActionListener(e -> {
+            fileOpen.showOpenDialog(menu);
+            File file = fileOpen.getSelectedFile();
+            if (file != null) {
+                try (BufferedReader inArray = new BufferedReader(new FileReader(file))) {
+                    TabulatedFunction arrayFunction = FunctionsIO.readTabulatedFunction(inArray, new ArrayTabulatedFunctionFactory());
+                    System.out.println(arrayFunction.toString());
+                } catch (IOException err) {
+                    err.printStackTrace();
+                }
+            }
+        });
+        loadingSecondFunction.addActionListener(e -> {
+            fileOpenSecond.showOpenDialog(menu);
+            File file = fileOpenSecond.getSelectedFile();
+            if (file != null) {
+                try (BufferedReader inArray = new BufferedReader(new FileReader(file))) {
+                    TabulatedFunction arrayFunction = FunctionsIO.readTabulatedFunction(inArray, new ArrayTabulatedFunctionFactory());
+                    System.out.println(arrayFunction.toString());
+                } catch (IOException err) {
+                    err.printStackTrace();
+                }
+            }
+        });
+
+        saveFirstFunction.addActionListener(e -> {
+            fileSave.showSaveDialog(menu);
+            File file = fileSave.getSelectedFile();
+            if (file != null) {
+
+            }
+        });
+
+        saveResult.addActionListener(e -> {
+            fileSaveResult.showSaveDialog(menu);
+            File file = fileSaveResult.getSelectedFile();
+            if (file != null) {
+
+            }
+        });
+
+
+        saveSecondFunction.addActionListener(e -> {
+            fileSaveSecond.showSaveDialog(menu);
+            File file = fileSaveSecond.getSelectedFile();
+            if (file != null) {
+
+            }
+        });
+
         checkBoxListener();
         createFirstFunListener();
         setVisible(false);
@@ -211,22 +304,40 @@ public class OperationsWithFunctions extends JDialog {
             if (boxArrayFirst.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
+                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
+                    xValues.add(String.valueOf(function.function.getX(i)));
+                    yValues.add(String.valueOf(function.function.getY(i)));
+                    firstFunction.fireTableDataChanged();
+                }
             }
             if (boxLLFirst.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
-                boxArrayFirst.setEnabled(false);
+                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
+                    xValues.add(String.valueOf(function.function.getX(i)));
+                    yValues.add(String.valueOf(function.function.getY(i)));
+                    firstFunction.fireTableDataChanged();
+                }
             }
         });
         createSecondFunction.addActionListener(e -> {
             if (boxLLSecond.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
+                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
+                    xValuesSecond.add(String.valueOf(function.function.getX(i)));
+                    yValuesSecond.add(String.valueOf(function.function.getY(i)));
+                    secondFunction.fireTableDataChanged();
+                }
             }
             if (boxArraySecond.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
-                boxArrayFirst.setEnabled(false);
+                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
+                    xValuesSecond.add(String.valueOf(function.function.getX(i)));
+                    yValuesSecond.add(String.valueOf(function.function.getY(i)));
+                    secondFunction.fireTableDataChanged();
+                }
             }
         });
     }
