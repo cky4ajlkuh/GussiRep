@@ -1,8 +1,12 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
@@ -13,18 +17,18 @@ public class Menu extends JFrame {
     JMenuBar jMenuBar = new JMenuBar();
     JMenu menuSettings = new JMenu("Настройки");
 
-    final CreateZeroFunction function = new CreateZeroFunction();
-    final CreatePowFunction function1 = new CreatePowFunction();
-    final CreateSqrFunction function2 = new CreateSqrFunction();
-    final CreateASinFunction function3 = new CreateASinFunction();
-    final CreateConstantFunction function4 = new CreateConstantFunction();
-    JDialog createTabulatedFunction = new CreateTabulatedFunction(this, "Создание функции", true);
-    JDialog operationsWithFunctions = new OperationsWithFunctions(this, "Операции", true);
-    final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
+    private final CreateZeroFunction function = new CreateZeroFunction();
+    private final CreatePowFunction function1 = new CreatePowFunction();
+    private final CreateSqrFunction function2 = new CreateSqrFunction();
+    private final CreateASinFunction function3 = new CreateASinFunction();
+    private final CreateConstantFunction function4 = new CreateConstantFunction();
+    private final JDialog createTabulatedFunction = new CreateTabulatedFunction(this, "Создание функции", true);
+    private final JDialog operationsWithFunctions = new OperationsWithFunctions(this, "Операции", true);
+    private final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
     public static TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
 
-    JRadioButtonMenuItem array = new JRadioButtonMenuItem("Массив");
-    JRadioButtonMenuItem linkedList = new JRadioButtonMenuItem("Связный список");
+    private final JRadioButtonMenuItem array = new JRadioButtonMenuItem("Массив");
+    private final JRadioButtonMenuItem linkedList = new JRadioButtonMenuItem("Связный список");
 
     Menu(String s) {
         super(s);
@@ -35,11 +39,9 @@ public class Menu extends JFrame {
         jMenuBar.add(createOperations());
         jMenuBar.add(setSettings());
         setSize(400, 400);
-
     }
 
     private JMenu createOperations() {
-
         JMenu menuOperations = new JMenu("Операции");
         JMenuItem jMenuItem = new JMenuItem("Приступить к операциям");
         jMenuItem.addActionListener(e -> operationsWithFunctions.setVisible(true));
@@ -51,6 +53,7 @@ public class Menu extends JFrame {
         JMenu tabulatedFunction = new JMenu("Табулированная функция");
         JMenuItem tabFunction = new JMenuItem("Ввести количество точек");
         tabFunction.addActionListener(event -> createTabulatedFunction.setVisible(true));
+
         tabulatedFunction.add(tabFunction);
         return tabulatedFunction;
     }

@@ -9,7 +9,6 @@ import ru.ssau.tk.GussiRep.labOOP.operations.TabulatedFunctionOperationService;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.*;
@@ -18,48 +17,37 @@ import java.util.List;
 
 public class OperationsWithFunctions extends JDialog {
 
-    JLabel noName = new JLabel(" ");
-    JLabel nameFirst = new JLabel("Первая функция");
-    JLabel nameSecond = new JLabel("Вторая функция");
-    JLabel nameResult = new JLabel("Результат");
+    private final JComboBox<String> comboBox = new JComboBox<>(new String[]{"", "Умножение", "Деление", "Сумма", "Разность"});
 
-    JComboBox<String> comboBox = new JComboBox<>(new String[]{"", "Умножение", "Деление", "Сумма", "Разность"});
-    JButton create = new JButton("Вычислить");
+    public final JCheckBox boxArrayFirst = new JCheckBox("Массив");
+    public final JCheckBox boxLLFirst = new JCheckBox("Связный список");
+    public final JCheckBox boxArraySecond = new JCheckBox("Массив");
+    public final JCheckBox boxLLSecond = new JCheckBox("Связный список");
 
-    JCheckBox boxArrayFirst = new JCheckBox("Массив");
-    JCheckBox boxLLFirst = new JCheckBox("Связный список");
-    JCheckBox boxArraySecond = new JCheckBox("Массив");
-    JCheckBox boxLLSecond = new JCheckBox("Связный список");
+    private final JButton createFirstFunction = new JButton("Создать");
+    private final JButton createSecondFunction = new JButton("Создать");
 
-    JButton createFirstFunction = new JButton("Создать");
-    JButton createSecondFunction = new JButton("Создать");
+    private List<Double> xValues = new ArrayList<>();
+    private List<Double> yValues = new ArrayList<>();
+    private TableModel firstFunction = new TableModel(xValues, yValues);
+    private final JTable firstTable = new JTable(firstFunction);
+    private final JScrollPane firstScroll = new JScrollPane(firstTable);
 
-    JButton loadingFirstFunction = new JButton("Загрузить");
-    JButton loadingSecondFunction = new JButton("Загрузить");
+    private List<Double> xValuesSecond = new ArrayList<>();
+    private List<Double> yValuesSecond = new ArrayList<>();
+    private TableModel secondFunction = new TableModel(xValuesSecond, yValuesSecond);
+    private final JTable secondTable = new JTable(secondFunction);
+    private final JScrollPane secondScroll = new JScrollPane(secondTable);
 
-    JButton saveFirstFunction = new JButton("Сохранить");
-    JButton saveSecondFunction = new JButton("Сохранить");
-    JButton saveResult = new JButton("Сохранить");
+    private List<Double> xValuesResult = new ArrayList<>();
+    private List<Double> yValuesResult = new ArrayList<>();
+    private TableModel result = new TableModel(xValuesResult, yValuesResult);
+    private final JTable resultTable = new JTable(result);
+    private final JScrollPane resultFunction = new JScrollPane(resultTable);
 
-    List<String> xValues = new ArrayList<>();
-    List<String> yValues = new ArrayList<>();
-    AbstractTableModel firstFunction = new TableModel(xValues, yValues);
-    JTable firstTable = new JTable(firstFunction);
-    JScrollPane firstScroll = new JScrollPane(firstTable);
-
-    List<String> xValuesSecond = new ArrayList<>();
-    List<String> yValuesSecond = new ArrayList<>();
-    AbstractTableModel secondFunction = new TableModel(xValuesSecond, yValuesSecond);
-    JTable secondTable = new JTable(secondFunction);
-    JScrollPane secondScroll = new JScrollPane(secondTable);
-
-    List<String> xValuesResult = new ArrayList<>();
-    List<String> yValuesResult = new ArrayList<>();
-    AbstractTableModel result = new TableModel(xValuesResult, yValuesResult);
-    JTable resultTable = new JTable(result);
-    JScrollPane resultFunction = new JScrollPane(resultTable);
-
-    TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(Menu.factory);
+    private final TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(Menu.factory);
+    private TabulatedFunction firstF;
+    private TabulatedFunction secondF;
 
     public OperationsWithFunctions(Menu menu, String s, Boolean modal) {
         super(menu, s, modal);
@@ -71,28 +59,28 @@ public class OperationsWithFunctions extends JDialog {
         JFileChooser fileSaveResult = new JFileChooser();
 
         fileSaveSecond.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileSaveSecond.setDialogTitle("Загрузка функции");
-        fileSaveSecond.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileSaveSecond.setDialogTitle("Сохранение функции");
+        fileSaveSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileSaveSecond.setAcceptAllFileFilterUsed(false);
 
         fileSave.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileSave.setDialogTitle("Загрузка функции");
-        fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileSave.setDialogTitle("Сохранение функции");
+        fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileSave.setAcceptAllFileFilterUsed(false);
 
         fileSaveResult.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileSaveResult.setDialogTitle("Загрузка функции");
-        fileSaveResult.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileSaveResult.setDialogTitle("Сохранение функции");
+        fileSaveResult.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileSaveResult.setAcceptAllFileFilterUsed(false);
 
         fileOpen.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileOpen.setDialogTitle("Загрузка функции");
-        fileOpen.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileOpen.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileOpen.setAcceptAllFileFilterUsed(false);
 
         fileOpenSecond.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileOpenSecond.setDialogTitle("Загрузка функции");
-        fileOpenSecond.addChoosableFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileOpenSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileOpenSecond.setAcceptAllFileFilterUsed(false);
 
         resultFunction.setPreferredSize(new Dimension(350, 400));
@@ -112,6 +100,7 @@ public class OperationsWithFunctions extends JDialog {
         comboBox.setMinimumSize(new Dimension(120, 26));
 
         //костыль для нормальной высоты
+        JLabel noName = new JLabel(" ");
         noName.setPreferredSize(new Dimension(1, 16));
         noName.setMaximumSize(new Dimension(1, 16));
         noName.setMinimumSize(new Dimension(1, 16));
@@ -120,6 +109,19 @@ public class OperationsWithFunctions extends JDialog {
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
+
+        JButton create = new JButton("Вычислить");
+
+        JLabel nameFirst = new JLabel("Первая функция");
+        JLabel nameSecond = new JLabel("Вторая функция");
+        JLabel nameResult = new JLabel("Результат");
+
+        JButton saveFirstFunction = new JButton("Сохранить");
+        JButton saveSecondFunction = new JButton("Сохранить");
+        JButton saveResult = new JButton("Сохранить");
+        JButton loadingSecondFunction = new JButton("Загрузить");
+        JButton loadingFirstFunction = new JButton("Загрузить");
+
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(nameFirst)
@@ -210,17 +212,21 @@ public class OperationsWithFunctions extends JDialog {
             fileOpen.showOpenDialog(menu);
             File file = fileOpen.getSelectedFile();
             if (file != null) {
+                firstFunction.setNulls();
                 try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, new ArrayTabulatedFunctionFactory());
+                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, Menu.factory);
+                    firstFunction.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
-                        xValues.add(i, String.valueOf(function.getX(i)));
-                        yValues.add(i, String.valueOf(function.getY(i)));
+                        xValues.add(i, (function.getX(i)));
+                        yValues.add(i, (function.getY(i)));
                         firstFunction.fireTableDataChanged();
                     }
                     System.out.println(function.toString());
-                } catch (IOException err) {
-                    err.printStackTrace();
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(this, err.getMessage());
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Файл не найдет");
             }
         });
 
@@ -228,17 +234,21 @@ public class OperationsWithFunctions extends JDialog {
             fileOpenSecond.showOpenDialog(menu);
             File file = fileOpenSecond.getSelectedFile();
             if (file != null) {
+                secondFunction.setNulls();
                 try (BufferedReader in = new BufferedReader(new FileReader(file))) {
                     TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, new ArrayTabulatedFunctionFactory());
+                    secondFunction.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
-                        xValuesSecond.add(i, String.valueOf(function.getX(i)));
-                        yValuesSecond.add(i, String.valueOf(function.getY(i)));
+                        xValuesSecond.add(i, (function.getX(i)));
+                        yValuesSecond.add(i, (function.getY(i)));
                         secondFunction.fireTableDataChanged();
                     }
                     System.out.println(function.toString());
-                } catch (IOException err) {
-                    err.printStackTrace();
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(this, err.getMessage());
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Файл не найдет");
             }
         });
 
@@ -246,6 +256,9 @@ public class OperationsWithFunctions extends JDialog {
             fileSave.showSaveDialog(menu);
             File file = fileSave.getSelectedFile();
             if (file != null) {
+                if (xValues.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
+                }
                 TabulatedFunction function;
                 TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
                 if (boxArrayFirst.isSelected()) {
@@ -265,29 +278,8 @@ public class OperationsWithFunctions extends JDialog {
 
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
                     FunctionsIO.writeTabulatedFunction(out, function);
-                } catch (IOException error) {
-                    error.printStackTrace();
-                }
-            }
-        });
-
-        saveResult.addActionListener(e -> {
-            fileSaveResult.showSaveDialog(menu);
-            File file = fileSaveResult.getSelectedFile();
-            if (file != null) {
-                TabulatedFunction function;
-                double[] x = new double[result.getRowCount()];
-                double[] y = new double[result.getRowCount()];
-                for (int i = 0; i < result.getRowCount(); i++) {
-                    x[i] = Double.parseDouble(result.getValueAt(i, 0).toString());
-                    y[i] = Double.parseDouble(result.getValueAt(i, 1).toString());
-                }
-
-                function = Menu.factory.create(x, y);
-                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-                    FunctionsIO.writeTabulatedFunction(out, function);
-                } catch (IOException error) {
-                    error.printStackTrace();
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(this, err.getMessage());
                 }
             }
         });
@@ -296,6 +288,7 @@ public class OperationsWithFunctions extends JDialog {
             fileSaveSecond.showSaveDialog(menu);
             File file = fileSaveSecond.getSelectedFile();
             if (file != null) {
+
                 TabulatedFunction function;
                 TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
 
@@ -316,8 +309,29 @@ public class OperationsWithFunctions extends JDialog {
 
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
                     FunctionsIO.writeTabulatedFunction(out, function);
-                } catch (IOException error) {
-                    error.printStackTrace();
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(this, err.getMessage());
+                }
+            }
+        });
+
+        saveResult.addActionListener(e -> {
+            fileSaveResult.showSaveDialog(menu);
+            File file = fileSaveResult.getSelectedFile();
+            if (file != null) {
+                TabulatedFunction function;
+                double[] x = new double[result.getRowCount()];
+                double[] y = new double[result.getRowCount()];
+                for (int i = 0; i < result.getRowCount(); i++) {
+                    x[i] = Double.parseDouble(result.getValueAt(i, 0).toString());
+                    y[i] = Double.parseDouble(result.getValueAt(i, 1).toString());
+                }
+
+                function = Menu.factory.create(x, y);
+                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+                    FunctionsIO.writeTabulatedFunction(out, function);
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(this, err.getMessage());
                 }
             }
         });
@@ -335,48 +349,67 @@ public class OperationsWithFunctions extends JDialog {
                 x2[i] = Double.parseDouble(secondFunction.getValueAt(i, 0).toString());
                 y2[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
             }
-            TabulatedFunction firstF = Menu.factory.create(x1, y1);
-            TabulatedFunction secondF = Menu.factory.create(x2, y2);
+            firstF = Menu.factory.create(x1, y1);
+            secondF = Menu.factory.create(x2, y2);
+        });
 
+        create.addActionListener(e -> {
             if (comboBox.getSelectedIndex() == 1) {
-                create.addActionListener(e -> {
+                try {
+                    result.setNulls();
                     TabulatedFunction function = service.multiply(firstF, secondF);
+                    result.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, String.valueOf(function.getX(i)));
-                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        xValuesResult.add(i, (function.getX(i)));
+                        yValuesResult.add(i, (function.getY(i)));
                         result.fireTableDataChanged();
                     }
-                });
+                    resultFunction.setEnabled(false);
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                }
             }
             if (comboBox.getSelectedIndex() == 2) {
-                create.addActionListener(e -> {
+                try {
+                    result.setNulls();
                     TabulatedFunction function = service.divider(firstF, secondF);
+                    result.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, String.valueOf(function.getX(i)));
-                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        xValuesResult.add(i, (function.getX(i)));
+                        yValuesResult.add(i, (function.getY(i)));
                         result.fireTableDataChanged();
                     }
-                });
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                }
             }
             if (comboBox.getSelectedIndex() == 3) {
-                create.addActionListener(e -> {
+                try {
+                    result.setNulls();
                     TabulatedFunction function = service.sum(firstF, secondF);
+                    result.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, String.valueOf(function.getX(i)));
-                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        xValuesResult.add(i, (function.getX(i)));
+                        yValuesResult.add(i, (function.getY(i)));
                         result.fireTableDataChanged();
                     }
-                });
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                }
             }
             if (comboBox.getSelectedIndex() == 4) {
-                create.addActionListener(e -> {
+                try {
+                    result.setNulls();
                     TabulatedFunction function = service.subtract(firstF, secondF);
+                    result.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, String.valueOf(function.getX(i)));
-                        yValuesResult.add(i, String.valueOf(function.getY(i)));
+                        xValuesResult.add(i, (function.getX(i)));
+                        yValuesResult.add(i, (function.getY(i)));
                         result.fireTableDataChanged();
                     }
-                });
+                } catch (Exception exception) {
+                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                }
             }
         });
 
@@ -384,7 +417,6 @@ public class OperationsWithFunctions extends JDialog {
         createFunctionsListener();
         setVisible(false);
         setResizable(false);
-        setLocationRelativeTo(null);
         setSize(new Dimension(1100, 600));
     }
 
@@ -430,18 +462,22 @@ public class OperationsWithFunctions extends JDialog {
             if (boxArrayFirst.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
-                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
-                    xValues.add(String.valueOf(function.function.getX(i)));
-                    yValues.add(String.valueOf(function.function.getY(i)));
+                firstFunction.setNulls();
+                firstFunction.setCount(function.function.getCount());
+                for (int i = 0; i < function.function.getCount(); i++) {
+                    xValues.add(function.function.getX(i));
+                    yValues.add(function.function.getY(i));
                     firstFunction.fireTableDataChanged();
                 }
             }
             if (boxLLFirst.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
+                firstFunction.setNulls();
+                firstFunction.setCount(function.function.getCount());
                 for (int i = 0; i < function.tableModel.getRowCount(); i++) {
-                    xValues.add(String.valueOf(function.function.getX(i)));
-                    yValues.add(String.valueOf(function.function.getY(i)));
+                    xValues.add((function.function.getX(i)));
+                    yValues.add((function.function.getY(i)));
                     firstFunction.fireTableDataChanged();
                 }
             }
@@ -450,18 +486,22 @@ public class OperationsWithFunctions extends JDialog {
             if (boxLLSecond.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
+                secondFunction.setNulls();
+                secondFunction.setCount(function.function.getCount());
                 for (int i = 0; i < function.tableModel.getRowCount(); i++) {
-                    xValuesSecond.add(String.valueOf(function.function.getX(i)));
-                    yValuesSecond.add(String.valueOf(function.function.getY(i)));
+                    xValuesSecond.add((function.function.getX(i)));
+                    yValuesSecond.add((function.function.getY(i)));
                     secondFunction.fireTableDataChanged();
                 }
             }
             if (boxArraySecond.isSelected()) {
                 CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
                 function.setVisible(true);
+                secondFunction.setNulls();
+                secondFunction.setCount(function.function.getCount());
                 for (int i = 0; i < function.tableModel.getRowCount(); i++) {
-                    xValuesSecond.add(String.valueOf(function.function.getX(i)));
-                    yValuesSecond.add(String.valueOf(function.function.getY(i)));
+                    xValuesSecond.add((function.function.getX(i)));
+                    yValuesSecond.add((function.function.getY(i)));
                     secondFunction.fireTableDataChanged();
                 }
             }

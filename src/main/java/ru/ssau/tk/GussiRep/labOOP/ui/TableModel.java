@@ -10,17 +10,28 @@ public class TableModel extends AbstractTableModel {
     private static final long serialVersionUID = -6914076134122253408L;
     private static final int X_COLUMN_NUMBER = 0;
     private static final int Y_COLUMN_NUMBER = 1;
-    private final List<String> stringsX;
-    private final List<String> stringsY;
+    private final List<Double> stringsX;
+    private final List<Double> stringsY;
+    private int count;
 
-    public TableModel(List<String> strings, List<String> strings2) {
-        this.stringsX = strings;
-        this.stringsY = strings2;
+    public TableModel(List<Double> stringsX, List<Double> stringsY) {
+        this.stringsX = stringsX;
+        this.stringsY = stringsY;
+        this.count = stringsX.size();
+    }
+
+    public void setCount(int size) {
+        count = size;
+    }
+
+    public void setNulls() {
+        stringsY.removeAll(List.copyOf(stringsY));
+        stringsX.removeAll(List.copyOf(stringsX));
     }
 
     @Override
     public int getRowCount() {
-        return stringsX.size();
+        return count;
     }
 
     @Override
@@ -31,10 +42,10 @@ public class TableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if (columnIndex == X_COLUMN_NUMBER) {
-            stringsX.set(rowIndex, String.valueOf(aValue));
+            stringsX.set(rowIndex, Double.parseDouble(aValue.toString()));
         }
         if (columnIndex == Y_COLUMN_NUMBER) {
-            stringsY.set(rowIndex, String.valueOf(aValue));
+            stringsY.set(rowIndex, Double.parseDouble(aValue.toString()));
         }
     }
 
