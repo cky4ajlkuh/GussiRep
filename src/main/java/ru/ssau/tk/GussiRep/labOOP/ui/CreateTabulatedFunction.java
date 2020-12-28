@@ -1,12 +1,8 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
-import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,19 +48,6 @@ public class CreateTabulatedFunction extends JDialog {
         label.setBounds(20, 170, 110, 40);
         textField.setBounds(140, 170, 120, 40);
         button.setBounds(280, 170, 80, 40);
-
-        if (menu.boxArrayFirst.isSelected()) {
-            Menu.factory = new ArrayTabulatedFunctionFactory();
-        }
-        if (menu.boxLLFirst.isSelected()) {
-            Menu.factory = new LinkedListTabulatedFunctionFactory();
-        }
-        if (menu.boxArraySecond.isSelected()) {
-            Menu.factory = new ArrayTabulatedFunctionFactory();
-        }
-        if (menu.boxLLSecond.isSelected()) {
-            Menu.factory = new LinkedListTabulatedFunctionFactory();
-        }
 
         add(label);
         add(textField);

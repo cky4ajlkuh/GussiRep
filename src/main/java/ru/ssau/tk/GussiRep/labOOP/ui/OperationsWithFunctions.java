@@ -1,16 +1,12 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
-import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
-import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
-import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.io.FunctionsIO;
 import ru.ssau.tk.GussiRep.labOOP.operations.TabulatedFunctionOperationService;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ItemEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +14,6 @@ import java.util.List;
 public class OperationsWithFunctions extends JDialog {
 
     private final JComboBox<String> comboBox = new JComboBox<>(new String[]{"", "Умножение", "Деление", "Сумма", "Разность"});
-
-    public final JCheckBox boxArrayFirst = new JCheckBox("Массив");
-    public final JCheckBox boxLLFirst = new JCheckBox("Связный список");
-    public final JCheckBox boxArraySecond = new JCheckBox("Массив");
-    public final JCheckBox boxLLSecond = new JCheckBox("Связный список");
 
     private final JButton createFirstFunction = new JButton("Создать");
     private final JButton createSecondFunction = new JButton("Создать");
@@ -133,12 +124,6 @@ public class OperationsWithFunctions extends JDialog {
         comboBox.setMaximumSize(new Dimension(120, 26));
         comboBox.setMinimumSize(new Dimension(120, 26));
 
-        //костыль для нормальной высоты
-        JLabel noName = new JLabel(" ");
-        noName.setPreferredSize(new Dimension(1, 16));
-        noName.setMaximumSize(new Dimension(1, 16));
-        noName.setMinimumSize(new Dimension(1, 16));
-
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -159,10 +144,6 @@ public class OperationsWithFunctions extends JDialog {
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(nameFirst)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(boxArrayFirst)
-                                .addComponent(boxLLFirst)
-                        )
                         .addComponent(createFirstFunction)
                         .addComponent(firstScroll)
 
@@ -173,13 +154,8 @@ public class OperationsWithFunctions extends JDialog {
                 )
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(nameSecond)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(boxArraySecond)
-                                .addComponent(boxLLSecond)
-                        )
                         .addComponent(createSecondFunction)
                         .addComponent(secondScroll)
-
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(loadingSecondFunction)
                                 .addComponent(saveSecondFunction)
@@ -191,7 +167,6 @@ public class OperationsWithFunctions extends JDialog {
                                 .addComponent(comboBox)
                                 .addComponent(create)
                         )
-                        .addComponent(noName)
                         .addComponent(resultFunction)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(saveResult)
@@ -202,10 +177,6 @@ public class OperationsWithFunctions extends JDialog {
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addComponent(nameFirst)
-                                .addGroup(layout.createParallelGroup()
-                                        .addComponent(boxArrayFirst)
-                                        .addComponent(boxLLFirst)
-                                )
                                 .addComponent(createFirstFunction)
                                 .addComponent(firstScroll)
                                 .addGroup(layout.createParallelGroup()
@@ -216,10 +187,6 @@ public class OperationsWithFunctions extends JDialog {
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addComponent(nameSecond)
-                                .addGroup(layout.createParallelGroup()
-                                        .addComponent(boxArraySecond)
-                                        .addComponent(boxLLSecond)
-                                )
                                 .addComponent(createSecondFunction)
                                 .addComponent(secondScroll)
                                 .addGroup(layout.createParallelGroup()
@@ -235,7 +202,6 @@ public class OperationsWithFunctions extends JDialog {
                                         .addComponent(create)
 
                                 )
-                                .addComponent(noName)
                                 .addComponent(resultFunction)
                                 .addGroup(layout.createParallelGroup()
                                         .addComponent(saveResult)
@@ -271,7 +237,7 @@ public class OperationsWithFunctions extends JDialog {
             if (file != null) {
                 secondFunction.setNulls();
                 try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, new ArrayTabulatedFunctionFactory());
+                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, Menu.factory);
                     secondFunction.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
                         xValuesSecond.add(i, (function.getX(i)));
@@ -295,13 +261,7 @@ public class OperationsWithFunctions extends JDialog {
                     JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
                 }
                 TabulatedFunction function;
-                TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
-                if (boxArrayFirst.isSelected()) {
-                    factory = new ArrayTabulatedFunctionFactory();
-                }
-                if (boxLLFirst.isSelected()) {
-                    factory = new LinkedListTabulatedFunctionFactory();
-                }
+
                 double[] x = new double[firstFunction.getRowCount()];
                 double[] y = new double[firstFunction.getRowCount()];
                 for (int i = 0; i < firstFunction.getRowCount(); i++) {
@@ -309,7 +269,7 @@ public class OperationsWithFunctions extends JDialog {
                     y[i] = Double.parseDouble(firstFunction.getValueAt(i, 1).toString());
                 }
 
-                function = factory.create(x, y);
+                function = Menu.factory.create(x, y);
 
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
                     FunctionsIO.writeTabulatedFunction(out, function);
@@ -325,14 +285,7 @@ public class OperationsWithFunctions extends JDialog {
             if (file != null) {
 
                 TabulatedFunction function;
-                TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
 
-                if (boxArraySecond.isSelected()) {
-                    factory = new ArrayTabulatedFunctionFactory();
-                }
-                if (boxLLSecond.isSelected()) {
-                    factory = new LinkedListTabulatedFunctionFactory();
-                }
                 double[] x = new double[secondFunction.getRowCount()];
                 double[] y = new double[secondFunction.getRowCount()];
                 for (int i = 0; i < secondFunction.getRowCount(); i++) {
@@ -340,7 +293,7 @@ public class OperationsWithFunctions extends JDialog {
                     y[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
                 }
 
-                function = factory.create(x, y);
+                function = Menu.factory.create(x, y);
 
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
                     FunctionsIO.writeTabulatedFunction(out, function);
@@ -448,97 +401,33 @@ public class OperationsWithFunctions extends JDialog {
             }
         });
 
-        checkBoxListener();
         createFunctionsListener();
         setVisible(false);
         setResizable(false);
         setSize(new Dimension(1100, 600));
     }
 
-    public void checkBoxListener() {
-        boxArrayFirst.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                boxLLFirst.setEnabled(false);
-            }
-            if (e.getStateChange() != ItemEvent.SELECTED) {
-                boxLLFirst.setEnabled(true);
-            }
-        });
-
-        boxLLFirst.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                boxArrayFirst.setEnabled(false);
-            }
-            if (e.getStateChange() != ItemEvent.SELECTED) {
-                boxArrayFirst.setEnabled(true);
-            }
-        });
-        boxArraySecond.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                boxLLSecond.setEnabled(false);
-            }
-            if (e.getStateChange() != ItemEvent.SELECTED) {
-                boxLLSecond.setEnabled(true);
-            }
-        });
-        boxLLSecond.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                boxArraySecond.setEnabled(false);
-            }
-            if (e.getStateChange() != ItemEvent.SELECTED) {
-                boxArraySecond.setEnabled(true);
-            }
-        });
-
-    }
-
     public void createFunctionsListener() {
         createFirstFunction.addActionListener(e -> {
-            if (boxArrayFirst.isSelected()) {
-                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
-                function.setVisible(true);
-                firstFunction.setNulls();
-                firstFunction.setCount(function.function.getCount());
-                for (int i = 0; i < function.function.getCount(); i++) {
-                    xValues.add(function.function.getX(i));
-                    yValues.add(function.function.getY(i));
-                    firstFunction.fireTableDataChanged();
-                }
-            }
-            if (boxLLFirst.isSelected()) {
-                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
-                function.setVisible(true);
-                firstFunction.setNulls();
-                firstFunction.setCount(function.function.getCount());
-                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
-                    xValues.add((function.function.getX(i)));
-                    yValues.add((function.function.getY(i)));
-                    firstFunction.fireTableDataChanged();
-                }
+            CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+            function.setVisible(true);
+            firstFunction.setNulls();
+            firstFunction.setCount(function.function.getCount());
+            for (int i = 0; i < function.function.getCount(); i++) {
+                xValues.add(function.function.getX(i));
+                yValues.add(function.function.getY(i));
+                firstFunction.fireTableDataChanged();
             }
         });
         createSecondFunction.addActionListener(e -> {
-            if (boxLLSecond.isSelected()) {
-                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
-                function.setVisible(true);
-                secondFunction.setNulls();
-                secondFunction.setCount(function.function.getCount());
-                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
-                    xValuesSecond.add((function.function.getX(i)));
-                    yValuesSecond.add((function.function.getY(i)));
-                    secondFunction.fireTableDataChanged();
-                }
-            }
-            if (boxArraySecond.isSelected()) {
-                CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
-                function.setVisible(true);
-                secondFunction.setNulls();
-                secondFunction.setCount(function.function.getCount());
-                for (int i = 0; i < function.tableModel.getRowCount(); i++) {
-                    xValuesSecond.add((function.function.getX(i)));
-                    yValuesSecond.add((function.function.getY(i)));
-                    secondFunction.fireTableDataChanged();
-                }
+            CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+            function.setVisible(true);
+            secondFunction.setNulls();
+            secondFunction.setCount(function.function.getCount());
+            for (int i = 0; i < function.tableModel.getRowCount(); i++) {
+                xValuesSecond.add((function.function.getX(i)));
+                yValuesSecond.add((function.function.getY(i)));
+                secondFunction.fireTableDataChanged();
             }
         });
     }
