@@ -83,27 +83,27 @@ public class OperationsWithFunctions extends JDialog {
         JFileChooser fileSaveSecond = new JFileChooser();
         JFileChooser fileSaveResult = new JFileChooser();
 
-        fileSaveSecond.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileSaveSecond.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileSaveSecond.setDialogTitle("Сохранение функции");
         fileSaveSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileSaveSecond.setAcceptAllFileFilterUsed(false);
 
-        fileSave.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileSave.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileSave.setDialogTitle("Сохранение функции");
         fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileSave.setAcceptAllFileFilterUsed(false);
 
-        fileSaveResult.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileSaveResult.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileSaveResult.setDialogTitle("Сохранение функции");
         fileSaveResult.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileSaveResult.setAcceptAllFileFilterUsed(false);
 
-        fileOpen.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileOpen.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileOpen.setDialogTitle("Загрузка функции");
         fileOpen.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileOpen.setAcceptAllFileFilterUsed(false);
 
-        fileOpenSecond.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileOpenSecond.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileOpenSecond.setDialogTitle("Загрузка функции");
         fileOpenSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
         fileOpenSecond.setAcceptAllFileFilterUsed(false);
@@ -214,8 +214,8 @@ public class OperationsWithFunctions extends JDialog {
             File file = fileOpen.getSelectedFile();
             if (file != null) {
                 firstFunction.setNulls();
-                try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, Menu.factory);
+                try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
+                    TabulatedFunction function = FunctionsIO.deserialize(in);
                     firstFunction.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
                         xValues.add(i, (function.getX(i)));
@@ -236,8 +236,8 @@ public class OperationsWithFunctions extends JDialog {
             File file = fileOpenSecond.getSelectedFile();
             if (file != null) {
                 secondFunction.setNulls();
-                try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-                    TabulatedFunction function = FunctionsIO.readTabulatedFunction(in, Menu.factory);
+                try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
+                    TabulatedFunction function = FunctionsIO.deserialize(in);
                     secondFunction.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
                         xValuesSecond.add(i, (function.getX(i)));
@@ -271,8 +271,8 @@ public class OperationsWithFunctions extends JDialog {
 
                 function = Menu.factory.create(x, y);
 
-                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-                    FunctionsIO.writeTabulatedFunction(out, function);
+                try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                    FunctionsIO.serialize(out, function);
                 } catch (Exception err) {
                     JOptionPane.showMessageDialog(this, err.getMessage());
                 }
@@ -295,8 +295,8 @@ public class OperationsWithFunctions extends JDialog {
 
                 function = Menu.factory.create(x, y);
 
-                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-                    FunctionsIO.writeTabulatedFunction(out, function);
+                try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                    FunctionsIO.serialize(out, function);
                 } catch (Exception err) {
                     JOptionPane.showMessageDialog(this, err.getMessage());
                 }
@@ -316,8 +316,8 @@ public class OperationsWithFunctions extends JDialog {
                 }
 
                 function = Menu.factory.create(x, y);
-                try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
-                    FunctionsIO.writeTabulatedFunction(out, function);
+                try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                    FunctionsIO.serialize(out, function);
                 } catch (Exception err) {
                     JOptionPane.showMessageDialog(this, err.getMessage());
                 }
