@@ -254,66 +254,94 @@ public class OperationsWithFunctions extends JDialog {
         });
 
         saveFirstFunction.addActionListener(e -> {
-            fileSave.showSaveDialog(menu);
-            File file = fileSave.getSelectedFile();
-            if (file != null) {
-                TabulatedFunction function;
-                double[] x = new double[firstFunction.getRowCount()];
-                double[] y = new double[firstFunction.getRowCount()];
-                for (int i = 0; i < firstFunction.getRowCount(); i++) {
-                    x[i] = Double.parseDouble(firstFunction.getValueAt(i, 0).toString());
-                    y[i] = Double.parseDouble(firstFunction.getValueAt(i, 1).toString());
+            if (xValues.isEmpty()) {
+                try {
+                    throw new FileNotFoundException();
+                } catch (FileNotFoundException fileNotFoundException) {
+                    JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
+                    fileNotFoundException.printStackTrace();
                 }
+            } else {
+                fileSave.showSaveDialog(menu);
+                File file = fileSave.getSelectedFile();
+                if (file != null) {
+                    TabulatedFunction function;
+                    double[] x = new double[firstFunction.getRowCount()];
+                    double[] y = new double[firstFunction.getRowCount()];
+                    for (int i = 0; i < firstFunction.getRowCount(); i++) {
+                        x[i] = Double.parseDouble(firstFunction.getValueAt(i, 0).toString());
+                        y[i] = Double.parseDouble(firstFunction.getValueAt(i, 1).toString());
+                    }
 
-                function = Menu.factory.create(x, y);
-                try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
-                    FunctionsIO.serialize(out, function);
-                } catch (Exception err) {
-                    JOptionPane.showMessageDialog(this, err.getMessage());
+                    function = Menu.factory.create(x, y);
+                    try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                        FunctionsIO.serialize(out, function);
+                    } catch (Exception err) {
+                        JOptionPane.showMessageDialog(this, err.getMessage());
+                    }
                 }
             }
         });
 
         saveSecondFunction.addActionListener(e -> {
-            fileSaveSecond.showSaveDialog(menu);
-            File file = fileSaveSecond.getSelectedFile();
-            if (file != null) {
-                TabulatedFunction function;
-                double[] x = new double[secondFunction.getRowCount()];
-                double[] y = new double[secondFunction.getRowCount()];
-                for (int i = 0; i < secondFunction.getRowCount(); i++) {
-                    x[i] = Double.parseDouble(secondFunction.getValueAt(i, 0).toString());
-                    y[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
+            if (xValuesSecond.isEmpty()) {
+                try {
+                    throw new FileNotFoundException();
+                } catch (FileNotFoundException fileNotFoundException) {
+                    JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
+                    fileNotFoundException.printStackTrace();
                 }
+            } else {
+                fileSaveSecond.showSaveDialog(menu);
+                File file = fileSaveSecond.getSelectedFile();
+                if (file != null) {
+                    TabulatedFunction function;
+                    double[] x = new double[secondFunction.getRowCount()];
+                    double[] y = new double[secondFunction.getRowCount()];
+                    for (int i = 0; i < secondFunction.getRowCount(); i++) {
+                        x[i] = Double.parseDouble(secondFunction.getValueAt(i, 0).toString());
+                        y[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
+                    }
 
-                function = Menu.factory.create(x, y);
-                try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
-                    FunctionsIO.serialize(out, function);
-                } catch (Exception err) {
-                    JOptionPane.showMessageDialog(this, err.getMessage());
+                    function = Menu.factory.create(x, y);
+                    try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                        FunctionsIO.serialize(out, function);
+                    } catch (Exception err) {
+                        JOptionPane.showMessageDialog(this, err.getMessage());
+                    }
                 }
             }
         });
 
         saveResult.addActionListener(e -> {
-            fileSaveResult.showSaveDialog(menu);
-            File file = fileSaveResult.getSelectedFile();
-            if (file != null) {
-                TabulatedFunction function;
-                double[] x = new double[result.getRowCount()];
-                double[] y = new double[result.getRowCount()];
-                for (int i = 0; i < result.getRowCount(); i++) {
-                    x[i] = Double.parseDouble(result.getValueAt(i, 0).toString());
-                    y[i] = Double.parseDouble(result.getValueAt(i, 1).toString());
+            if (xValuesResult.isEmpty()) {
+                try {
+                    throw new FileNotFoundException();
+                } catch (FileNotFoundException fileNotFoundException) {
+                    JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
+                    fileNotFoundException.printStackTrace();
                 }
+            } else {
+                fileSaveResult.showSaveDialog(menu);
+                File file = fileSaveResult.getSelectedFile();
+                if (file != null) {
+                    TabulatedFunction function;
+                    double[] x = new double[result.getRowCount()];
+                    double[] y = new double[result.getRowCount()];
+                    for (int i = 0; i < result.getRowCount(); i++) {
+                        x[i] = Double.parseDouble(result.getValueAt(i, 0).toString());
+                        y[i] = Double.parseDouble(result.getValueAt(i, 1).toString());
+                    }
 
-                function = Menu.factory.create(x, y);
-                try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
-                    FunctionsIO.serialize(out, function);
-                } catch (Exception err) {
-                    JOptionPane.showMessageDialog(this, err.getMessage());
+                    function = Menu.factory.create(x, y);
+                    try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                        FunctionsIO.serialize(out, function);
+                    } catch (Exception err) {
+                        JOptionPane.showMessageDialog(this, err.getMessage());
+                    }
                 }
             }
+
         });
 
         comboBox.addActionListener(event -> {

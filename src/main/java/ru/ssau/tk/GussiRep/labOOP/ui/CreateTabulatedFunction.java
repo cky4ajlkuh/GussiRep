@@ -104,13 +104,17 @@ public class CreateTabulatedFunction extends JDialog {
         });
     }
 
-    public void listenerRow() {
+    private void checkTable() throws RowIsEmpty {
+        if (strings2.isEmpty() | strings.isEmpty()) {
+            throw new RowIsEmpty();
+        }
+    }
 
-        addRowButton.addActionListener(e -> {
-            try {
+    public void listenerRow() {
+        try {
+            addRowButton.addActionListener(e -> {
                 double[] x = new double[tableModel.getRowCount()];
                 double[] y = new double[tableModel.getRowCount()];
-
                 setVisible(false);
                 button.setVisible(true);
                 textField.setVisible(true);
@@ -118,7 +122,11 @@ public class CreateTabulatedFunction extends JDialog {
                 addRowButton.setVisible(false);
                 scrollPane.setVisible(false);
                 textField.setText(null);
-
+                try {
+                    checkTable();
+                } catch (RowIsEmpty rowIsEmpty) {
+                    rowIsEmpty.printStackTrace();
+                }
                 for (int j = 0; j < tableModel.getRowCount(); j++) {
                     x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
                     y[j] = Double.parseDouble(tableModel.getValueAt(j, 1).toString());
@@ -126,11 +134,10 @@ public class CreateTabulatedFunction extends JDialog {
                 function = Menu.factory.create(x, y);
                 System.out.println(function.toString());
 
-            } catch (Exception error) {
-                JOptionPane.showMessageDialog(this, error.getMessage());
-            }
-        });
-
+            });
+        } catch (Exception exception){
+            JOptionPane.showMessageDialog(this,exception.getMessage() );
+        }
     }
 
 }
