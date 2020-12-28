@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class MainWindow {
     public static void main(String[] args) {
-        Menu menu = new Menu("Menu Function");
+        Menu menu = new Menu("Меню");
         menu.setVisible(true);
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setResizable(false);

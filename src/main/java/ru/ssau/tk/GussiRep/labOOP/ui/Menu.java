@@ -1,12 +1,9 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactory;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
@@ -32,13 +29,36 @@ public class Menu extends JFrame {
 
     Menu(String s) {
         super(s);
+        draw();
+        JButton button = new JButton("Что-то..");
+        setLayout(null);
+        button.setBounds(280, 190, 100, 30);
+        add(button);
+        button.addActionListener(e -> {
+            if (e.getSource() == button) {
+                QR qr = new QR(this, "QR-код", true);
+                qr.setVisible(true);
+            }
+        });
         menu.add(createTabulatedFunction());
         menu.add(createMathFunction());
         jMenuBar.add(menu);
         setJMenuBar(jMenuBar);
         jMenuBar.add(createOperations());
         jMenuBar.add(setSettings());
+
         setSize(400, 400);
+
+    }
+
+    public void draw() {
+        Image image = new ImageIcon("обложка.png").getImage();
+        setContentPane(new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                g.drawImage(image, 0, 0, null);
+            }
+        });
     }
 
     private JMenu createOperations() {

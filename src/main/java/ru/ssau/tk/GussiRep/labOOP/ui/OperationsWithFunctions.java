@@ -29,13 +29,14 @@ public class OperationsWithFunctions extends JDialog {
 
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
-    private TableModel firstFunction = new TableModel(xValues, yValues){
+    private TableModel firstFunction = new TableModel(xValues, yValues) {
         @Serial
         private static final long serialVersionUID = -7247776622311553601L;
         private static final int Y_COLUMN_NUMBER = 1;
+
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if(columnIndex == Y_COLUMN_NUMBER){
+            if (columnIndex == Y_COLUMN_NUMBER) {
                 return true;
             }
             return false;
@@ -46,13 +47,14 @@ public class OperationsWithFunctions extends JDialog {
 
     private List<Double> xValuesSecond = new ArrayList<>();
     private List<Double> yValuesSecond = new ArrayList<>();
-    private TableModel secondFunction = new TableModel(xValuesSecond, yValuesSecond){
+    private TableModel secondFunction = new TableModel(xValuesSecond, yValuesSecond) {
         @Serial
         private static final long serialVersionUID = -7725822446193357493L;
         private static final int Y_COLUMN_NUMBER = 1;
+
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            if(columnIndex == Y_COLUMN_NUMBER){
+            if (columnIndex == Y_COLUMN_NUMBER) {
                 return true;
             }
             return false;
@@ -63,7 +65,7 @@ public class OperationsWithFunctions extends JDialog {
 
     private List<Double> xValuesResult = new ArrayList<>();
     private List<Double> yValuesResult = new ArrayList<>();
-    private TableModel result = new TableModel(xValuesResult, yValuesResult){
+    private TableModel result = new TableModel(xValuesResult, yValuesResult) {
 
         @Serial
         private static final long serialVersionUID = 4546851026558366597L;
@@ -72,7 +74,8 @@ public class OperationsWithFunctions extends JDialog {
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
         }
-    };;
+    };
+
     private final JTable resultTable = new JTable(result);
     private final JScrollPane resultFunction = new JScrollPane(resultTable);
 
@@ -239,6 +242,7 @@ public class OperationsWithFunctions extends JDialog {
                                 )
                 )
         );
+
         loadingFirstFunction.addActionListener(e -> {
             fileOpen.showOpenDialog(menu);
             File file = fileOpen.getSelectedFile();

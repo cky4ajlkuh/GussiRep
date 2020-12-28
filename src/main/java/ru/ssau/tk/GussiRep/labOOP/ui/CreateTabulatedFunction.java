@@ -5,6 +5,8 @@ import ru.ssau.tk.GussiRep.labOOP.functions.factory.ArrayTabulatedFunctionFactor
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.LinkedListTabulatedFunctionFactory;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,6 @@ public class CreateTabulatedFunction extends JDialog {
         listenerRow();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setSize(400, 450);
-
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
