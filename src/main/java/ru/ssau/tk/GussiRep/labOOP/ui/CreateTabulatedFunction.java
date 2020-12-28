@@ -95,10 +95,11 @@ public class CreateTabulatedFunction extends JDialog {
                         tableModel.fireTableDataChanged();
                     }
                 } else {
-                    throw new ArithmeticException("Кол-во должно быть больше 2!");
+                    JOptionPane.showMessageDialog(this, "Кол-во должно быть больше 2!");
+                    throw new ArithmeticException();
                 }
-            } catch (Exception error) {
-                JOptionPane.showMessageDialog(this, error.getMessage());
+            } catch (NumberFormatException error) {
+                JOptionPane.showMessageDialog(this, "Пожалуйста, вводите цифры!");
             }
         });
     }

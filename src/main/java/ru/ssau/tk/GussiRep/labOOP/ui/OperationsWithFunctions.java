@@ -257,11 +257,7 @@ public class OperationsWithFunctions extends JDialog {
             fileSave.showSaveDialog(menu);
             File file = fileSave.getSelectedFile();
             if (file != null) {
-                if (xValues.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
-                }
                 TabulatedFunction function;
-
                 double[] x = new double[firstFunction.getRowCount()];
                 double[] y = new double[firstFunction.getRowCount()];
                 for (int i = 0; i < firstFunction.getRowCount(); i++) {
@@ -270,7 +266,6 @@ public class OperationsWithFunctions extends JDialog {
                 }
 
                 function = Menu.factory.create(x, y);
-
                 try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
                     FunctionsIO.serialize(out, function);
                 } catch (Exception err) {
@@ -283,9 +278,7 @@ public class OperationsWithFunctions extends JDialog {
             fileSaveSecond.showSaveDialog(menu);
             File file = fileSaveSecond.getSelectedFile();
             if (file != null) {
-
                 TabulatedFunction function;
-
                 double[] x = new double[secondFunction.getRowCount()];
                 double[] y = new double[secondFunction.getRowCount()];
                 for (int i = 0; i < secondFunction.getRowCount(); i++) {
@@ -294,7 +287,6 @@ public class OperationsWithFunctions extends JDialog {
                 }
 
                 function = Menu.factory.create(x, y);
-
                 try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
                     FunctionsIO.serialize(out, function);
                 } catch (Exception err) {
@@ -343,60 +335,44 @@ public class OperationsWithFunctions extends JDialog {
 
         create.addActionListener(e -> {
             if (comboBox.getSelectedIndex() == 1) {
-                try {
-                    result.setNulls();
-                    TabulatedFunction function = service.multiply(firstF, secondF);
-                    result.setCount(function.getCount());
-                    for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, (function.getX(i)));
-                        yValuesResult.add(i, (function.getY(i)));
-                        result.fireTableDataChanged();
-                    }
-                    resultFunction.setEnabled(false);
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                result.setNulls();
+                TabulatedFunction function = service.multiply(firstF, secondF);
+                result.setCount(function.getCount());
+                for (int i = 0; i < function.getCount(); i++) {
+                    xValuesResult.add(i, (function.getX(i)));
+                    yValuesResult.add(i, (function.getY(i)));
+                    result.fireTableDataChanged();
                 }
+                resultFunction.setEnabled(false);
             }
             if (comboBox.getSelectedIndex() == 2) {
-                try {
-                    result.setNulls();
-                    TabulatedFunction function = service.divider(firstF, secondF);
-                    result.setCount(function.getCount());
-                    for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, (function.getX(i)));
-                        yValuesResult.add(i, (function.getY(i)));
-                        result.fireTableDataChanged();
-                    }
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                result.setNulls();
+                TabulatedFunction function = service.divider(firstF, secondF);
+                result.setCount(function.getCount());
+                for (int i = 0; i < function.getCount(); i++) {
+                    xValuesResult.add(i, (function.getX(i)));
+                    yValuesResult.add(i, (function.getY(i)));
+                    result.fireTableDataChanged();
                 }
             }
             if (comboBox.getSelectedIndex() == 3) {
-                try {
-                    result.setNulls();
-                    TabulatedFunction function = service.sum(firstF, secondF);
-                    result.setCount(function.getCount());
-                    for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, (function.getX(i)));
-                        yValuesResult.add(i, (function.getY(i)));
-                        result.fireTableDataChanged();
-                    }
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                result.setNulls();
+                TabulatedFunction function = service.sum(firstF, secondF);
+                result.setCount(function.getCount());
+                for (int i = 0; i < function.getCount(); i++) {
+                    xValuesResult.add(i, (function.getX(i)));
+                    yValuesResult.add(i, (function.getY(i)));
+                    result.fireTableDataChanged();
                 }
             }
             if (comboBox.getSelectedIndex() == 4) {
-                try {
-                    result.setNulls();
-                    TabulatedFunction function = service.subtract(firstF, secondF);
-                    result.setCount(function.getCount());
-                    for (int i = 0; i < function.getCount(); i++) {
-                        xValuesResult.add(i, (function.getX(i)));
-                        yValuesResult.add(i, (function.getY(i)));
-                        result.fireTableDataChanged();
-                    }
-                } catch (Exception exception) {
-                    JOptionPane.showMessageDialog(this, exception.getMessage());
+                result.setNulls();
+                TabulatedFunction function = service.subtract(firstF, secondF);
+                result.setCount(function.getCount());
+                for (int i = 0; i < function.getCount(); i++) {
+                    xValuesResult.add(i, (function.getX(i)));
+                    yValuesResult.add(i, (function.getY(i)));
+                    result.fireTableDataChanged();
                 }
             }
         });
