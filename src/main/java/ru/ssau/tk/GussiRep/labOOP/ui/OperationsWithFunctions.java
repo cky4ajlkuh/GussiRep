@@ -345,33 +345,42 @@ public class OperationsWithFunctions extends JDialog {
 
         });
 
-
         comboBox.addActionListener(event -> {
             if (firstFunction.getRowCount() == 0 | secondFunction.getRowCount() == 0) {
                 try {
                     throw new TablesIsEmpty();
                 } catch (TablesIsEmpty empty) {
+                    JOptionPane.showMessageDialog(this, "Нельзя оперировать пустыми(ой) функциями!");
                     empty.printStackTrace();
                 }
+            } else {
+                double[] x1 = new double[firstFunction.getRowCount()];
+                double[] y1 = new double[firstFunction.getRowCount()];
+                for (int i = 0; i < firstFunction.getRowCount(); i++) {
+                    x1[i] = Double.parseDouble(firstFunction.getValueAt(i, 0).toString());
+                    y1[i] = Double.parseDouble(firstFunction.getValueAt(i, 1).toString());
+                }
+                double[] x2 = new double[secondFunction.getRowCount()];
+                double[] y2 = new double[secondFunction.getRowCount()];
+                for (int i = 0; i < secondFunction.getRowCount(); i++) {
+                    x2[i] = Double.parseDouble(secondFunction.getValueAt(i, 0).toString());
+                    y2[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
+                }
+                firstF = Menu.factory.create(x1, y1);
+                secondF = Menu.factory.create(x2, y2);
             }
-            double[] x1 = new double[firstFunction.getRowCount()];
-            double[] y1 = new double[firstFunction.getRowCount()];
-            for (int i = 0; i < firstFunction.getRowCount(); i++) {
-                x1[i] = Double.parseDouble(firstFunction.getValueAt(i, 0).toString());
-                y1[i] = Double.parseDouble(firstFunction.getValueAt(i, 1).toString());
-            }
-            double[] x2 = new double[secondFunction.getRowCount()];
-            double[] y2 = new double[secondFunction.getRowCount()];
-            for (int i = 0; i < secondFunction.getRowCount(); i++) {
-                x2[i] = Double.parseDouble(secondFunction.getValueAt(i, 0).toString());
-                y2[i] = Double.parseDouble(secondFunction.getValueAt(i, 1).toString());
-            }
-            firstF = Menu.factory.create(x1, y1);
-            secondF = Menu.factory.create(x2, y2);
 
         });
 
         create.addActionListener(e -> {
+            if (firstFunction.getRowCount() == 0 | secondFunction.getRowCount() == 0) {
+                try {
+                    throw new TablesIsEmpty();
+                } catch (TablesIsEmpty empty) {
+                    JOptionPane.showMessageDialog(this, "Введите сначала значения!");
+                    empty.printStackTrace();
+                }
+            }
             if (comboBox.getSelectedIndex() == 1) {
                 xValuesResult.clear();
                 yValuesResult.clear();

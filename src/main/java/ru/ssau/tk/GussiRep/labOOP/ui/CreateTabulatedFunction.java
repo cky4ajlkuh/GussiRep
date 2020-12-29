@@ -106,7 +106,7 @@ public class CreateTabulatedFunction extends JDialog {
     }
 
     private void checkTable() throws RowIsEmpty {
-        if (strings.contains(null) | strings2.contains(null)){
+        if (strings.contains(null) | strings2.contains(null)) {
             throw new RowIsEmpty("Aй");
         }
 

@@ -73,7 +73,10 @@ public class Menu extends JFrame {
     private JMenu createChart() {
         JMenu menu = new JMenu("График");
         JMenuItem jMenuItem = new JMenuItem("Построить");
-        jMenuItem.addActionListener(e -> chart.setVisible(true));
+        jMenuItem.addActionListener(e -> {
+                    chart.setVisible(true);
+                }
+        );
         menu.add(jMenuItem);
         return menu;
     }
