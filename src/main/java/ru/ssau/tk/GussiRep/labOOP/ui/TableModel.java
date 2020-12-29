@@ -57,6 +57,7 @@ public class TableModel extends AbstractTableModel {
         if (columnIndex == Y_COLUMN_NUMBER) {
             return stringsY.get(rowIndex);
         }
+
         throw new UnsupportedOperationException();
     }
 

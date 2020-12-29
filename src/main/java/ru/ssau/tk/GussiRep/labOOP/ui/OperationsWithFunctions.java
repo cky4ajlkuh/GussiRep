@@ -332,7 +332,6 @@ public class OperationsWithFunctions extends JDialog {
                         x[i] = Double.parseDouble(result.getValueAt(i, 0).toString());
                         y[i] = Double.parseDouble(result.getValueAt(i, 1).toString());
                     }
-
                     function = Menu.factory.create(x, y);
                     try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
                         FunctionsIO.serialize(out, function);

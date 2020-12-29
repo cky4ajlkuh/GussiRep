@@ -21,6 +21,7 @@ public class CreateTabulatedFunction extends JDialog {
     JScrollPane scrollPane = new JScrollPane(table);
     TabulatedFunction function;
     private int i;
+    Double aDouble = null;
 
     public CreateTabulatedFunction(Menu menu, String s, boolean modal) {
         super(menu, s, modal);
@@ -38,7 +39,6 @@ public class CreateTabulatedFunction extends JDialog {
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
-
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
@@ -105,9 +105,17 @@ public class CreateTabulatedFunction extends JDialog {
     }
 
     private void checkTable() throws RowIsEmpty {
-        if (strings2.isEmpty() | strings.isEmpty()) {
-            throw new RowIsEmpty();
+        for (int j = 0; j < strings.size(); j++) {
+            if (strings.contains(null)) {
+                throw new RowIsEmpty("Aй");
+            }
         }
+        for (int j = 0; j < strings2.size(); j++) {
+            if (strings.contains(null)) {
+                throw new RowIsEmpty("Aй");
+            }
+        }
+
     }
 
     public void listenerRow() {
@@ -124,8 +132,8 @@ public class CreateTabulatedFunction extends JDialog {
                 textField.setText(null);
                 try {
                     checkTable();
-                } catch (RowIsEmpty rowIsEmpty) {
-                    rowIsEmpty.printStackTrace();
+                } catch (RowIsEmpty empty) {
+                    empty.printStackTrace();
                 }
                 for (int j = 0; j < tableModel.getRowCount(); j++) {
                     x[j] = Double.parseDouble(tableModel.getValueAt(j, 0).toString());
@@ -133,10 +141,9 @@ public class CreateTabulatedFunction extends JDialog {
                 }
                 function = Menu.factory.create(x, y);
                 System.out.println(function.toString());
-
             });
-        } catch (Exception exception){
-            JOptionPane.showMessageDialog(this,exception.getMessage() );
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(this, exception.getMessage());
         }
     }
 
