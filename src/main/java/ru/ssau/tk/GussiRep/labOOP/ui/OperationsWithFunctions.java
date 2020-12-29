@@ -85,27 +85,27 @@ public class OperationsWithFunctions extends JDialog {
 
         fileSaveSecond.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileSaveSecond.setDialogTitle("Сохранение функции");
-        fileSaveSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
+        fileSaveSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
         fileSaveSecond.setAcceptAllFileFilterUsed(false);
 
         fileSave.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileSave.setDialogTitle("Сохранение функции");
-        fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
+        fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
         fileSave.setAcceptAllFileFilterUsed(false);
 
         fileSaveResult.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileSaveResult.setDialogTitle("Сохранение функции");
-        fileSaveResult.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
+        fileSaveResult.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
         fileSaveResult.setAcceptAllFileFilterUsed(false);
 
         fileOpen.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileOpen.setDialogTitle("Загрузка функции");
-        fileOpen.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
+        fileOpen.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
         fileOpen.setAcceptAllFileFilterUsed(false);
 
         fileOpenSecond.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         fileOpenSecond.setDialogTitle("Загрузка функции");
-        fileOpenSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "txt"));
+        fileOpenSecond.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
         fileOpenSecond.setAcceptAllFileFilterUsed(false);
 
         resultFunction.setPreferredSize(new Dimension(350, 400));
