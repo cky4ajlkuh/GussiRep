@@ -121,6 +121,10 @@ public class CreateChart extends JDialog {
             fileOpen.setAcceptAllFileFilterUsed(false);
             fileOpen.showOpenDialog(menu);
             File file = fileOpen.getSelectedFile();
+            x.clear();
+            y.clear();
+            tableModel.setCount(0);
+            series.clear();
             if (file != null) {
                 try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
                     textField.setText(null);
@@ -238,6 +242,7 @@ public class CreateChart extends JDialog {
                 y[i] = Double.parseDouble(tableModel.getValueAt(i, 1).toString());
             }
             function = Menu.factory.create(x, y);
+            series.clear();
             for (int i = 0; i < function.getCount(); i++) {
                 series.add(function.getX(i), function.getY(i));
             }
