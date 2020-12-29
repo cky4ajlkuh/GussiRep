@@ -213,7 +213,8 @@ public class OperationsWithFunctions extends JDialog {
             fileOpen.showOpenDialog(menu);
             File file = fileOpen.getSelectedFile();
             if (file != null) {
-                firstFunction.setNulls();
+                xValues.clear();
+                yValues.clear();
                 try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
                     TabulatedFunction function = FunctionsIO.deserialize(in);
                     firstFunction.setCount(function.getCount());
@@ -235,7 +236,8 @@ public class OperationsWithFunctions extends JDialog {
             fileOpenSecond.showOpenDialog(menu);
             File file = fileOpenSecond.getSelectedFile();
             if (file != null) {
-                secondFunction.setNulls();
+                xValuesSecond.clear();
+                yValuesSecond.clear();
                 try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
                     TabulatedFunction function = FunctionsIO.deserialize(in);
                     secondFunction.setCount(function.getCount());
@@ -362,7 +364,8 @@ public class OperationsWithFunctions extends JDialog {
 
         create.addActionListener(e -> {
             if (comboBox.getSelectedIndex() == 1) {
-                result.setNulls();
+                xValuesResult.clear();
+                yValuesResult.clear();
                 TabulatedFunction function = service.multiply(firstF, secondF);
                 result.setCount(function.getCount());
                 for (int i = 0; i < function.getCount(); i++) {
@@ -373,7 +376,8 @@ public class OperationsWithFunctions extends JDialog {
                 resultFunction.setEnabled(false);
             }
             if (comboBox.getSelectedIndex() == 2) {
-                result.setNulls();
+                xValuesResult.clear();
+                yValuesResult.clear();
                 TabulatedFunction function = service.divider(firstF, secondF);
                 result.setCount(function.getCount());
                 for (int i = 0; i < function.getCount(); i++) {
@@ -383,7 +387,8 @@ public class OperationsWithFunctions extends JDialog {
                 }
             }
             if (comboBox.getSelectedIndex() == 3) {
-                result.setNulls();
+                xValuesResult.clear();
+                yValuesResult.clear();
                 TabulatedFunction function = service.sum(firstF, secondF);
                 result.setCount(function.getCount());
                 for (int i = 0; i < function.getCount(); i++) {
@@ -393,7 +398,8 @@ public class OperationsWithFunctions extends JDialog {
                 }
             }
             if (comboBox.getSelectedIndex() == 4) {
-                result.setNulls();
+                xValuesResult.clear();
+                yValuesResult.clear();
                 TabulatedFunction function = service.subtract(firstF, secondF);
                 result.setCount(function.getCount());
                 for (int i = 0; i < function.getCount(); i++) {
@@ -414,7 +420,8 @@ public class OperationsWithFunctions extends JDialog {
         createFirstFunction.addActionListener(e -> {
             CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
             function.setVisible(true);
-            firstFunction.setNulls();
+            xValues.clear();
+            yValues.clear();
             firstFunction.setCount(function.function.getCount());
             for (int i = 0; i < function.function.getCount(); i++) {
                 xValues.add(function.function.getX(i));
@@ -425,7 +432,8 @@ public class OperationsWithFunctions extends JDialog {
         createSecondFunction.addActionListener(e -> {
             CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
             function.setVisible(true);
-            secondFunction.setNulls();
+            xValuesSecond.clear();
+            yValuesSecond.clear();
             secondFunction.setCount(function.function.getCount());
             for (int i = 0; i < function.tableModel.getRowCount(); i++) {
                 xValuesSecond.add((function.function.getX(i)));

@@ -24,11 +24,6 @@ public class TableModel extends AbstractTableModel {
         count = size;
     }
 
-    public void setNulls() {
-        stringsY.removeAll(List.copyOf(stringsY));
-        stringsX.removeAll(List.copyOf(stringsX));
-    }
-
     @Override
     public int getRowCount() {
         return count;

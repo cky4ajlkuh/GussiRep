@@ -66,7 +66,8 @@ public class CreateTabulatedFunction extends JDialog {
         button.addActionListener(e -> {
             try {
                 i = Integer.parseInt(textField.getText());
-                tableModel.setNulls();
+                strings2.clear();
+                strings.clear();
                 if (i >= 2) {
                     if (e.getSource() == button) {
                         GroupLayout layout = new GroupLayout(getContentPane());
@@ -105,17 +106,9 @@ public class CreateTabulatedFunction extends JDialog {
     }
 
     private void checkTable() throws RowIsEmpty {
-        for (int j = 0; j < strings.size(); j++) {
-            if (strings.contains(null)) {
-                throw new RowIsEmpty("Aй");
-            }
+        if (strings.contains(null) | strings2.contains(null)){
+            throw new RowIsEmpty("Aй");
         }
-        for (int j = 0; j < strings2.size(); j++) {
-            if (strings.contains(null)) {
-                throw new RowIsEmpty("Aй");
-            }
-        }
-
     }
 
     public void listenerRow() {
