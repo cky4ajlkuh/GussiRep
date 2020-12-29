@@ -23,7 +23,7 @@ public class Menu extends JFrame {
     private final JDialog operationsWithFunctions = new OperationsWithFunctions(this, "Операции", true);
     private final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
     public static TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
-
+    private final JDialog chart = new CreateChart(this, "График", true);
     private final JRadioButtonMenuItem array = new JRadioButtonMenuItem("Массив");
     private final JRadioButtonMenuItem linkedList = new JRadioButtonMenuItem("Связный список");
 
@@ -46,6 +46,7 @@ public class Menu extends JFrame {
         setJMenuBar(jMenuBar);
         jMenuBar.add(createOperations());
         jMenuBar.add(setSettings());
+        jMenuBar.add(createChart());
 
         setSize(400, 400);
 
@@ -67,6 +68,14 @@ public class Menu extends JFrame {
         jMenuItem.addActionListener(e -> operationsWithFunctions.setVisible(true));
         menuOperations.add(jMenuItem);
         return menuOperations;
+    }
+
+    private JMenu createChart() {
+        JMenu menu = new JMenu("График");
+        JMenuItem jMenuItem = new JMenuItem("Построить");
+        jMenuItem.addActionListener(e -> chart.setVisible(true));
+        menu.add(jMenuItem);
+        return menu;
     }
 
     private JMenu createTabulatedFunction() {

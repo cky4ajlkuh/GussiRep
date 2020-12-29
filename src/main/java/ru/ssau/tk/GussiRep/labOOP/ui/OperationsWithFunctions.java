@@ -130,7 +130,6 @@ public class OperationsWithFunctions extends JDialog {
         layout.setAutoCreateContainerGaps(true);
 
         JButton create = new JButton("Вычислить");
-
         JLabel nameFirst = new JLabel("Первая функция");
         JLabel nameSecond = new JLabel("Вторая функция");
         JLabel nameResult = new JLabel("Результат");

@@ -21,7 +21,6 @@ public class CreateTabulatedFunction extends JDialog {
     JScrollPane scrollPane = new JScrollPane(table);
     TabulatedFunction function;
     private int i;
-    Double aDouble = null;
 
     public CreateTabulatedFunction(Menu menu, String s, boolean modal) {
         super(menu, s, modal);
@@ -109,6 +108,7 @@ public class CreateTabulatedFunction extends JDialog {
         if (strings.contains(null) | strings2.contains(null)){
             throw new RowIsEmpty("Aй");
         }
+
     }
 
     public void listenerRow() {
