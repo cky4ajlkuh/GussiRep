@@ -28,6 +28,8 @@ public class CreateChart extends JDialog {
     private TabulatedFunction function;
     private int enter;
     private final XYSeries series = new XYSeries("График");
+    private final JLabel labelX = new JLabel("X: ");
+    private final JLabel labelY = new JLabel("Y: ");
 
     public CreateChart(Menu menu, String name, boolean modal) {
         super(menu, name, modal);
@@ -51,6 +53,11 @@ public class CreateChart extends JDialog {
         JTable table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
+        JLabel label2 = new JLabel("Вычислить значение Y в точке");
+        JTextField xValue = new JTextField();
+        JTextField yValue = new JTextField();
+        yValue.setEditable(false);
+
         layout.setVerticalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(label)
@@ -61,7 +68,19 @@ public class CreateChart extends JDialog {
                                 .addComponent(create)
                                 .addComponent(save)
                                 .addComponent(load)
-                                .addComponent(apply)
+                        )
+                        .addComponent(label2)
+                        .addGroup(layout.createParallelGroup()
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup()
+                                                .addComponent(labelX)
+                                                .addComponent(xValue)
+                                        )
+                                        .addGroup(layout.createParallelGroup()
+                                                .addComponent(labelY)
+                                                .addComponent(yValue)
+                                        )
+                                        .addComponent(apply))
                         )
                 )
                 .addComponent(panel)
@@ -76,7 +95,18 @@ public class CreateChart extends JDialog {
                                         .addComponent(create)
                                         .addComponent(save)
                                         .addComponent(load)
-                                        .addComponent(apply)
+                                )
+                                .addComponent(label2)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup()
+                                                .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(labelX)
+                                                        .addComponent(xValue)
+                                                ).addGroup(layout.createSequentialGroup()
+                                                        .addComponent(labelY)
+                                                        .addComponent(yValue)
+                                                )
+                                                .addComponent(apply))
                                 )
                         )
                 )
@@ -148,9 +178,25 @@ public class CreateChart extends JDialog {
             }
         });
 
+        apply.addActionListener(e -> {
+            if (tableModel.getRowCount() == 0 | x.contains(null) | y.contains(null)) {
+                try {
+                    throw new TablesIsEmpty();
+                } catch (TablesIsEmpty empty) {
+                    JOptionPane.showMessageDialog(this, "Нельзя вычислить значение!");
+                    empty.printStackTrace();
+                }
+            }
+            int x;
+            x = Integer.parseInt(xValue.getText());
+            double y = function.apply(x);
+            yValue.setText(String.valueOf(y));
+
+        });
+
         enterListener();
         createListener();
-        setSize(1000, 600);
+        setSize(1000, 800);
         setVisible(false);
         setResizable(false);
         setLocationRelativeTo(null);
