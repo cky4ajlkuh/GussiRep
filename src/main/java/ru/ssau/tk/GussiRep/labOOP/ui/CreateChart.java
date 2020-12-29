@@ -89,17 +89,20 @@ public class CreateChart extends JDialog {
             fileOpen.setDialogTitle("Загрузка функции");
             fileOpen.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
             fileOpen.setAcceptAllFileFilterUsed(false);
-
             fileOpen.showOpenDialog(menu);
             File file = fileOpen.getSelectedFile();
             if (file != null) {
                 try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
+                    textField.setText(null);
                     TabulatedFunction function = FunctionsIO.deserialize(in);
                     tableModel.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
                         x.add(i, (function.getX(i)));
                         y.add(i, (function.getY(i)));
                         tableModel.fireTableDataChanged();
+                    }
+                    for (int i = 0; i < function.getCount(); i++) {
+                        series.add(function.getX(i), function.getY(i));
                     }
                     System.out.println(function.toString());
                 } catch (Exception err) {
@@ -112,42 +115,34 @@ public class CreateChart extends JDialog {
         });
 
         save.addActionListener(e -> {
-            if (tableModel.getRowCount() == 0) {
+            JFileChooser fileSave = new JFileChooser();
+            fileSave.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+            fileSave.setDialogTitle("Сохранение функции");
+            fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
+            fileSave.setAcceptAllFileFilterUsed(false);
+            if (x.isEmpty() | y.isEmpty() | x.contains(null) | y.contains(null)) {
                 try {
-                    throw new TablesIsEmpty();
-                } catch (TablesIsEmpty empty) {
-                    empty.printStackTrace();
+                    throw new FileNotFoundException();
+                } catch (FileNotFoundException fileNotFoundException) {
+                    JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
+                    fileNotFoundException.printStackTrace();
                 }
             } else {
-                JFileChooser fileSave = new JFileChooser();
-                fileSave.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-                fileSave.setDialogTitle("Сохранение функции");
-                fileSave.addChoosableFileFilter(new FileNameExtensionFilter("Табулированная функция", "bin"));
-                fileSave.setAcceptAllFileFilterUsed(false);
-                if (x.isEmpty() | y.isEmpty()) {
-                    try {
-                        throw new FileNotFoundException();
-                    } catch (FileNotFoundException fileNotFoundException) {
-                        JOptionPane.showMessageDialog(this, "Нельзя сохранить пустую функцию!");
-                        fileNotFoundException.printStackTrace();
+                fileSave.showSaveDialog(menu);
+                File file = fileSave.getSelectedFile();
+                if (file != null) {
+                    TabulatedFunction function;
+                    double[] x = new double[tableModel.getRowCount()];
+                    double[] y = new double[tableModel.getRowCount()];
+                    for (int i = 0; i < tableModel.getRowCount(); i++) {
+                        x[i] = Double.parseDouble(tableModel.getValueAt(i, 0).toString());
+                        y[i] = Double.parseDouble(tableModel.getValueAt(i, 1).toString());
                     }
-                } else {
-                    fileSave.showSaveDialog(menu);
-                    File file = fileSave.getSelectedFile();
-                    if (file != null) {
-                        TabulatedFunction function;
-                        double[] x = new double[tableModel.getRowCount()];
-                        double[] y = new double[tableModel.getRowCount()];
-                        for (int i = 0; i < tableModel.getRowCount(); i++) {
-                            x[i] = Double.parseDouble(tableModel.getValueAt(i, 0).toString());
-                            y[i] = Double.parseDouble(tableModel.getValueAt(i, 1).toString());
-                        }
-                        function = Menu.factory.create(x, y);
-                        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
-                            FunctionsIO.serialize(out, function);
-                        } catch (Exception err) {
-                            JOptionPane.showMessageDialog(this, err.getMessage());
-                        }
+                    function = Menu.factory.create(x, y);
+                    try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
+                        FunctionsIO.serialize(out, function);
+                    } catch (Exception err) {
+                        JOptionPane.showMessageDialog(this, err.getMessage());
                     }
                 }
             }
@@ -164,6 +159,8 @@ public class CreateChart extends JDialog {
 
     private void enterListener() {
         button.addActionListener(e -> {
+            x.clear();
+            y.clear();
             try {
                 enter = Integer.parseInt(textField.getText());
                 tableModel.setCount(enter);
@@ -172,7 +169,6 @@ public class CreateChart extends JDialog {
                     y.add(null);
                 }
                 tableModel.fireTableDataChanged();
-
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
@@ -181,10 +177,11 @@ public class CreateChart extends JDialog {
 
     private void createListener() {
         create.addActionListener(e -> {
-            if (tableModel.getRowCount() == 0) {
+            if (tableModel.getRowCount() == 0 | x.contains(null) | y.contains(null)) {
                 try {
                     throw new TablesIsEmpty();
                 } catch (TablesIsEmpty empty) {
+                    JOptionPane.showMessageDialog(this, "Нельзя создать пустую функцию!");
                     empty.printStackTrace();
                 }
             }
