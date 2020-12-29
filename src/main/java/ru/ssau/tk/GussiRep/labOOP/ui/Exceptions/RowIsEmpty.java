@@ -1,4 +1,4 @@
-package ru.ssau.tk.GussiRep.labOOP.ui;
+package ru.ssau.tk.GussiRep.labOOP.ui.Exceptions;
 
 import javax.swing.*;
 import java.io.Serial;

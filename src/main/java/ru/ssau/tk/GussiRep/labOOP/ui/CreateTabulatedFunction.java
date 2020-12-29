@@ -1,6 +1,7 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
+import ru.ssau.tk.GussiRep.labOOP.ui.Exceptions.RowIsEmpty;
 
 import javax.swing.*;
 import java.util.ArrayList;

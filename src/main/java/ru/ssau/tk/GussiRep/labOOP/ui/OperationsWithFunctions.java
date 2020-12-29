@@ -3,6 +3,7 @@ package ru.ssau.tk.GussiRep.labOOP.ui;
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
 import ru.ssau.tk.GussiRep.labOOP.io.FunctionsIO;
 import ru.ssau.tk.GussiRep.labOOP.operations.TabulatedFunctionOperationService;
+import ru.ssau.tk.GussiRep.labOOP.ui.Exceptions.TablesIsEmpty;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -344,7 +345,15 @@ public class OperationsWithFunctions extends JDialog {
 
         });
 
+
         comboBox.addActionListener(event -> {
+            if (firstFunction.getRowCount() == 0 | secondFunction.getRowCount() == 0) {
+                try {
+                    throw new TablesIsEmpty();
+                } catch (TablesIsEmpty empty) {
+                    empty.printStackTrace();
+                }
+            }
             double[] x1 = new double[firstFunction.getRowCount()];
             double[] y1 = new double[firstFunction.getRowCount()];
             for (int i = 0; i < firstFunction.getRowCount(); i++) {
@@ -359,6 +368,7 @@ public class OperationsWithFunctions extends JDialog {
             }
             firstF = Menu.factory.create(x1, y1);
             secondF = Menu.factory.create(x2, y2);
+
         });
 
         create.addActionListener(e -> {
