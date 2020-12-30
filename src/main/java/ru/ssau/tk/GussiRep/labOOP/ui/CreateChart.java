@@ -213,14 +213,19 @@ public class CreateChart extends JDialog {
             y.clear();
             try {
                 enter = Integer.parseInt(textField.getText());
-                tableModel.setCount(enter);
-                for (int i = 0; i < enter; i++) {
-                    x.add(null);
-                    y.add(null);
+                if (enter >= 2) {
+                    tableModel.setCount(enter);
+                    for (int i = 0; i < enter; i++) {
+                        x.add(null);
+                        y.add(null);
+                    }
+                    tableModel.fireTableDataChanged();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Кол-во должно быть больше 2!");
+                    throw new ArithmeticException();
                 }
-                tableModel.fireTableDataChanged();
             } catch (Exception exception) {
-                JOptionPane.showMessageDialog(this, exception.getMessage());
+                JOptionPane.showMessageDialog(this, "Пожалуйста, вводите цифры!");
             }
         });
     }
