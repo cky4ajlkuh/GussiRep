@@ -128,7 +128,7 @@ public class CreateChart extends JDialog {
             if (file != null) {
                 try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
                     textField.setText(null);
-                    TabulatedFunction function = FunctionsIO.deserialize(in);
+                    function = FunctionsIO.deserialize(in);
                     tableModel.setCount(function.getCount());
                     for (int i = 0; i < function.getCount(); i++) {
                         x.add(i, (function.getX(i)));
