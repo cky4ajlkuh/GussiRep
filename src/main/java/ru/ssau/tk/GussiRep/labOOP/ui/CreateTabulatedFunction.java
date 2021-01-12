@@ -141,4 +141,15 @@ public class CreateTabulatedFunction extends JDialog {
         }
     }
 
+    public int getCount() {
+        return 0;
+    }
+
+    public Double getX(int i) {
+        return null;
+    }
+
+    public Double getY(int i) {
+        return null;
+    }
 }

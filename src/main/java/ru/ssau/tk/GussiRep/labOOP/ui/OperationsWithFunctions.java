@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OperationsWithFunctions extends JDialog {
-
+    private CreateMathFunction createMathFunction;
     private final JComboBox<String> comboBox = new JComboBox<>(new String[]{"", "Умножение", "Деление", "Сумма", "Разность"});
-
-    private final JButton createFirstFunction = new JButton("Создать");
-    private final JButton createSecondFunction = new JButton("Создать");
-
+    private final JButton jButtonCreateOfMathFunction1 = new JButton("Создать из мат. функции");
+    private final JButton jButtonCreateOfMathFunction2 = new JButton("Создать из мат. функции");
+    private final JButton jButtonCreateOfTabulatedFunction1 = new JButton("Создать из массива функции");
+    private final JButton jButtonCreateOfTabulatedFunction2 = new JButton("Создать из массива функции");
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
     private TableModel firstFunction = new TableModel(xValues, yValues) {
@@ -36,7 +36,6 @@ public class OperationsWithFunctions extends JDialog {
     };
     private final JTable firstTable = new JTable(firstFunction);
     private final JScrollPane firstScroll = new JScrollPane(firstTable);
-
     private List<Double> xValuesSecond = new ArrayList<>();
     private List<Double> yValuesSecond = new ArrayList<>();
     private TableModel secondFunction = new TableModel(xValuesSecond, yValuesSecond) {
@@ -77,6 +76,7 @@ public class OperationsWithFunctions extends JDialog {
 
     public OperationsWithFunctions(Menu menu, String s, Boolean modal) {
         super(menu, s, modal);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         JFileChooser fileOpen = new JFileChooser();
         JFileChooser fileOpenSecond = new JFileChooser();
@@ -144,7 +144,7 @@ public class OperationsWithFunctions extends JDialog {
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(nameFirst)
-                        .addComponent(createFirstFunction)
+                        .addComponent(jButtonCreateOfMathFunction1)
                         .addComponent(firstScroll)
 
                         .addGroup(layout.createSequentialGroup()
@@ -152,15 +152,40 @@ public class OperationsWithFunctions extends JDialog {
                                 .addComponent(saveFirstFunction)
                         )
                 )
+
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(nameFirst)
+                        .addComponent(jButtonCreateOfTabulatedFunction1)
+                        .addComponent(firstScroll)
+
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(loadingFirstFunction)
+                                .addComponent(saveFirstFunction)
+                        )
+                )
+
+
+               .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(nameSecond)
-                        .addComponent(createSecondFunction)
+                        .addComponent(jButtonCreateOfMathFunction2)
                         .addComponent(secondScroll)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(loadingSecondFunction)
                                 .addComponent(saveSecondFunction)
                         )
                 )
+
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(nameSecond)
+                        .addComponent(jButtonCreateOfTabulatedFunction2)
+                        .addComponent(secondScroll)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(loadingSecondFunction)
+                                .addComponent(saveSecondFunction)
+                        )
+                )
+
+
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(nameResult)
                         .addGroup(layout.createSequentialGroup()
@@ -177,23 +202,48 @@ public class OperationsWithFunctions extends JDialog {
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addComponent(nameFirst)
-                                .addComponent(createFirstFunction)
+                                .addComponent(jButtonCreateOfMathFunction1)
                                 .addComponent(firstScroll)
                                 .addGroup(layout.createParallelGroup()
                                         .addComponent(loadingFirstFunction)
                                         .addComponent(saveFirstFunction)
                                 )
                 )
+
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addComponent(nameFirst)
+                                .addComponent(jButtonCreateOfTabulatedFunction1)
+                                .addComponent(firstScroll)
+                                .addGroup(layout.createParallelGroup()
+                                        .addComponent(loadingFirstFunction)
+                                        .addComponent(saveFirstFunction)
+                                )
+                )
+
+
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addComponent(nameSecond)
-                                .addComponent(createSecondFunction)
+                                .addComponent(jButtonCreateOfMathFunction2)
                                 .addComponent(secondScroll)
                                 .addGroup(layout.createParallelGroup()
                                         .addComponent(loadingSecondFunction)
                                         .addComponent(saveSecondFunction)
                                 )
                 )
+
+                .addGroup(
+                        layout.createSequentialGroup()
+                                .addComponent(nameSecond)
+                                .addComponent(jButtonCreateOfTabulatedFunction2)
+                                .addComponent(secondScroll)
+                                .addGroup(layout.createParallelGroup()
+                                        .addComponent(loadingSecondFunction)
+                                        .addComponent(saveSecondFunction)
+                                )
+                )
+
                 .addGroup(
                         layout.createSequentialGroup()
                                 .addComponent(nameResult)
@@ -431,12 +481,26 @@ public class OperationsWithFunctions extends JDialog {
         createFunctionsListener();
         setVisible(false);
         setResizable(false);
-        setSize(new Dimension(1100, 600));
+        setSize(new Dimension(1600, 600));
     }
 
     public void createFunctionsListener() {
-        createFirstFunction.addActionListener(e -> {
-            CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+        /*jButtonCreateOfMathFunction1.addActionListener(args -> {
+            try {
+                createMathFunction  = new CreateMathFunction(this, "Создание мат функции", true);
+
+                firstFunction = (TableModel) createMathFunction.getTabulatedFunction();
+                xValues.add(function.function.getX(i));
+                yValues.add(function.function.getY(i))
+                //firstFunction.setFunction(firstTable);
+                firstFunction.fireTableDataChanged();
+            } catch (UnsupportedOperationException | NullPointerException e) {
+                System.out.println();
+            }
+        });*/
+
+        jButtonCreateOfTabulatedFunction1.addActionListener(e -> {
+            CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции из массива", true);
             function.setVisible(true);
             xValues.clear();
             yValues.clear();
@@ -447,8 +511,23 @@ public class OperationsWithFunctions extends JDialog {
                 firstFunction.fireTableDataChanged();
             }
         });
-        createSecondFunction.addActionListener(e -> {
-            CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции", true);
+
+        jButtonCreateOfMathFunction2.addActionListener(e -> {
+            CreateMathFunction function = new CreateMathFunction(this, "Создание мат функции", true);
+            function.setVisible(true);
+            xValues.clear();
+            yValues.clear();
+            firstFunction.setCount(function.function.getCount());
+            for (int i = 0; i < function.function.getCount(); i++) {
+                xValues.add(function.function.getX(i));
+                yValues.add(function.function.getY(i));
+                firstFunction.fireTableDataChanged();
+            }
+        });
+
+
+        jButtonCreateOfTabulatedFunction2.addActionListener(e -> {
+            CreateTabulatedFunction function = new CreateTabulatedFunction(this, "Создание функции из массива", true);
             function.setVisible(true);
             xValuesSecond.clear();
             yValuesSecond.clear();

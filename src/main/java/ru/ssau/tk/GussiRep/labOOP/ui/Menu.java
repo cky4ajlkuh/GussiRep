@@ -17,7 +17,6 @@ public class Menu extends JFrame {
     private final CreateSqrFunction function2 = new CreateSqrFunction();
     private final CreateASinFunction function3 = new CreateASinFunction();
     private final CreateConstantFunction function4 = new CreateConstantFunction();
-    private final CreateDifferentialFunction function5 = new CreateDifferentialFunction();
     private final JDialog createTabulatedFunction = new CreateTabulatedFunction(this, "Создание функции", true);
     private final JDialog operationsWithFunctions = new OperationsWithFunctions(this, "Операции", true);
     private final CreateTabulatedFunctionForMath createTabulatedFunctionForMath = new CreateTabulatedFunctionForMath();
@@ -169,20 +168,6 @@ public class Menu extends JFrame {
         JMenuBar jMenuBar = new JMenuBar();
 
         public CreateASinFunction() {
-            setSize(400, 400);
-            setVisible(false);
-            setResizable(false);
-            setLocationRelativeTo(null);
-            jMenuBar.add(menu);
-            setJMenuBar(jMenuBar);
-        }
-    }
-
-    static class CreateDifferentialFunction extends JDialog {
-        JMenu menu = new JMenu("Производная-функция");
-        JMenuBar jMenuBar = new JMenuBar();
-
-        public CreateDifferentialFunction() {
             setSize(400, 400);
             setVisible(false);
             setResizable(false);

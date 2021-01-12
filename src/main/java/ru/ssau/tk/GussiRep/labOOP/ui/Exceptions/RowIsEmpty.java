@@ -15,5 +15,6 @@ public class RowIsEmpty extends Exception {
         super(message);
         JOptionPane.showMessageDialog(null, "Отсутствую значения в таблице!");
 
+
     }
 }

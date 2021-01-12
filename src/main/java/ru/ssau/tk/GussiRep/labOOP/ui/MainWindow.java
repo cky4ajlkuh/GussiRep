@@ -1,8 +1,12 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
+import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
+
 import javax.swing.*;
 
 public class MainWindow {
+    public static TabulatedFunctionFactory factory;
+
     public static void main(String[] args) {
         Menu menu = new Menu("Меню");
         menu.setVisible(true);

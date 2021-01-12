@@ -1,5 +1,6 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.io.Serial;
 import java.util.List;
@@ -13,6 +14,8 @@ public class TableModel extends AbstractTableModel {
     private final List<Double> stringsX;
     private final List<Double> stringsY;
     private int count;
+    private JTable function;
+
 
     public TableModel(List<Double> stringsX, List<Double> stringsY) {
         this.stringsX = stringsX;
@@ -74,5 +77,11 @@ public class TableModel extends AbstractTableModel {
             default -> super.getColumnName(column);
         };
     }
+        public JTable getFunction() {
+            return function;
+        }
 
-}
+        public void setFunction(JTable function) {
+            this.function = function;
+        }
+    }
