@@ -15,9 +15,9 @@ public class MyMathFunction extends JDialog {
     public static TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
     private final JComboBox<String> functionComboBox = new JComboBox<>();
     private final JButton buttonCreateFunction = new JButton("Создать функцию");
-    private final JLabel fromLabel = new JLabel("От:");
-    private final JLabel toLabel = new JLabel("До:");
-    private final JLabel countLabel = new JLabel("Количество точек:");
+    private final JLabel fromLabel = new JLabel("От: ");
+    private final JLabel toLabel = new JLabel("До: ");
+    private final JLabel countLabel = new JLabel("Укажите количество точек разбиения: ");
     private final JTextField countField = new JTextField();
     private final JTextField fromField = new JTextField();
     private final JTextField toField = new JTextField();

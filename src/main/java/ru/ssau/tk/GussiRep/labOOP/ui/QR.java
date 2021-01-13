@@ -1,5 +1,7 @@
 package ru.ssau.tk.GussiRep.labOOP.ui;
 
+import ru.ssau.tk.GussiRep.labOOP.ui2.MyMainWindow;
+
 import javax.swing.*;
 import java.awt.*;
 

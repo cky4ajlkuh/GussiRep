@@ -29,7 +29,7 @@ public class MyTabFunction extends JDialog {
         setModal(true);
         setLocationRelativeTo(null);
         getContentPane().setLayout(new FlowLayout());
-        this.setBounds(100, 100, 300, 300);
+        this.setBounds(100, 100, 320, 300);
         addButtonListeners(callback);
         compose();
         setLocationRelativeTo(null);
