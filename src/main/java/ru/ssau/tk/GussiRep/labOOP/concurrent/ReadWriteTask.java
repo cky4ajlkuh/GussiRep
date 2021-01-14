@@ -4,15 +4,21 @@ import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
 
 public class ReadWriteTask implements Runnable {
     private final TabulatedFunction tabulatedFunction;
+    private Runnable postRunAction;
 
     public ReadWriteTask(TabulatedFunction tabulatedFunction) {
         this.tabulatedFunction = tabulatedFunction;
     }
 
+    public ReadWriteTask(TabulatedFunction tabulatedFunction, Runnable postRunAction) {
+        this.tabulatedFunction = tabulatedFunction;
+        this.postRunAction = postRunAction;
+    }
+
     @Override
     public void run() {
-        double x = 0;
-        double y = 0;
+        double x;
+        double y ;
         for (int i = 0; i < tabulatedFunction.getCount(); i++) {
             x = tabulatedFunction.getX(i);
             synchronized (tabulatedFunction) {
@@ -22,7 +28,7 @@ public class ReadWriteTask implements Runnable {
                 y = tabulatedFunction.getY(i);
             }
             System.out.printf(" %s, after write: i = %d, x = %f, y = %f ", Thread.currentThread().getName(), i, x, y);
-            System.out.println();
         }
+        postRunAction.run();
     }
 }
