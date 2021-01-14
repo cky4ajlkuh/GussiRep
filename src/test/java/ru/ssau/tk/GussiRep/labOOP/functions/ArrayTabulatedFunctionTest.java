@@ -314,73 +314,48 @@ public class ArrayTabulatedFunctionTest {
         assertEquals(j, 5, 0.01);
     }
 
-    /*@Test
-    ArrayTabulatedFunction testingRemoveArray = new ArrayTabulatedFunction(xValues, yValues);
-        testingRemoveArray.remove(0);       //удаление из первого
-    assertEquals(testingRemoveArray.getCount(), 4);
-    assertEquals(testingRemoveArray.getX(0), 1.2);
-    assertEquals(testingRemoveArray.getY(0), 2.2);
-    assertEquals(testingRemoveArray.getX(1), 1.3);
-    assertEquals(testingRemoveArray.getY(1), 2.3);
-    assertEquals(testingRemoveArray.getX(2), 1.4);
-    assertEquals(testingRemoveArray.getY(2), 2.4);
-    assertEquals(testingRemoveArray.getX(3), 1.5);
-    assertEquals(testingRemoveArray.getY(3), 2.5);
+    @Test
+    public void testRemove() {
+        ArrayTabulatedFunction testRemoveArrays = (ArrayTabulatedFunction) getDefinedThroughArrays();
 
-        testingRemoveArray.remove(2);      //удаление из середины
-    assertEquals(testingRemoveArray.getCount(), 3);
-    assertEquals(testingRemoveArray.getX(0), 1.2);
-    assertEquals(testingRemoveArray.getY(0), 2.2);
-    assertEquals(testingRemoveArray.getX(1), 1.3);
-    assertEquals(testingRemoveArray.getY(1), 2.3);
-    assertEquals(testingRemoveArray.getX(2), 1.5);
-    assertEquals(testingRemoveArray.getY(2), 2.5);
+        testRemoveArrays.remove(0);
+        assertEquals(testRemoveArrays.getX(0), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(0), -4, DELTA);
+        assertEquals(testRemoveArrays.getX(1), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(1), -2, DELTA);
+        assertEquals(testRemoveArrays.getX(2), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(2), -1, DELTA);
+        assertEquals(testRemoveArrays.getX(3), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(3), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(4), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(4), 1, DELTA);
+        assertEquals(testRemoveArrays.getX(5), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(5), 3, DELTA);
+        assertEquals(testRemoveArrays.getCount(), 7, DELTA);
 
-        testingRemoveArray.remove(2);           //удаление последнего
-    assertEquals(testingRemoveArray.getCount(), 2);
-    assertEquals(testingRemoveArray.getX(0), 1.2);
-    assertEquals(testingRemoveArray.getY(0), 2.2);
-    assertEquals(testingRemoveArray.getX(1), 1.3);
-    assertEquals(testingRemoveArray.getY(1), 2.3);
+        testRemoveArrays.remove(5);
+        assertEquals(testRemoveArrays.getX(0), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(0), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(1), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(1), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(2), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(2), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(3), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(3), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(4), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(4), 0, DELTA);
+        assertEquals(testRemoveArrays.getCount(), 6, DELTA);
 
-    ArrayTabulatedFunction testingRemoveList = new ArrayTabulatedFunction(source, 1, 16, 6);
-        testingRemoveList.remove(0);       //удаление из первого
-    assertEquals(testingRemoveList.getCount(), 5);
-    assertEquals(testingRemoveList.getX(0), 4);
-    assertEquals(testingRemoveList.getY(0), 16);
-    assertEquals(testingRemoveList.getX(1), 7);
-    assertEquals(testingRemoveList.getY(1), 49);
-    assertEquals(testingRemoveList.getX(2), 10);
-    assertEquals(testingRemoveList.getY(2), 100);
-    assertEquals(testingRemoveList.getX(3), 13);
-    assertEquals(testingRemoveList.getY(3), 169);
-    assertEquals(testingRemoveList.getX(4), 16);
-    assertEquals(testingRemoveList.getY(4), 256);
+        testRemoveArrays.remove(2);
+        assertEquals(testRemoveArrays.getX(0), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(0), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(1), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(1), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(2), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(2), 0, DELTA);
+        assertEquals(testRemoveArrays.getX(3), 0, DELTA);
+        assertEquals(testRemoveArrays.getY(3), 0, DELTA);
+        assertEquals(testRemoveArrays.getCount(), 5, DELTA);
+    }
 
-        testingRemoveList.remove(2);      //удаление из середины
-    assertEquals(testingRemoveList.getCount(), 4);
-    assertEquals(testingRemoveList.getX(0), 4);
-    assertEquals(testingRemoveList.getY(0), 16);
-    assertEquals(testingRemoveList.getX(1), 7);
-    assertEquals(testingRemoveList.getY(1), 49);
-    assertEquals(testingRemoveList.getX(2), 13);
-    assertEquals(testingRemoveList.getY(2), 169);
-    assertEquals(testingRemoveList.getX(3), 16);
-    assertEquals(testingRemoveList.getY(3), 256);
-
-        testingRemoveList.remove(3);           //удаление последнего
-    assertEquals(testingRemoveList.getCount(), 3);
-    assertEquals(testingRemoveList.getX(0), 4);
-    assertEquals(testingRemoveList.getY(0), 16);
-    assertEquals(testingRemoveList.getX(1), 7);
-    assertEquals(testingRemoveList.getY(1), 49);
-    assertEquals(testingRemoveList.getX(2), 13);
-    assertEquals(testingRemoveList.getY(2), 169);
-
-    final double[] brokenValuesToo = {1, 3};
-    final double[] twoElementArray = {1, 5};
-    assertThrows(IllegalArgumentException.class, () -> {
-        ArrayTabulatedFunction checkFunction = new ArrayTabulatedFunction(twoElementArray, brokenValuesToo);
-        checkFunction.remove(0);
-    });*/
 }
