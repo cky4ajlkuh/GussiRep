@@ -131,16 +131,17 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         if (count <=2) {
             throw new IllegalArgumentException("Array's length is less than 2");
         }
-        double[] valuesX = new double[count - 1];
-        double[] valuesY = new double[count - 1];
-        System.arraycopy(yValues, 0, valuesX, 0, index);
-        System.arraycopy(yValues, index + 1, valuesY, index, count - index - 1);
+        double[] xValuesNew = new double[count + 1];
+        double[] yValuesNew = new double[count - 1];
+        System.arraycopy(yValues, 0, xValuesNew, 0, index);
+        System.arraycopy(yValues, index + 1, yValuesNew, index, count - index - 1);
 
-        System.arraycopy(xValues, 0, valuesX, 0, index);
-        System.arraycopy(xValues, index + 1, valuesY, index, count - index - 1);
+        System.arraycopy(xValues, 0, xValuesNew, 0, index);
+        System.arraycopy(xValues, index + 1, yValuesNew, index, count - index - 1);
         count--;
-        this.xValues = valuesX;
-        this.yValues = valuesY;
+        this.xValues = xValuesNew;
+        this.yValues = yValuesNew;
+        this.yValues = yValuesNew;
     }
 
     @Override

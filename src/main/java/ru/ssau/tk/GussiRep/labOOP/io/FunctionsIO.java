@@ -1,8 +1,10 @@
 package ru.ssau.tk.GussiRep.labOOP.io;
 
+import com.thoughtworks.xstream.XStream;
 import ru.ssau.tk.GussiRep.labOOP.functions.Point;
 import ru.ssau.tk.GussiRep.labOOP.functions.TabulatedFunction;
 import ru.ssau.tk.GussiRep.labOOP.functions.factory.TabulatedFunctionFactory;
+import ru.ssau.tk.GussiRep.labOOP.functions.ArrayTabulatedFunction;
 
 import java.io.*;
 import java.util.Locale;
@@ -31,6 +33,18 @@ public final class FunctionsIO {
             dataOutputStream.writeDouble(point.y);
         }
         dataOutputStream.flush();
+    }
+
+    static void serializeXml(BufferedWriter writer, ArrayTabulatedFunction function) throws IOException {
+        XStream xmlWriter = new XStream();
+        String xmlString = xmlWriter.toXML(function);
+        writer.write(xmlString);
+        writer.flush();
+    }
+
+    static ArrayTabulatedFunction deserializeXml(BufferedReader reader) {
+        XStream xmlReader = new XStream();
+        return (ArrayTabulatedFunction) xmlReader.fromXML(reader);
     }
 
     public static TabulatedFunction readTabulatedFunction(BufferedReader reader, TabulatedFunctionFactory factory) throws IOException {
