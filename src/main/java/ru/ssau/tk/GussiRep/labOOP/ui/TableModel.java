@@ -85,3 +85,4 @@ public class TableModel extends AbstractTableModel {
             this.function = function;
         }
     }
+

@@ -21,6 +21,8 @@ public class OperationsWithFunctions extends JDialog {
     private final JButton jButtonCreateOfTabulatedFunction2 = new JButton("Создать из массива функции");
     private List<Double> xValues = new ArrayList<>();
     private List<Double> yValues = new ArrayList<>();
+    private TableModel tableModel = new TableModel(xValues, yValues);
+    private JTable table = new JTable(tableModel);
     private TableModel firstFunction = new TableModel(xValues, yValues) {
         @Serial
         private static final long serialVersionUID = -7247776622311553601L;
@@ -66,6 +68,18 @@ public class OperationsWithFunctions extends JDialog {
             return false;
         }
     };
+
+    public void wrapTable(int countOld, int countNew) {
+        tableModel.fireTableDataChanged();
+        for (int i = 0; i < countOld; i++) {
+            if (xValues.size() != 0) xValues.remove(countOld - i - 1);
+            if (yValues.size() != 0) yValues.remove(countOld - i - 1);
+        }
+        for (int i = 0; i < countNew; i++) {
+           // xValues.add(tableModel.getFunction().getX(i));
+            //yValues.add(tableModel.getFunction().getY(i));
+        }
+    }
 
     private final JTable resultTable = new JTable(result);
     private final JScrollPane resultFunction = new JScrollPane(resultTable);
@@ -517,11 +531,11 @@ public class OperationsWithFunctions extends JDialog {
             function.setVisible(true);
             xValues.clear();
             yValues.clear();
-            firstFunction.setCount(function.function.getCount());
+            secondFunction.setCount(function.function.getCount());
             for (int i = 0; i < function.function.getCount(); i++) {
                 xValues.add(function.function.getX(i));
                 yValues.add(function.function.getY(i));
-                firstFunction.fireTableDataChanged();
+                secondFunction.fireTableDataChanged();
             }
         });
 
