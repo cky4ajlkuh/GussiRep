@@ -62,13 +62,13 @@ public class FunctionsIOTest {
     public void testXML() {
         ArrayTabulatedFunction arrayFunction = new ArrayTabulatedFunction(xValues, yValues);
 
-        try (BufferedWriter out = new BufferedWriter(new FileWriter("temp/serialized array functions.XML"))) {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter("XML"))) {
             FunctionsIO.serializeXml(out, arrayFunction);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try (BufferedReader in = new BufferedReader(new FileReader("temp/serialized array functions.XML"))) {
+        try (BufferedReader in = new BufferedReader(new FileReader("XML"))) {
             TabulatedFunction resultArray = FunctionsIO.deserializeXml(in);
 
             assertEquals(arrayFunction.getCount(), resultArray.getCount());
